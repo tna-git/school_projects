@@ -1,0 +1,897 @@
+Term/Year Code,"Coll
+",College,"Dept
+","Degree
+",Major_Code,Major_Name,Conc_code,Concentration_Name,Total,Men,Women,Unknown_Sex,Caucasian,Asian_American,African_American,Hispanic,Native_American,Pacific_Isl,Multiracial,International,Unknown,Illinois_Resident,Non-Illinois_Resident,Academic_Program_Code
+120241,KL ,"Agr, Cons, Env Sci ",306,BS ,5895,Metropolitan Food & Enviro Sys ,  ,  ,1,1,0,0,0,0,0,1,0,0,0,0,0,1,0,10KL5895BS
+120241,KL ,"Agr, Cons, Env Sci ",306,BS ,6147,SustainabilityinFood&EnviroSys ,  ,  ,10,7,3,0,3,1,3,3,0,0,0,0,0,9,1,10KL6147BS
+120241,KL ,"Agr, Cons, Env Sci ",306,MS ,5599,Bioprocessing and Bioenergy ,5166,Professional Science Masters ,3,1,2,0,1,0,0,0,0,0,0,2,0,1,2,1PKS5599MS
+120241,KL ,"Agr, Cons, Env Sci ",342,BS ,5740,"Ag Ldrship, Ed & Communication ",5736,Agricultural Education ,26,10,16,0,24,0,0,1,0,0,1,0,0,26,0,10KL5736BS
+120241,KL ,"Agr, Cons, Env Sci ",342,BS ,5740,"Ag Ldrship, Ed & Communication ",5737,Org & Community Leadership ,42,24,18,0,34,0,4,1,0,0,2,0,1,41,1,10KL5737BS
+120241,KL ,"Agr, Cons, Env Sci ",342,BS ,5740,"Ag Ldrship, Ed & Communication ",5738,Ag Communications-Advertising ,4,0,4,0,3,0,0,1,0,0,0,0,0,4,0,10KL5738BS
+120241,KL ,"Agr, Cons, Env Sci ",342,BS ,5740,"Ag Ldrship, Ed & Communication ",5739,Ag Communications-Journalism ,2,0,2,0,1,0,0,0,0,0,1,0,0,2,0,10KL5739BS
+120241,KL ,"Agr, Cons, Env Sci ",342,BS ,5740,"Ag Ldrship, Ed & Communication ",6080,Agricultural Communications ,34,8,26,0,32,0,0,1,0,0,1,0,0,31,3,10KL6080BS
+120241,KL ,"Agr, Cons, Env Sci ",342,MS ,5740,"Ag Ldrship, Ed & Communication ",  ,  ,10,2,8,0,8,0,1,0,0,0,0,1,0,7,3,10KS5740MS
+120241,KL ,"Agr, Cons, Env Sci ",342,MS ,5740,"Ag Ldrship, Ed & Communication ",  ,  ,16,2,14,0,16,0,0,0,0,0,0,0,0,14,2,10KS5740MSU
+120241,KL ,"Agr, Cons, Env Sci ",342,NDEG ,5740,"Ag Ldrship, Ed & Communication ",  ,  ,3,1,2,0,2,1,0,0,0,0,0,0,0,0,3,10KS5740NDEU
+120241,KL ,"Agr, Cons, Env Sci ",470,BS ,176,Agr & Consumer Economics ,5003,Agri-Accounting ,59,42,17,0,36,8,3,3,0,0,2,5,2,54,5,10KL5003BS
+120241,KL ,"Agr, Cons, Env Sci ",470,BS ,176,Agr & Consumer Economics ,5005,Farm Management ,15,11,4,0,12,0,1,2,0,0,0,0,0,15,0,10KL5005BS
+120241,KL ,"Agr, Cons, Env Sci ",470,BS ,176,Agr & Consumer Economics ,5006,Agribusiness Markets & Mgmt ,124,85,39,0,88,8,6,13,1,0,3,4,1,116,8,10KL5006BS
+120241,KL ,"Agr, Cons, Env Sci ",470,BS ,176,Agr & Consumer Economics ,5006,Agribusiness Markets & Mgmt ,1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,10KL8037BS
+120241,KL ,"Agr, Cons, Env Sci ",470,BS ,176,Agr & Consumer Economics ,5007,Consumer Economics & Finance ,174,134,40,0,100,27,7,18,0,0,7,14,1,153,21,10KL5007BS
+120241,KL ,"Agr, Cons, Env Sci ",470,BS ,176,Agr & Consumer Economics ,5008,Envirnmntal Economics & Policy ,49,22,27,0,21,7,1,8,0,0,3,9,0,35,14,10KL5008BS
+120241,KL ,"Agr, Cons, Env Sci ",470,BS ,176,Agr & Consumer Economics ,5010,"Policy, Intl Trade, & Dvlpmt ",20,12,8,0,8,2,0,4,0,0,2,3,1,16,4,10KL5010BS
+120241,KL ,"Agr, Cons, Env Sci ",470,BS ,176,Agr & Consumer Economics ,5011,Public Policy and Law ,60,26,34,0,29,11,3,14,0,0,1,2,0,53,7,10KL5011BS
+120241,KL ,"Agr, Cons, Env Sci ",470,BS ,176,Agr & Consumer Economics ,5136,Financial Planning ,168,133,35,0,87,13,12,42,0,0,4,8,2,153,15,10KL5136BS
+120241,KL ,"Agr, Cons, Env Sci ",470,BS ,176,Agr & Consumer Economics ,5316,Finance in Agri-Business ,56,42,14,0,37,6,1,7,0,0,2,2,1,52,4,10KL5316BS
+120241,KL ,"Agr, Cons, Env Sci ",470,MAAE ,5870,Agricultural & Applied Econ ,  ,  ,2,2,0,0,0,1,0,0,0,0,0,1,0,0,2,1PKS5870MAAE
+120241,KL ,"Agr, Cons, Env Sci ",470,MAAE ,5870,Agricultural & Applied Econ ,5869,BS ACE/MAAE AAE ,4,3,1,0,2,0,1,0,0,0,1,0,0,4,0,1PKS5869MAAE
+120241,KL ,"Agr, Cons, Env Sci ",470,MS ,5273,Agricultural & Applied Econ ,  ,  ,10,6,4,0,5,0,0,0,0,0,0,4,1,6,4,10KS5273MS
+120241,KL ,"Agr, Cons, Env Sci ",470,PHD ,5273,Agricultural & Applied Econ ,  ,  ,55,26,29,0,6,1,0,1,0,0,0,47,0,2,53,10KS5273PHD
+120241,KL ,"Agr, Cons, Env Sci ",483,NDEG ,67,Nondegree ,  ,  ,78,46,32,0,56,3,0,2,0,0,1,14,2,65,13,10KL0067NDEG
+120241,KL ,"Agr, Cons, Env Sci ",483,NONE ,5621,ACES Undeclared ,  ,  ,86,48,38,0,44,1,19,14,0,1,1,5,1,78,8,10KL5621NONE
+120241,KL ,"Agr, Cons, Env Sci ",538,BS ,2,Animal Sciences ,5268,Companion Animal & Equine Sci ,94,12,82,0,40,7,6,32,0,0,3,3,3,88,6,10KL0002BS
+120241,KL ,"Agr, Cons, Env Sci ",538,BS ,2,Animal Sciences ,5269,"Science, Pre-Vet Med and Med ",404,78,326,0,196,44,29,113,2,0,8,8,4,367,37,10KL0002BS
+120241,KL ,"Agr, Cons, Env Sci ",538,BS ,2,Animal Sciences ,5588,Food Animal Prod & Mgmt ,29,5,24,0,22,1,0,4,0,0,2,0,0,27,2,10KL0002BS
+120241,KL ,"Agr, Cons, Env Sci ",538,BS ,5864,Computer Sci & Animal Sci ,  ,  ,6,5,1,0,3,3,0,0,0,0,0,0,0,3,3,10KL5864BS
+120241,KL ,"Agr, Cons, Env Sci ",538,MANSC ,2,Animal Sciences ,  ,  ,13,4,9,0,5,4,2,0,0,0,0,2,0,9,4,1PKS0002MANS
+120241,KL ,"Agr, Cons, Env Sci ",538,MANSC ,2,Animal Sciences ,  ,  ,9,0,9,0,6,0,2,1,0,0,0,0,0,4,5,1PKS0002MANU
+120241,KL ,"Agr, Cons, Env Sci ",538,MS ,2,Animal Sciences ,  ,  ,22,13,9,0,9,0,2,2,0,0,1,8,0,7,15,10KS0002MS
+120241,KL ,"Agr, Cons, Env Sci ",538,MS ,4026,Bioinformatics ,5099,Animal Science ,5,2,3,0,1,0,0,1,0,0,0,3,0,2,3,10KS5099MS
+120241,KL ,"Agr, Cons, Env Sci ",538,NDEG ,2,Animal Sciences ,  ,  ,28,7,21,0,20,2,0,0,0,0,1,1,4,4,24,1PKS0002NDEU
+120241,KL ,"Agr, Cons, Env Sci ",538,PHD ,2,Animal Sciences ,  ,  ,42,10,32,0,21,1,1,4,0,0,1,14,0,16,26,10KS0002PHD
+120241,KL ,"Agr, Cons, Env Sci ",698,BS ,37,Food Science & Human Nutrition ,38,Food Science ,57,24,33,0,17,16,6,3,0,0,3,12,0,33,24,10KL0038BS
+120241,KL ,"Agr, Cons, Env Sci ",698,BS ,37,Food Science & Human Nutrition ,40,Human Nutrition ,39,8,31,0,14,10,2,10,0,0,1,2,0,35,4,10KL0040BS
+120241,KL ,"Agr, Cons, Env Sci ",698,BS ,37,Food Science & Human Nutrition ,41,Dietetics ,25,4,21,0,14,4,0,4,0,0,0,3,0,20,5,10KL0041BS
+120241,KL ,"Agr, Cons, Env Sci ",698,BS ,37,Food Science & Human Nutrition ,42,Hospitality Management ,20,4,16,0,11,5,1,2,0,0,1,0,0,18,2,10KL0042BS
+120241,KL ,"Agr, Cons, Env Sci ",698,BS ,184,Food Science ,  ,  ,35,11,24,0,11,10,1,5,0,0,3,4,1,28,7,10KL0184BS
+120241,KL ,"Agr, Cons, Env Sci ",698,BS ,6139,Dietetics and Nutrition ,  ,  ,37,3,34,0,20,9,0,4,0,0,2,2,0,31,6,10KL6139BS
+120241,KL ,"Agr, Cons, Env Sci ",698,BS ,6143,Hospitality Management ,  ,  ,26,3,23,0,9,9,3,3,0,0,1,1,0,20,6,10KL6143BS
+120241,KL ,"Agr, Cons, Env Sci ",698,BS ,6144,Nutrition & Health ,  ,  ,30,9,21,0,11,8,2,4,0,0,1,4,0,23,7,10KL6144BS
+120241,KL ,"Agr, Cons, Env Sci ",698,MS ,37,Food Science & Human Nutrition ,  ,  ,43,8,35,0,24,8,1,7,0,0,2,0,1,23,20,10KS0037MSU
+120241,KL ,"Agr, Cons, Env Sci ",698,MS ,37,Food Science & Human Nutrition ,38,Food Science ,26,8,18,0,4,4,1,0,0,0,0,17,0,4,22,10KS0037MS
+120241,KL ,"Agr, Cons, Env Sci ",698,MS ,37,Food Science & Human Nutrition ,40,Human Nutrition ,7,2,5,0,4,0,0,0,0,0,1,2,0,3,4,10KS0037MS
+120241,KL ,"Agr, Cons, Env Sci ",698,MS ,37,Food Science & Human Nutrition ,5166,Professional Science Masters ,10,5,5,0,0,1,0,0,0,0,0,9,0,0,10,1PKS0037MS
+120241,KL ,"Agr, Cons, Env Sci ",698,MS ,37,Food Science & Human Nutrition ,6090,Clinical & Community Nutrition ,13,3,10,0,9,2,0,0,0,0,0,2,0,7,6,10KS0037MS
+120241,KL ,"Agr, Cons, Env Sci ",698,MS ,37,Food Science & Human Nutrition ,6090,Clinical & Community Nutrition ,4,0,4,0,3,0,1,0,0,0,0,0,0,4,0,10KS0037MSU
+120241,KL ,"Agr, Cons, Env Sci ",698,NDEG ,37,Food Science & Human Nutrition ,  ,  ,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,10KS0037NDEG
+120241,KL ,"Agr, Cons, Env Sci ",698,PHD ,37,Food Science & Human Nutrition ,38,Food Science ,23,12,11,0,4,0,0,1,0,0,1,17,0,5,18,10KS0037PHD
+120241,KL ,"Agr, Cons, Env Sci ",698,PHD ,37,Food Science & Human Nutrition ,40,Human Nutrition ,11,3,8,0,1,0,0,2,0,0,0,8,0,0,11,10KS0037PHD
+120241,KL ,"Agr, Cons, Env Sci ",741,BS ,25,Technical Systems Management ,  ,  ,11,8,3,0,5,1,2,3,0,0,0,0,0,11,0,10KL0025BS
+120241,KL ,"Agr, Cons, Env Sci ",741,BS ,25,Technical Systems Management ,  ,  ,1,1,0,0,1,0,0,0,0,0,0,0,0,1,0,10KL8037BS
+120241,KL ,"Agr, Cons, Env Sci ",741,BS ,6028,Engr Tech & Mgmt for Ag Sys ,6002,Ag Production & Processing ,9,9,0,0,8,0,0,0,0,0,1,0,0,9,0,10KL6028BS
+120241,KL ,"Agr, Cons, Env Sci ",741,BS ,6028,Engr Tech & Mgmt for Ag Sys ,6003,Construction Management ,76,66,10,0,40,4,8,20,0,0,1,2,1,71,5,10KL6028BS
+120241,KL ,"Agr, Cons, Env Sci ",741,BS ,6028,Engr Tech & Mgmt for Ag Sys ,6004,Digital & Precision Ag ,21,19,2,0,12,2,3,4,0,0,0,0,0,20,1,10KL6028BS
+120241,KL ,"Agr, Cons, Env Sci ",741,BS ,6028,Engr Tech & Mgmt for Ag Sys ,6004,Digital & Precision Ag ,1,1,0,0,1,0,0,0,0,0,0,0,0,1,0,10KL8037BS
+120241,KL ,"Agr, Cons, Env Sci ",741,BS ,6028,Engr Tech & Mgmt for Ag Sys ,6005,Energy and the Environment ,43,31,12,0,23,7,1,8,1,0,1,1,1,41,2,10KL6028BS
+120241,KL ,"Agr, Cons, Env Sci ",741,BS ,6028,Engr Tech & Mgmt for Ag Sys ,6005,Energy and the Environment ,1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,10KL8037BS
+120241,KL ,"Agr, Cons, Env Sci ",741,BSAG ,5163,Agricultural & Biological Engr ,  ,  ,40,18,22,0,21,5,1,7,0,0,2,4,0,34,6,10KL5163BSAG
+120241,KL ,"Agr, Cons, Env Sci ",741,MS ,25,Technical Systems Management ,  ,  ,2,1,1,0,1,0,1,0,0,0,0,0,0,1,1,10KS0025MS
+120241,KL ,"Agr, Cons, Env Sci ",741,MS ,6028,Engr Tech & Mgmt for Ag Sys ,  ,  ,7,7,0,0,4,0,1,1,0,0,0,1,0,4,3,10KS6028MS
+120241,KL ,"Agr, Cons, Env Sci ",741,MS ,6028,Engr Tech & Mgmt for Ag Sys ,5166,Professional Science Masters ,3,3,0,0,1,0,1,0,0,0,0,1,0,2,1,1PKS6028MS
+120241,KL ,"Agr, Cons, Env Sci ",793,BS ,48,Human Development & Family St ,  ,  ,173,10,163,0,70,11,28,57,1,0,2,3,1,163,10,10KL0048BS
+120241,KL ,"Agr, Cons, Env Sci ",793,BS ,48,Human Development & Family St ,49,Child and Adolescent Dev ,25,0,25,0,10,1,1,12,0,0,0,0,1,25,0,10KL0049BS
+120241,KL ,"Agr, Cons, Env Sci ",793,BS ,48,Human Development & Family St ,50,Family Studies ,9,2,7,0,6,0,0,3,0,0,0,0,0,9,0,10KL0050BS
+120241,KL ,"Agr, Cons, Env Sci ",793,PHD ,5577,Human Dvlpmt & Family Studies ,  ,  ,24,3,21,0,3,3,1,6,0,0,1,10,0,3,21,10KS5577PHD
+120241,KL ,"Agr, Cons, Env Sci ",802,BS ,30,Crop Sciences ,31,Agroecology ,7,2,5,0,4,2,0,1,0,0,0,0,0,6,1,10KL0031BS
+120241,KL ,"Agr, Cons, Env Sci ",802,BS ,30,Crop Sciences ,32,Plant Protection ,4,3,1,0,2,1,0,1,0,0,0,0,0,3,1,10KL0032BS
+120241,KL ,"Agr, Cons, Env Sci ",802,BS ,30,Crop Sciences ,33,Crops ,1,1,0,0,1,0,0,0,0,0,0,0,0,1,0,10KL0033BS
+120241,KL ,"Agr, Cons, Env Sci ",802,BS ,30,Crop Sciences ,34,Crop Agribusiness ,14,12,2,0,10,0,0,2,0,0,0,0,2,14,0,10KL0034BS
+120241,KL ,"Agr, Cons, Env Sci ",802,BS ,30,Crop Sciences ,35,Plant Biotech & Molecular Bio ,4,1,3,0,2,1,1,0,0,0,0,0,0,4,0,10KL0035BS
+120241,KL ,"Agr, Cons, Env Sci ",802,BS ,30,Crop Sciences ,36,Biological Sciences ,2,2,0,0,2,0,0,0,0,0,0,0,0,1,1,10KL0036BS
+120241,KL ,"Agr, Cons, Env Sci ",802,BS ,30,Crop Sciences ,5560,Horticultural Food Systems ,7,5,2,0,4,0,0,2,0,1,0,0,0,7,0,10KL5560BS
+120241,KL ,"Agr, Cons, Env Sci ",802,BS ,177,Agronomy ,  ,  ,12,8,4,0,9,0,1,1,0,0,0,1,0,11,1,10KL0177BS
+120241,KL ,"Agr, Cons, Env Sci ",802,BS ,5461,Plant Biotechnology ,  ,  ,32,11,21,0,21,2,0,5,0,0,1,3,0,27,5,10KL5461BS
+120241,KL ,"Agr, Cons, Env Sci ",802,BS ,5623,Computer Science&Crop Sciences ,  ,  ,23,15,8,0,5,13,0,0,0,0,0,5,0,9,14,10KL5623BS
+120241,KL ,"Agr, Cons, Env Sci ",802,MS ,30,Crop Sciences ,  ,  ,26,13,13,0,12,1,0,1,0,0,1,11,0,11,15,10KS0030MS
+120241,KL ,"Agr, Cons, Env Sci ",802,MS ,30,Crop Sciences ,  ,  ,20,9,11,0,16,1,0,2,0,0,0,0,1,12,8,10KS0030MSU
+120241,KL ,"Agr, Cons, Env Sci ",802,MS ,30,Crop Sciences ,5883,BS/MS Crop Sciences ,1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,10KS5883MS
+120241,KL ,"Agr, Cons, Env Sci ",802,MS ,4026,Bioinformatics ,5100,Crop Science ,2,1,1,0,0,0,0,0,0,0,0,2,0,0,2,10KS5100MS
+120241,KL ,"Agr, Cons, Env Sci ",802,NDEG ,30,Crop Sciences ,  ,  ,2,1,1,0,1,0,0,0,0,0,1,0,0,2,0,10KS0030NDEG
+120241,KL ,"Agr, Cons, Env Sci ",802,NDEG ,63,Horticulture ,  ,  ,25,10,14,1,14,0,2,2,0,0,1,0,6,0,25,1PKL0063NDEU
+120241,KL ,"Agr, Cons, Env Sci ",802,PHD ,30,Crop Sciences ,  ,  ,48,23,25,0,16,0,1,4,0,0,0,27,0,12,36,10KS0030PHD
+120241,KL ,"Agr, Cons, Env Sci ",875,BS ,51,Natural Resrcs & Environ Sci ,57,Fish and Wildlife Conservation ,1,0,1,0,0,0,0,1,0,0,0,0,0,1,0,10KL0051BS
+120241,KL ,"Agr, Cons, Env Sci ",875,BS ,51,Natural Resrcs & Environ Sci ,5239,Humn Dimnsns of the Environmnt ,57,21,36,0,39,4,3,8,0,0,1,2,0,52,5,10KL0051BS
+120241,KL ,"Agr, Cons, Env Sci ",875,BS ,51,Natural Resrcs & Environ Sci ,5685,Environmental Science & Mgmt ,74,43,31,0,32,13,3,12,0,0,2,12,0,58,16,10KL0051BS
+120241,KL ,"Agr, Cons, Env Sci ",875,BS ,51,Natural Resrcs & Environ Sci ,5686,Ecosys Stewardship & Rest Ecol ,72,33,39,0,40,9,1,9,0,0,5,6,2,61,11,10KL0051BS
+120241,KL ,"Agr, Cons, Env Sci ",875,BS ,51,Natural Resrcs & Environ Sci ,5687,Fish Wildlife Conserve Biol ,92,35,57,0,62,8,3,12,0,0,6,1,0,88,4,10KL0051BS
+120241,KL ,"Agr, Cons, Env Sci ",875,MS ,190,Natural Res & Env Sciences ,  ,  ,55,27,28,0,38,3,0,6,0,0,1,7,0,23,32,10KS0190MS
+120241,KL ,"Agr, Cons, Env Sci ",875,MS ,190,Natural Res & Env Sciences ,  ,  ,49,22,27,0,41,0,0,3,1,0,1,1,2,32,17,10KS0190MSU
+120241,KL ,"Agr, Cons, Env Sci ",875,NDEG ,190,Natural Res & Env Sciences ,  ,  ,5,2,3,0,2,1,1,0,0,0,0,0,1,2,3,10KS0190NDEU
+120241,KL ,"Agr, Cons, Env Sci ",875,PHD ,190,Natural Res & Env Sciences ,  ,  ,43,18,25,0,17,0,1,1,0,0,0,24,0,6,37,10KS0190PHD
+120241,KL ,"Agr, Cons, Env Sci ",971,MS ,191,Nutritional Sciences ,  ,  ,15,5,10,0,4,3,0,4,0,0,0,4,0,5,10,10KS0191MS
+120241,KL ,"Agr, Cons, Env Sci ",971,PHD ,191,Nutritional Sciences ,  ,  ,28,6,22,0,8,2,1,3,0,0,0,14,0,3,25,10KS0191PHD
+120241,KM ,Buissiness,260,BS ,75,Finance ,  ,  ,464,338,126,0,211,80,26,80,0,0,15,44,8,387,77,10KM0075BS
+120241,KM ,Buissiness,260,BS ,75,Finance ,  ,  ,275,187,87,1,129,78,2,26,0,0,12,25,3,219,56,10KM8037BS
+120241,KM ,Buissiness,260,BS ,6076,Finance + Data Science ,  ,  ,81,61,20,0,23,34,1,3,0,0,2,15,3,45,36,10KM6076BS
+120241,KM ,Buissiness,260,BS ,6076,Finance + Data Science ,  ,  ,3,3,0,0,1,1,0,0,0,0,0,1,0,1,2,10KM8037BS
+120241,KM ,Buissiness,260,MS ,5624,Finance ,  ,  ,178,96,82,0,2,2,0,1,0,0,1,171,1,4,174,10KS5624MSK
+120241,KM ,Buissiness,260,PHD ,5624,Finance ,  ,  ,15,8,7,0,2,1,0,0,0,0,0,12,0,0,15,10KS5624PHD
+120241,KM ,Buissiness,346,BS ,71,Accountancy ,  ,  ,424,246,178,0,181,78,15,51,0,0,11,84,4,321,103,10KM0071BS
+120241,KM ,Buissiness,346,BS ,71,Accountancy ,  ,  ,270,145,125,0,108,96,0,15,0,0,11,37,3,207,63,10KM8037BS
+120241,KM ,Buissiness,346,BS ,6077,Accountancy + Data Science ,  ,  ,64,26,38,0,10,14,1,5,0,0,0,34,0,27,37,10KM6077BS
+120241,KM ,Buissiness,346,BS ,6077,Accountancy + Data Science ,  ,  ,3,2,1,0,1,1,1,0,0,0,0,0,0,3,0,10KM8037BS
+120241,KM ,Buissiness,346,CERT ,5187,Taxation ,  ,  ,1,1,0,0,0,1,0,0,0,0,0,0,0,0,1,1PKS5187CERU
+120241,KM ,Buissiness,346,CERT ,6017,Accounting Data Analytics ,  ,  ,13,7,6,0,4,0,2,0,0,0,0,1,6,2,11,1PKS6017CERU
+120241,KM ,Buissiness,346,CERT ,6140,Accounting Foundations ,  ,  ,13,7,5,1,9,3,0,0,0,0,0,0,1,6,7,1PKS6140CERU
+120241,KM ,Buissiness,346,CERT ,6141,CPA Pathways ,  ,  ,5,4,0,1,1,3,0,0,0,0,0,1,0,0,5,1PKS6141CERU
+120241,KM ,Buissiness,346,MAS ,5666,Accountancy ,5101,Taxation ,63,26,37,0,18,11,6,6,0,0,1,20,1,37,26,10KS5666MAS
+120241,KM ,Buissiness,346,MAS ,5666,Accountancy ,5899,Financial Reporting& Assurance ,103,48,55,0,29,15,5,7,0,0,7,39,1,47,56,10KS5666MAS
+120241,KM ,Buissiness,346,MS ,5666,Accountancy ,  ,  ,160,57,102,1,8,7,3,0,0,0,1,141,0,11,149,10KS5666MSK
+120241,KM ,Buissiness,346,MS ,5666,Accountancy ,  ,  ,376,195,179,2,165,89,20,50,0,0,9,18,25,135,241,1PKS5666MSU
+120241,KM ,Buissiness,346,MS ,5666,Accountancy ,5900,Accountancy Analytics ,8,2,5,1,3,1,0,3,0,0,0,0,1,2,6,1PKS5666MSU
+120241,KM ,Buissiness,346,NDEG ,5666,Accountancy ,  ,  ,16,11,5,0,3,3,1,1,0,0,0,2,6,4,12,1EKS5666NDEU
+120241,KM ,Buissiness,346,NDEG ,5666,Accountancy ,  ,  ,4,2,2,0,0,1,0,0,0,0,1,1,1,0,4,1PKS5666NDEU
+120241,KM ,Buissiness,346,PHD ,5666,Accountancy ,  ,  ,17,7,10,0,5,2,2,1,0,0,0,7,0,1,16,10KS5666PHD
+120241,KM ,Buissiness,902,BS ,1432,Marketing ,  ,  ,150,49,101,0,79,21,10,25,0,0,8,7,0,138,12,10KM1432BS
+120241,KM ,Buissiness,902,BS ,1432,Marketing ,  ,  ,188,42,146,0,88,45,5,32,0,0,5,12,1,165,23,10KM8037BS
+120241,KM ,Buissiness,902,BS ,5071,Supply Chain Management ,  ,  ,23,13,10,0,13,5,1,3,0,0,1,0,0,21,2,10KM5071BS
+120241,KM ,Buissiness,902,BS ,5071,Supply Chain Management ,  ,  ,53,29,24,0,28,11,3,5,0,0,2,4,0,46,7,10KM8037BS
+120241,KM ,Buissiness,902,BS ,5073,Management ,  ,  ,51,31,20,0,25,5,9,6,0,0,2,4,0,43,8,10KM5073BS
+120241,KM ,Buissiness,902,BS ,5073,Management ,  ,  ,30,9,21,0,12,8,1,6,0,0,1,1,1,26,4,10KM8037BS
+120241,KM ,Buissiness,902,BS ,5597,Information Systems ,  ,  ,61,37,24,0,16,24,5,7,0,0,5,4,0,50,11,10KM5597BS
+120241,KM ,Buissiness,902,BS ,5597,Information Systems ,  ,  ,58,22,35,1,14,29,0,10,0,0,2,1,2,45,13,10KM8037BS
+120241,KM ,Buissiness,902,BS ,5600,Operations Management ,  ,  ,23,14,9,0,12,7,1,1,0,0,2,0,0,21,2,10KM5600BS
+120241,KM ,Buissiness,902,BS ,5600,Operations Management ,  ,  ,16,8,8,0,4,6,1,1,0,0,0,3,1,10,6,10KM8037BS
+120241,KM ,Buissiness,902,BS ,5741,STR BUS DEV & Entrepreneurship ,  ,  ,6,4,2,0,3,1,0,0,0,0,1,1,0,4,2,10KM5741BS
+120241,KM ,Buissiness,902,BS ,5741,STR BUS DEV & Entrepreneurship ,  ,  ,7,4,3,0,1,3,1,1,0,0,0,1,0,5,2,10KM8037BS
+120241,KM ,Buissiness,902,BS ,6127,"Strategy, Innovation & Entrep ",  ,  ,20,10,10,0,5,2,2,5,0,0,2,4,0,13,7,10KM6127BS
+120241,KM ,Buissiness,902,BS ,6127,"Strategy, Innovation & Entrep ",  ,  ,5,1,4,0,4,1,0,0,0,0,0,0,0,5,0,10KM8037BS
+120241,KM ,Buissiness,902,BS ,6146,Business + Data Science ,  ,  ,4,2,2,0,1,3,0,0,0,0,0,0,0,4,0,10KM6146BS
+120241,KM ,Buissiness,902,CERT ,6011,Strategic Leadership & Mgmt ,  ,  ,51,28,20,3,26,5,5,6,0,0,2,1,6,13,38,1PKS6011CERU
+120241,KM ,Buissiness,902,CERT ,6012,Managerial Econ & Bus Analysis ,  ,  ,3,2,1,0,2,0,0,0,0,0,0,0,1,0,3,1PKS6012CERU
+120241,KM ,Buissiness,902,CERT ,6014,Financial Management ,  ,  ,5,5,0,0,2,1,1,0,0,0,0,0,1,2,3,1PKS6014CERU
+120241,KM ,Buissiness,902,CERT ,6016,Value Chain Management ,  ,  ,3,2,1,0,2,0,0,1,0,0,0,0,0,1,2,1PKS6016CERU
+120241,KM ,Buissiness,902,CERT ,6018,Digital Marketing ,  ,  ,10,5,5,0,7,0,1,0,0,0,1,0,1,8,2,1PKS6018CERU
+120241,KM ,Buissiness,902,MS ,5148,Technology Management ,  ,  ,137,63,74,0,1,5,2,0,0,0,0,128,1,3,134,10KS5148MSK
+120241,KM ,Buissiness,902,MS ,5590,Management ,  ,  ,85,32,53,0,15,8,3,5,0,0,2,52,0,26,59,1PKS5590MS
+120241,KM ,Buissiness,902,MS ,5590,Management ,  ,  ,769,455,303,11,257,128,52,69,3,1,22,55,182,195,574,1PKS5590MSU
+120241,KM ,Buissiness,902,MS ,5964,Business Analytics ,  ,  ,102,44,58,0,3,4,0,3,0,0,0,91,1,9,93,1PKS5964MS
+120241,KM ,Buissiness,902,NDEG ,5590,Management ,  ,  ,92,55,37,0,14,15,7,6,0,0,2,5,43,15,77,1EKS5590NDEU
+120241,KM ,Buissiness,902,NDEG ,5590,Management ,  ,  ,12,7,5,0,5,2,1,0,0,0,0,0,4,1,11,1PKS5590NDEU
+120241,KM ,Buissiness,902,PHD ,79,Business Administration ,  ,  ,36,14,22,0,2,0,0,0,0,0,1,33,0,1,35,10KS0079PHD
+120241,KM ,Buissiness,952,MBA ,9875,Business Administration (MBA) ,  ,  ,3322,2224,1079,19,1358,705,167,249,5,3,50,323,462,950,2372,10KS9875MBAU
+120241,KM ,Buissiness,952,MBA ,9875,Business Administration (MBA) ,5986,Entrpshp & Strategic Innov ,2,2,0,0,0,0,0,1,0,0,0,0,1,0,2,10KS9875MBAU
+120241,KM ,Buissiness,952,NDEG ,67,Nondegree ,  ,  ,38,24,14,0,1,0,0,0,0,0,0,37,0,0,38,10KM0067NDEG
+120241,KM ,Buissiness,952,NDEG ,9875,Business Administration (MBA) ,  ,  ,1,0,1,0,0,1,0,0,0,0,0,0,0,0,1,10KS9875NDEU
+120241,KM ,Buissiness,952,NDEG ,9875,Business Administration (MBA) ,  ,  ,102,81,21,0,29,11,7,6,2,0,2,10,35,20,82,1EKS9875NDEU
+120241,KM ,Buissiness,952,NDEG ,9875,Business Administration (MBA) ,  ,  ,39,24,15,0,20,6,2,3,0,0,0,3,5,12,27,1PKS9875NDEU
+120241,KM ,Buissiness,952,NONE ,70,Business Undeclared ,  ,  ,643,368,275,0,246,158,32,89,0,1,20,83,14,488,155,10KM0070NONE
+120241,KN ,Education,335,BS ,5391,Learning and Education Studies ,  ,  ,8,2,6,0,2,3,0,0,0,0,0,3,0,3,5,10KN5391BS
+120241,KN ,Education,335,BS ,5391,Learning and Education Studies ,5388,Ed Equlty & Cltrl Understandng ,3,0,3,0,0,0,2,1,0,0,0,0,0,3,0,10KN5391BS
+120241,KN ,Education,335,BS ,5391,Learning and Education Studies ,5389,Workplace Trng & Development ,7,0,7,0,4,1,1,0,0,0,0,1,0,6,1,10KN5391BS
+120241,KN ,Education,335,BS ,5391,Learning and Education Studies ,5417,"Dig. Env. Lrnng, Tchng, Agency ",12,2,10,0,4,3,0,1,0,0,2,2,0,9,3,10KN5391BS
+120241,KN ,Education,335,NDEG ,67,Nondegree ,  ,  ,9,2,7,0,5,0,0,2,0,0,0,2,0,7,2,10KN0067NDEG
+120241,KN ,Education,570,BS ,93,Special Education ,  ,  ,82,13,69,0,65,3,0,10,0,0,3,0,1,81,1,10KN0093BS
+120241,KN ,Education,570,EDM ,93,Special Education ,  ,  ,11,1,10,0,5,1,0,1,0,0,1,3,0,7,4,10KS0093EDM
+120241,KN ,Education,570,EDM ,93,Special Education ,  ,  ,14,3,11,0,11,0,0,2,0,0,0,0,1,13,1,10KS0093EDMX
+120241,KN ,Education,570,NDEG ,93,Special Education ,  ,  ,1,0,1,0,1,0,0,0,0,0,0,0,0,0,1,10KS0093NDEU
+120241,KN ,Education,570,PHD ,93,Special Education ,  ,  ,24,3,21,0,9,2,3,2,0,0,1,7,0,11,13,10KS0093PHD
+120241,KN ,Education,613,BS ,94,Early Childhood Education ,  ,  ,77,5,72,0,28,12,7,21,0,0,4,5,0,70,7,10KN0094BS
+120241,KN ,Education,613,BS ,94,Early Childhood Education ,6135,Prof Education Licensure ,21,0,21,0,15,0,2,3,0,0,0,0,1,21,0,10KN6135BSU
+120241,KN ,Education,613,BS ,94,Early Childhood Education ,6136,Prof Education Non-Licensure ,13,0,13,0,9,0,2,2,0,0,0,0,0,13,0,10KN6136BSU
+120241,KN ,Education,613,BS ,95,Elementary Education ,  ,  ,320,20,300,0,204,33,15,53,0,0,13,1,1,313,7,10KN0095BS
+120241,KN ,Education,613,BS ,5422,Middle Grades Education ,  ,  ,20,3,17,0,8,3,4,2,0,0,2,0,1,20,0,10KN5422BS
+120241,KN ,Education,613,BS ,5422,Middle Grades Education ,5423,Literacy ,33,3,30,0,20,1,2,8,0,0,2,0,0,33,0,10KN5422BS
+120241,KN ,Education,613,BS ,5422,Middle Grades Education ,5424,Mathematics ,40,11,29,0,16,9,5,8,0,0,2,0,0,40,0,10KN5422BS
+120241,KN ,Education,613,BS ,5422,Middle Grades Education ,5425,Science ,7,4,3,0,4,1,1,1,0,0,0,0,0,7,0,10KN5422BS
+120241,KN ,Education,613,BS ,5422,Middle Grades Education ,5426,Social Science ,9,2,7,0,3,1,0,5,0,0,0,0,0,9,0,10KN5422BS
+120241,KN ,Education,613,BS ,6081,Computer Science & Education ,6069,Learning Sciences ,19,13,6,0,5,10,0,1,0,0,0,3,0,8,11,10KN6069BS
+120241,KN ,Education,613,BS ,6081,Computer Science & Education ,6082,Secondary Education ,1,0,1,0,0,1,0,0,0,0,0,0,0,0,1,10KN6082BS
+120241,KN ,Education,613,BS ,8527,Secondary Education ,5227,Mathematics ,19,6,13,0,7,0,2,8,0,0,1,1,0,18,1,10KN5227BS
+120241,KN ,Education,613,EDM ,95,Elementary Education ,  ,  ,1,1,0,0,0,0,0,1,0,0,0,0,0,1,0,10KS0095EDM
+120241,KN ,Education,613,EDM ,1144,Curriculum and Instruction ,  ,  ,28,4,24,0,17,2,3,3,0,0,0,3,0,23,5,10KS1144EDM
+120241,KN ,Education,613,EDM ,1144,Curriculum and Instruction ,  ,  ,26,6,20,0,19,2,2,1,0,0,0,0,2,19,7,10KS1144EDMU
+120241,KN ,Education,613,EDM ,1144,Curriculum and Instruction ,5866,Bilingual-Bicultural Education ,1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,10KS1144EDM
+120241,KN ,Education,613,EDM ,1144,Curriculum and Instruction ,5866,Bilingual-Bicultural Education ,10,2,8,0,4,0,1,4,0,0,0,1,0,6,4,10KS1144EDMU
+120241,KN ,Education,613,EDM ,1144,Curriculum and Instruction ,5867,Digital Learning ,1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,10KS1144EDM
+120241,KN ,Education,613,EDM ,1144,Curriculum and Instruction ,5867,Digital Learning ,18,3,15,0,12,3,0,0,0,0,0,1,2,11,7,10KS1144EDMU
+120241,KN ,Education,613,EDM ,5082,Early Childhood Education ,  ,  ,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,10KS5082EDM
+120241,KN ,Education,613,EDM ,8527,Secondary Education ,5224,English ,4,1,3,0,1,1,0,2,0,0,0,0,0,3,1,10KS8527EDM
+120241,KN ,Education,613,EDM ,8527,Secondary Education ,5225,Social Studies ,4,3,1,0,3,0,1,0,0,0,0,0,0,4,0,10KS8527EDM
+120241,KN ,Education,613,EDM ,8527,Secondary Education ,5226,Sciences ,2,0,2,0,2,0,0,0,0,0,0,0,0,2,0,10KS8527EDM
+120241,KN ,Education,613,MA ,1144,Curriculum and Instruction ,  ,  ,3,1,2,0,0,0,0,1,0,0,0,2,0,1,2,10KS1144MA
+120241,KN ,Education,613,MS ,1144,Curriculum and Instruction ,  ,  ,2,0,2,0,0,0,0,1,0,0,0,1,0,1,1,10KS1144MS
+120241,KN ,Education,613,NDEG ,1144,Curriculum and Instruction ,  ,  ,2,1,1,0,1,0,0,1,0,0,0,0,0,0,2,10KS1144NDEG
+120241,KN ,Education,613,NDEG ,1144,Curriculum and Instruction ,  ,  ,1,1,0,0,1,0,0,0,0,0,0,0,0,0,1,10KS1144NDEU
+120241,KN ,Education,613,NDEG ,1144,Curriculum and Instruction ,  ,  ,17,6,10,1,15,0,0,0,0,0,1,0,1,0,17,1EKS1144NDEU
+120241,KN ,Education,613,PHD ,1144,Curriculum and Instruction ,  ,  ,53,16,37,0,15,3,8,1,0,0,0,26,0,17,36,10KS1144PHD
+120241,KN ,Education,616,MS ,5865,Educational Psychology ,  ,  ,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,10KS5865MS
+120241,KN ,Education,616,MS ,5998,Mental Health Counseling ,  ,  ,9,1,8,0,2,1,1,0,0,0,0,5,0,4,5,1PKS5998MS
+120241,KN ,Education,616,PHD ,5865,Educational Psychology ,  ,  ,47,13,34,0,10,6,9,3,0,0,3,15,1,11,36,10KS5865PHD
+120241,KN ,Education,616,PHD ,5865,Educational Psychology ,5867,Digital Learning ,1,1,0,0,0,0,0,1,0,0,0,0,0,1,0,10KS5865PHD
+120241,KN ,Education,760,CAS ,5399,"Educ Policy, Orgzn & Leadrshp ",5097,Educational Admin & Leadership ,1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,10KS5399CASX
+120241,KN ,Education,760,CAS ,5399,"Educ Policy, Orgzn & Leadrshp ",5508,Diversity & Equity in Educ ,1,1,0,0,1,0,0,0,0,0,0,0,0,1,0,10KS5399CAS
+120241,KN ,Education,760,CERT ,6098,International Ed Leadership ,  ,  ,2,1,1,0,1,0,1,0,0,0,0,0,0,0,2,1PKS6098CERU
+120241,KN ,Education,760,CERT ,6099,Learning Design and Leadership ,  ,  ,3,1,2,0,1,0,0,1,0,0,1,0,0,1,2,1PKS6099CERU
+120241,KN ,Education,760,CERT ,6117,Instruct Sys Design Mgmt Lead ,  ,  ,4,2,2,0,2,0,1,1,0,0,0,0,0,2,2,1PKS6117CERU
+120241,KN ,Education,760,EDD ,5399,"Educ Policy, Orgzn & Leadrshp ",5096,Higher Education ,8,4,4,0,3,0,1,3,0,0,1,0,0,8,0,10KS5399EDD
+120241,KN ,Education,760,EDD ,5399,"Educ Policy, Orgzn & Leadrshp ",5097,Educational Admin & Leadership ,11,5,6,0,6,0,4,1,0,0,0,0,0,10,1,10KS5399EDD
+120241,KN ,Education,760,EDD ,5399,"Educ Policy, Orgzn & Leadrshp ",5097,Educational Admin & Leadership ,42,19,23,0,26,3,5,8,0,0,0,0,0,42,0,10KS5399EDDX
+120241,KN ,Education,760,EDD ,5399,"Educ Policy, Orgzn & Leadrshp ",5137,Human Resource Development ,4,1,3,0,3,0,0,0,0,1,0,0,0,4,0,10KS5399EDD
+120241,KN ,Education,760,EDD ,5399,"Educ Policy, Orgzn & Leadrshp ",5137,Human Resource Development ,44,17,27,0,21,4,7,4,0,0,0,2,6,11,33,10KS5399EDDU
+120241,KN ,Education,760,EDD ,5399,"Educ Policy, Orgzn & Leadrshp ",5407,Learning Design and Leadership ,6,3,3,0,6,0,0,0,0,0,0,0,0,5,1,10KS5399EDD
+120241,KN ,Education,760,EDD ,5399,"Educ Policy, Orgzn & Leadrshp ",5407,Learning Design and Leadership ,81,29,52,0,50,4,7,4,0,0,2,2,12,31,50,10KS5399EDDU
+120241,KN ,Education,760,EDD ,5399,"Educ Policy, Orgzn & Leadrshp ",5471,Global Studies in Education ,4,0,4,0,2,0,0,2,0,0,0,0,0,4,0,10KS5399EDD
+120241,KN ,Education,760,EDD ,5399,"Educ Policy, Orgzn & Leadrshp ",5471,Global Studies in Education ,55,21,34,0,32,6,3,7,0,0,0,1,6,5,50,10KS5399EDDU
+120241,KN ,Education,760,EDD ,5399,"Educ Policy, Orgzn & Leadrshp ",5508,Diversity & Equity in Educ ,11,3,8,0,3,0,3,4,0,0,0,1,0,10,1,10KS5399EDD
+120241,KN ,Education,760,EDD ,5399,"Educ Policy, Orgzn & Leadrshp ",5508,Diversity & Equity in Educ ,114,34,77,3,43,8,33,18,0,1,7,1,3,35,79,10KS5399EDDU
+120241,KN ,Education,760,EDM ,5399,"Educ Policy, Orgzn & Leadrshp ",5096,Higher Education ,9,4,5,0,3,1,1,3,0,0,0,1,0,9,0,10KS5399EDM
+120241,KN ,Education,760,EDM ,5399,"Educ Policy, Orgzn & Leadrshp ",5097,Educational Admin & Leadership ,16,3,13,0,13,0,0,0,0,0,1,1,1,15,1,10KS5399EDM
+120241,KN ,Education,760,EDM ,5399,"Educ Policy, Orgzn & Leadrshp ",5097,Educational Admin & Leadership ,16,4,12,0,9,2,4,1,0,0,0,0,0,16,0,10KS5399EDMX
+120241,KN ,Education,760,EDM ,5399,"Educ Policy, Orgzn & Leadrshp ",5137,Human Resource Development ,11,2,9,0,7,0,2,1,0,0,0,1,0,10,1,10KS5399EDM
+120241,KN ,Education,760,EDM ,5399,"Educ Policy, Orgzn & Leadrshp ",5137,Human Resource Development ,11,3,8,0,5,0,1,3,0,0,0,1,1,5,6,10KS5399EDMU
+120241,KN ,Education,760,EDM ,5399,"Educ Policy, Orgzn & Leadrshp ",5407,Learning Design and Leadership ,2,1,1,0,2,0,0,0,0,0,0,0,0,2,0,10KS5399EDM
+120241,KN ,Education,760,EDM ,5399,"Educ Policy, Orgzn & Leadrshp ",5407,Learning Design and Leadership ,24,9,15,0,20,1,2,0,0,0,0,0,1,15,9,10KS5399EDMU
+120241,KN ,Education,760,EDM ,5399,"Educ Policy, Orgzn & Leadrshp ",5471,Global Studies in Education ,4,1,3,0,2,1,0,1,0,0,0,0,0,4,0,10KS5399EDM
+120241,KN ,Education,760,EDM ,5399,"Educ Policy, Orgzn & Leadrshp ",5471,Global Studies in Education ,22,3,19,0,17,2,3,0,0,0,0,0,0,13,9,10KS5399EDMU
+120241,KN ,Education,760,EDM ,5399,"Educ Policy, Orgzn & Leadrshp ",5505,Social Sciences & Ed Policy ,2,1,1,0,0,0,1,1,0,0,0,0,0,2,0,10KS5399EDM
+120241,KN ,Education,760,EDM ,5399,"Educ Policy, Orgzn & Leadrshp ",5508,Diversity & Equity in Educ ,13,3,10,0,6,0,2,3,0,0,1,1,0,13,0,10KS5399EDM
+120241,KN ,Education,760,EDM ,5399,"Educ Policy, Orgzn & Leadrshp ",5508,Diversity & Equity in Educ ,73,19,53,1,43,7,7,9,0,0,3,0,4,32,41,10KS5399EDMU
+120241,KN ,Education,760,MA ,5399,"Educ Policy, Orgzn & Leadrshp ",5505,Social Sciences & Ed Policy ,3,2,1,0,2,0,0,0,0,0,1,0,0,3,0,10KS5399MA
+120241,KN ,Education,760,NDEG ,5399,"Educ Policy, Orgzn & Leadrshp ",  ,  ,5,1,4,0,0,0,4,0,0,0,1,0,0,0,5,10KS5399NDEG
+120241,KN ,Education,760,NDEG ,5399,"Educ Policy, Orgzn & Leadrshp ",  ,  ,5,2,2,1,1,0,0,1,0,0,0,0,3,0,5,10KS5399NDEU
+120241,KN ,Education,760,NDEG ,5399,"Educ Policy, Orgzn & Leadrshp ",  ,  ,54,12,40,2,22,1,8,1,0,0,3,1,18,0,54,1PKS5399NDEU
+120241,KN ,Education,760,NDEG ,5399,"Educ Policy, Orgzn & Leadrshp ",5508,Diversity & Equity in Educ ,1,0,1,0,0,1,0,0,0,0,0,0,0,0,1,10KS5399NDEU
+120241,KN ,Education,760,PHD ,209,Ed Organization and Leadership ,  ,  ,1,0,1,0,0,1,0,0,0,0,0,0,0,1,0,10KS0209PHD
+120241,KN ,Education,760,PHD ,220,Educational Policy Studies ,  ,  ,2,0,2,0,2,0,0,0,0,0,0,0,0,1,1,10KS0220PHD
+120241,KN ,Education,760,PHD ,5399,"Educ Policy, Orgzn & Leadrshp ",  ,  ,3,1,2,0,1,0,0,0,0,0,0,2,0,1,2,10KS5399PHD
+120241,KN ,Education,760,PHD ,5399,"Educ Policy, Orgzn & Leadrshp ",5096,Higher Education ,21,6,15,0,7,1,7,3,0,0,0,3,0,13,8,10KS5399PHD
+120241,KN ,Education,760,PHD ,5399,"Educ Policy, Orgzn & Leadrshp ",5097,Educational Admin & Leadership ,4,3,1,0,3,0,0,0,0,0,0,1,0,3,1,10KS5399PHD
+120241,KN ,Education,760,PHD ,5399,"Educ Policy, Orgzn & Leadrshp ",5137,Human Resource Development ,19,2,17,0,2,4,3,1,0,0,0,9,0,7,12,10KS5399PHD
+120241,KN ,Education,760,PHD ,5399,"Educ Policy, Orgzn & Leadrshp ",5407,Learning Design and Leadership ,7,5,2,0,4,0,0,0,0,0,0,3,0,2,5,10KS5399PHD
+120241,KN ,Education,760,PHD ,5399,"Educ Policy, Orgzn & Leadrshp ",5471,Global Studies in Education ,22,3,19,0,4,1,1,3,0,0,0,12,1,5,17,10KS5399PHD
+120241,KN ,Education,760,PHD ,5399,"Educ Policy, Orgzn & Leadrshp ",5505,Social Sciences & Ed Policy ,16,6,10,0,3,0,6,3,0,0,2,2,0,8,8,10KS5399PHD
+120241,KN ,Education,760,PHD ,5399,"Educ Policy, Orgzn & Leadrshp ",5506,History of Education ,5,2,3,0,3,0,1,0,0,0,0,1,0,3,2,10KS5399PHD
+120241,KN ,Education,760,PHD ,5399,"Educ Policy, Orgzn & Leadrshp ",5507,Philosophy of Education ,7,2,5,0,0,1,1,1,0,0,0,4,0,0,7,10KS5399PHD
+120241,KP ,Engineering,227,BS ,5163,Agricultural & Biological Engr ,  ,  ,16,7,9,0,9,3,0,2,0,0,0,2,0,10,6,10KP5163BS
+120241,KP ,Engineering,227,BS ,5163,Agricultural & Biological Engr ,5270,Agricultural Engineering ,12,8,4,0,9,0,0,2,0,0,0,1,0,10,2,10KP5163BS
+120241,KP ,Engineering,227,BS ,5163,Agricultural & Biological Engr ,5271,Biological Engineering ,8,3,5,0,4,2,0,1,0,0,0,1,0,7,1,10KP5163BS
+120241,KP ,Engineering,227,MENGR ,1211,Engineering ,5370,Energy Systems ,11,7,4,0,1,1,0,0,0,0,0,9,0,2,9,1PKS5370MENG
+120241,KP ,Engineering,227,MENGR ,1211,Engineering ,5370,Energy Systems ,11,9,2,0,9,1,0,0,0,0,0,0,1,6,5,1PKS5370MENU
+120241,KP ,Engineering,227,MENGR ,1211,Engineering ,5982,Autonomy and Robotics ,28,24,4,0,0,2,0,0,0,0,0,26,0,1,27,1PKS5982MENG
+120241,KP ,Engineering,227,MENGR ,1211,Engineering ,6120,Digital Agriculture ,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,1PKS6120MENU
+120241,KP ,Engineering,227,MENGR ,1211,Engineering ,6149,Chemical Engineering Leadershp ,2,0,2,0,1,1,0,0,0,0,0,0,0,2,0,1PKS6149MENG
+120241,KP ,Engineering,227,MENGR ,1211,Engineering ,6149,Chemical Engineering Leadershp ,2,1,1,0,0,1,0,0,0,0,0,0,1,1,1,1PKS6149MENU
+120241,KP ,Engineering,227,MS ,5163,Agricultural & Biological Engr ,  ,  ,11,6,5,0,0,0,0,0,0,0,1,10,0,1,10,10KS5163MS
+120241,KP ,Engineering,227,NDEG ,67,Nondegree ,  ,  ,94,68,26,0,12,2,0,1,0,0,2,76,1,16,78,10KP0067NDEG
+120241,KP ,Engineering,227,NDEG ,1211,Engineering ,  ,  ,2,2,0,0,0,0,0,1,1,0,0,0,0,0,2,10KP1211NDEU
+120241,KP ,Engineering,227,NDEG ,1211,Engineering ,  ,  ,34,24,10,0,15,4,1,2,0,0,0,7,5,0,34,10KS1211NDEU
+120241,KP ,Engineering,227,PHD ,5163,Agricultural & Biological Engr ,  ,  ,43,25,17,1,11,1,0,1,0,0,1,29,0,4,39,10KS5163PHD
+120241,KP ,Engineering,227,PHD ,5163,Agricultural & Biological Engr ,5511,Computational Sci & Engr ,7,7,0,0,0,0,0,0,0,0,0,7,0,0,7,10KS5163PHD
+120241,KP ,Engineering,227,PHD ,5163,Agricultural & Biological Engr ,6091,Data Science and Engineering ,2,1,1,0,0,0,0,0,0,0,0,2,0,0,2,10KS5163PHD
+120241,KP ,Engineering,244,BS ,121,Engineering Physics ,  ,  ,161,135,26,0,65,43,0,11,0,0,4,38,0,89,72,10KP0121BS
+120241,KP ,Engineering,244,BS ,240,Physics ,  ,  ,248,203,45,0,92,61,3,11,0,0,13,65,3,128,120,10KP0240BS
+120241,KP ,Engineering,244,MENGR ,1211,Engineering ,6084,Instrumentation & Applied Phys ,13,12,1,0,8,0,0,1,0,0,0,4,0,5,8,1PKS6084MENG
+120241,KP ,Engineering,244,MS ,240,Physics ,  ,  ,2,0,2,0,2,0,0,0,0,0,0,0,0,1,1,10KS0240MS
+120241,KP ,Engineering,244,PHD ,240,Physics ,  ,  ,307,218,89,0,107,30,1,22,0,0,15,129,3,21,286,10KS0240PHD
+120241,KP ,Engineering,244,PHD ,240,Physics ,5511,Computational Sci & Engr ,6,4,2,0,2,0,0,0,0,0,0,4,0,0,6,10KS0240PHD
+120241,KP ,Engineering,244,PHD ,240,Physics ,6091,Data Science and Engineering ,2,2,0,0,0,0,0,0,0,0,0,2,0,0,2,10KS0240PHD
+120241,KP ,Engineering,251,BS ,106,Civil Engineering ,  ,  ,630,406,224,0,308,108,15,97,0,1,28,65,8,471,159,10KP0106BS
+120241,KP ,Engineering,251,BS ,1233,Environmental Engineering ,  ,  ,17,8,9,0,10,3,0,4,0,0,0,0,0,14,3,10KP1233BS
+120241,KP ,Engineering,251,MS ,106,Civil Engineering ,  ,  ,152,113,39,0,32,5,0,3,0,0,2,110,0,28,124,10KS0106MS
+120241,KP ,Engineering,251,MS ,106,Civil Engineering ,  ,  ,76,56,17,3,44,10,3,9,0,0,3,3,4,23,53,10KS0106MSU
+120241,KP ,Engineering,251,MS ,231,Environ Engr in Civil Engr ,  ,  ,21,12,9,0,7,0,0,0,0,0,0,14,0,5,16,10KS0231MS
+120241,KP ,Engineering,251,MS ,231,Environ Engr in Civil Engr ,  ,  ,12,6,6,0,8,1,0,2,0,0,1,0,0,5,7,10KS0231MSU
+120241,KP ,Engineering,251,NDEG ,106,Civil Engineering ,  ,  ,6,4,2,0,0,0,0,0,0,0,0,6,0,0,6,10KP0106NDEX
+120241,KP ,Engineering,251,PHD ,106,Civil Engineering ,  ,  ,172,116,56,0,10,3,1,2,0,0,0,154,2,5,167,10KS0106PHD
+120241,KP ,Engineering,251,PHD ,106,Civil Engineering ,5511,Computational Sci & Engr ,27,20,7,0,1,0,0,0,0,0,0,26,0,0,27,10KS0106PHD
+120241,KP ,Engineering,251,PHD ,106,Civil Engineering ,6091,Data Science and Engineering ,1,1,0,0,0,0,0,0,0,0,0,1,0,0,1,10KS0106PHD
+120241,KP ,Engineering,251,PHD ,231,Environ Engr in Civil Engr ,  ,  ,48,21,27,0,6,2,0,2,0,0,2,36,0,2,46,10KS0231PHD
+120241,KP ,Engineering,251,PHD ,231,Environ Engr in Civil Engr ,5511,Computational Sci & Engr ,7,4,3,0,0,1,0,0,0,0,0,6,0,0,7,10KS0231PHD
+120241,KP ,Engineering,343,BS ,408,Bioengineering ,  ,  ,335,145,190,0,113,138,8,24,0,0,19,24,9,250,85,10KP0408BS
+120241,KP ,Engineering,343,BS ,6131,Neural Engineering ,  ,  ,21,13,8,0,11,8,0,1,0,0,0,1,0,18,3,10KP6131BS
+120241,KP ,Engineering,343,MENGR ,408,Bioengineering ,5542,General Bioengineering ,16,8,8,0,5,5,0,1,0,0,0,5,0,10,6,1PKS5542MENG
+120241,KP ,Engineering,343,MENGR ,408,Bioengineering ,5542,General Bioengineering ,22,13,9,0,9,6,3,2,0,0,2,0,0,9,13,1PKS5542MENU
+120241,KP ,Engineering,343,MENGR ,408,Bioengineering ,5545,Bioinstrumentation ,12,8,4,0,3,3,0,2,0,0,0,4,0,7,5,1PKS5545MENG
+120241,KP ,Engineering,343,MENGR ,408,Bioengineering ,5545,Bioinstrumentation ,6,2,4,0,5,1,0,0,0,0,0,0,0,1,5,1PKS5545MENU
+120241,KP ,Engineering,343,MS ,408,Bioengineering ,  ,  ,2,1,1,0,0,0,0,1,0,0,0,1,0,1,1,10KS0408MS
+120241,KP ,Engineering,343,MS ,6019,Biomedical Image Computing ,  ,  ,2,1,1,0,0,0,0,0,0,0,0,2,0,0,2,1PKS6019MS
+120241,KP ,Engineering,343,MS ,6019,Biomedical Image Computing ,  ,  ,2,2,0,0,0,1,0,0,0,0,0,0,1,0,2,1PKS6019MSU
+120241,KP ,Engineering,343,PHD ,408,Bioengineering ,  ,  ,114,72,42,0,26,11,0,6,0,0,2,69,0,12,102,10KS0408PHD
+120241,KP ,Engineering,343,PHD ,408,Bioengineering ,5511,Computational Sci & Engr ,1,0,1,0,1,0,0,0,0,0,0,0,0,0,1,10KS0408PHD
+120241,KP ,Engineering,343,PHD ,408,Bioengineering ,6091,Data Science and Engineering ,3,1,2,0,0,1,0,0,0,0,0,2,0,0,3,10KS0408PHD
+120241,KP ,Engineering,422,BS ,127,Industrial Engineering ,  ,  ,274,202,72,0,95,84,5,12,0,0,9,61,8,164,110,10KP0127BS
+120241,KP ,Engineering,422,BS ,5532,Systems Engineering and Design ,  ,  ,302,214,88,0,112,74,6,41,0,0,12,47,10,198,104,10KP5532BS
+120241,KP ,Engineering,422,MS ,127,Industrial Engineering ,  ,  ,33,29,4,0,0,0,0,0,0,0,1,32,0,1,32,10KS0127MS
+120241,KP ,Engineering,422,MS ,127,Industrial Engineering ,  ,  ,3,2,1,0,1,1,0,0,0,0,1,0,0,0,3,10KS0127MSU
+120241,KP ,Engineering,422,MS ,127,Industrial Engineering ,5511,Computational Sci & Engr ,3,1,2,0,0,0,0,0,0,0,0,3,0,0,3,10KS0127MS
+120241,KP ,Engineering,422,MS ,127,Industrial Engineering ,5539,Advanced Analytics in IESE ,31,29,2,0,0,0,0,0,0,0,0,31,0,0,31,10KS0127MS
+120241,KP ,Engineering,422,MS ,127,Industrial Engineering ,5539,Advanced Analytics in IESE ,1,1,0,0,1,0,0,0,0,0,0,0,0,1,0,10KS0127MSU
+120241,KP ,Engineering,422,MS ,3846,Systems & Entrepreneurial Engr ,  ,  ,7,5,2,0,4,1,0,1,0,0,0,1,0,4,3,10KS3846MS
+120241,KP ,Engineering,422,PHD ,127,Industrial Engineering ,  ,  ,50,35,15,0,5,8,1,1,0,0,1,34,0,4,46,10KS0127PHD
+120241,KP ,Engineering,422,PHD ,127,Industrial Engineering ,6091,Data Science and Engineering ,6,5,1,0,0,0,0,0,0,0,0,6,0,0,6,10KS0127PHD
+120241,KP ,Engineering,422,PHD ,3846,Systems & Entrepreneurial Engr ,  ,  ,18,12,6,0,2,0,0,1,0,0,1,14,0,2,16,10KS3846PHD
+120241,KP ,Engineering,434,BS ,112,Computer Science ,  ,  ,1212,795,417,0,185,563,26,76,0,0,40,302,20,607,605,10KP0112BS
+120241,KP ,Engineering,434,BS ,112,Computer Science ,1854,CS:BS/MS Program ,1,1,0,0,0,1,0,0,0,0,0,0,0,0,1,10KP1854BS
+120241,KP ,Engineering,434,BS ,112,Computer Science ,5458,BS/MCS Computer Science ,86,56,30,0,9,52,1,0,0,0,2,21,1,24,62,10KP5458BS
+120241,KP ,Engineering,434,CERT ,6079,Computing Fundamentals ,  ,  ,5,4,1,0,3,1,0,1,0,0,0,0,0,5,0,10KS6079CERT
+120241,KP ,Engineering,434,CERT ,6079,Computing Fundamentals ,  ,  ,18,7,11,0,5,3,1,3,0,0,1,1,4,7,11,10KS6079CERU
+120241,KP ,Engineering,434,MCS ,112,Computer Science ,  ,  ,452,370,80,2,8,58,1,1,1,0,5,374,4,34,418,10KS0112MCS
+120241,KP ,Engineering,434,MCS ,112,Computer Science ,  ,  ,25,20,5,0,10,14,0,1,0,0,0,0,0,19,6,10KS0112MCSX
+120241,KP ,Engineering,434,MCS ,112,Computer Science ,  ,  ,1305,970,317,18,293,431,18,70,0,2,28,231,232,184,1121,1SKS0112MCSU
+120241,KP ,Engineering,434,MCS ,112,Computer Science ,5458,BS/MCS Computer Science ,59,45,14,0,5,38,0,1,0,0,1,13,1,24,35,10KS5458MCS
+120241,KP ,Engineering,434,MS ,112,Computer Science ,  ,  ,122,102,20,0,7,12,0,1,0,0,2,100,0,6,116,10KS0112MS
+120241,KP ,Engineering,434,MS ,112,Computer Science ,1854,CS:BS/MS Program ,1,1,0,0,0,0,0,0,0,0,0,1,0,0,1,10KS1854MS
+120241,KP ,Engineering,434,MS ,4026,Bioinformatics ,4028,Computer Science ,2,2,0,0,0,1,0,0,0,0,0,1,0,1,1,10KS4028MS
+120241,KP ,Engineering,434,NDEG ,112,Computer Science ,  ,  ,10,9,1,0,4,2,0,0,0,0,0,1,3,0,10,1SKS0112NDEU
+120241,KP ,Engineering,434,PHD ,112,Computer Science ,  ,  ,485,358,127,0,65,60,8,17,0,0,2,329,4,20,465,10KS0112PHD
+120241,KP ,Engineering,434,PHD ,112,Computer Science ,5511,Computational Sci & Engr ,2,2,0,0,0,0,1,0,0,0,0,1,0,0,2,10KS0112PHD
+120241,KP ,Engineering,545,MS ,5244,Financial Engineering ,  ,  ,13,12,1,0,0,0,0,0,0,0,0,13,0,0,13,10KS5244MS
+120241,KP ,Engineering,545,MS ,5244,Financial Engineering ,5511,Computational Sci & Engr ,1,1,0,0,0,0,0,0,0,0,0,1,0,0,1,10KS5244MS
+120241,KP ,Engineering,545,MS ,5244,Financial Engineering ,5539,Advanced Analytics in IESE ,2,2,0,0,0,0,0,0,0,0,0,2,0,0,2,10KS5244MS
+120241,KP ,Engineering,545,MS ,5244,Financial Engineering ,5877,Data Analytics in Finance ,9,5,4,0,0,0,0,1,0,0,0,8,0,1,8,10KS5244MS
+120241,KP ,Engineering,545,MS ,5244,Financial Engineering ,6123,Automated Trading Practices ,7,7,0,0,0,1,0,0,0,0,0,6,0,1,6,10KS5244MS
+120241,KP ,Engineering,545,NONE ,5333,Engineering Undeclared ,  ,  ,286,192,94,0,87,54,13,69,0,0,9,49,5,201,85,10KP5333NONE
+120241,KP ,Engineering,615,BS ,4048,Aerospace Engineering ,  ,  ,627,512,115,0,268,165,7,78,0,0,34,63,12,409,218,10KP4048BS
+120241,KP ,Engineering,615,MENGR ,1211,Engineering ,5862,Aerospace Systems Engineering ,4,4,0,0,1,2,0,0,0,0,0,1,0,2,2,1PKS5862MENG
+120241,KP ,Engineering,615,MENGR ,1211,Engineering ,5862,Aerospace Systems Engineering ,8,7,1,0,3,2,0,2,0,0,1,0,0,3,5,1PKS5862MENU
+120241,KP ,Engineering,615,MS ,4048,Aerospace Engineering ,  ,  ,76,61,15,0,13,12,4,3,0,0,3,41,0,14,62,10KS4048MS
+120241,KP ,Engineering,615,MS ,4048,Aerospace Engineering ,  ,  ,51,45,6,0,27,15,0,5,0,0,2,1,1,9,42,10KS4048MSU
+120241,KP ,Engineering,615,MS ,4048,Aerospace Engineering ,5511,Computational Sci & Engr ,2,2,0,0,1,0,0,0,0,0,0,1,0,0,2,10KS4048MS
+120241,KP ,Engineering,615,MS ,4048,Aerospace Engineering ,5684,BS/MS Aerospace Engineering ,1,1,0,0,0,1,0,0,0,0,0,0,0,1,0,10KS5684MS
+120241,KP ,Engineering,615,PHD ,4048,Aerospace Engineering ,  ,  ,125,102,23,0,39,14,2,3,0,0,2,65,0,16,109,10KS4048PHD
+120241,KP ,Engineering,615,PHD ,4048,Aerospace Engineering ,5511,Computational Sci & Engr ,10,9,1,0,2,0,0,1,0,0,0,7,0,0,10,10KS4048PHD
+120241,KP ,Engineering,855,BS ,5546,"Innov, Ldshp and Engr Entr ",  ,  ,1,1,0,0,0,0,0,1,0,0,0,0,0,1,0,10KP5546BS
+120241,KP ,Engineering,917,BS ,118,Engineering Mechanics ,  ,  ,105,89,15,1,33,24,1,10,0,1,4,31,1,53,52,10KP0118BS
+120241,KP ,Engineering,917,BS ,133,Mechanical Engineering ,  ,  ,964,782,182,0,383,255,16,103,1,0,47,145,14,608,356,10KP0133BS
+120241,KP ,Engineering,917,MENGR ,133,Mechanical Engineering ,  ,  ,45,42,3,0,6,1,1,3,0,0,0,34,0,9,36,1PKS0133MENG
+120241,KP ,Engineering,917,MENGR ,133,Mechanical Engineering ,  ,  ,32,29,3,0,14,10,1,5,0,0,1,0,1,11,21,1PKS0133MENU
+120241,KP ,Engineering,917,MENGR ,133,Mechanical Engineering ,5861,Entrepreneurship & Innovation ,3,2,1,0,1,0,0,0,0,0,0,2,0,1,2,1PKS0133MENG
+120241,KP ,Engineering,917,MENGR ,133,Mechanical Engineering ,5861,Entrepreneurship & Innovation ,2,2,0,0,1,0,0,1,0,0,0,0,0,2,0,1PKS0133MENU
+120241,KP ,Engineering,917,MS ,133,Mechanical Engineering ,  ,  ,46,37,9,0,9,2,0,3,0,0,1,31,0,5,41,10KS0133MS
+120241,KP ,Engineering,917,MS ,133,Mechanical Engineering ,  ,  ,2,2,0,0,2,0,0,0,0,0,0,0,0,0,2,10KS0133MSU
+120241,KP ,Engineering,917,MS ,242,Theoretical & Applied Mechans ,  ,  ,2,2,0,0,0,0,0,0,0,0,0,2,0,0,2,10KS0242MS
+120241,KP ,Engineering,917,NDEG ,133,Mechanical Engineering ,  ,  ,12,9,3,0,0,0,0,0,0,0,0,12,0,0,12,10KP0133NDEX
+120241,KP ,Engineering,917,PHD ,133,Mechanical Engineering ,  ,  ,256,200,56,0,39,14,3,8,0,0,2,190,0,17,239,10KS0133PHD
+120241,KP ,Engineering,917,PHD ,133,Mechanical Engineering ,5511,Computational Sci & Engr ,16,14,2,0,1,0,0,0,0,0,0,15,0,0,16,10KS0133PHD
+120241,KP ,Engineering,917,PHD ,133,Mechanical Engineering ,6091,Data Science and Engineering ,11,9,2,0,0,0,0,0,0,0,1,10,0,0,11,10KS0133PHD
+120241,KP ,Engineering,917,PHD ,242,Theoretical & Applied Mechans ,  ,  ,12,10,2,0,3,1,0,0,0,0,1,7,0,1,11,10KS0242PHD
+120241,KP ,Engineering,917,PHD ,242,Theoretical & Applied Mechans ,5511,Computational Sci & Engr ,2,2,0,0,0,0,0,0,0,0,0,2,0,0,2,10KS0242PHD
+120241,KP ,Engineering,919,BS ,130,Materials Science & Engr ,  ,  ,257,176,81,0,78,67,4,19,0,0,10,75,4,124,133,10KP0130BS
+120241,KP ,Engineering,919,MS ,130,Materials Science & Engr ,  ,  ,34,23,11,0,3,2,1,1,0,0,0,27,0,2,32,10KS0130MS
+120241,KP ,Engineering,919,MS ,130,Materials Science & Engr ,5511,Computational Sci & Engr ,1,0,0,1,0,0,0,0,0,0,0,1,0,0,1,10KS0130MS
+120241,KP ,Engineering,919,PHD ,130,Materials Science & Engr ,  ,  ,157,119,38,0,26,14,1,8,0,0,1,107,0,10,147,10KS0130PHD
+120241,KP ,Engineering,919,PHD ,130,Materials Science & Engr ,5511,Computational Sci & Engr ,4,3,1,0,0,3,0,0,0,0,0,1,0,0,4,10KS0130PHD
+120241,KP ,Engineering,919,PHD ,130,Materials Science & Engr ,6091,Data Science and Engineering ,3,2,1,0,0,0,0,0,0,0,0,3,0,0,3,10KS0130PHD
+120241,KP ,Engineering,933,BS ,109,Computer Engineering ,  ,  ,1332,1144,188,0,304,584,18,58,0,0,40,317,11,611,721,10KP0109BS
+120241,KP ,Engineering,933,BS ,115,Electrical Engineering ,  ,  ,817,704,112,1,229,307,10,49,0,0,40,165,17,392,425,10KP0115BS
+120241,KP ,Engineering,933,MENGR ,1200,Electrical & Computer Engr ,  ,  ,115,95,20,0,5,8,0,0,0,0,2,99,1,6,109,1PKS1200MENG
+120241,KP ,Engineering,933,MENGR ,1200,Electrical & Computer Engr ,  ,  ,20,18,2,0,10,5,1,0,0,0,0,3,1,4,16,1PKS1200MENU
+120241,KP ,Engineering,933,MS ,1200,Electrical & Computer Engr ,  ,  ,167,137,30,0,23,31,0,2,0,0,3,107,1,23,144,10KS1200MS
+120241,KP ,Engineering,933,NDEG ,109,Computer Engineering ,  ,  ,43,32,11,0,0,0,0,0,0,0,0,43,0,0,43,10KP0109NDEX
+120241,KP ,Engineering,933,NDEG ,115,Electrical Engineering ,  ,  ,29,26,3,0,0,0,0,0,0,0,0,29,0,0,29,10KP0115NDEX
+120241,KP ,Engineering,933,PHD ,1200,Electrical & Computer Engr ,  ,  ,365,293,72,0,56,32,1,3,0,0,2,271,0,22,343,10KS1200PHD
+120241,KP ,Engineering,933,PHD ,1200,Electrical & Computer Engr ,5511,Computational Sci & Engr ,1,1,0,0,0,0,0,0,0,0,0,1,0,0,1,10KS1200PHD
+120241,KP ,Engineering,933,PHD ,1200,Electrical & Computer Engr ,5861,Entrepreneurship & Innovation ,1,0,1,0,0,0,0,0,0,0,1,0,0,0,1,10KS1200PHD
+120241,KP ,Engineering,973,BS ,5183,"Nuclear, Plasma, Radiolgc Engr ",  ,  ,50,40,10,0,33,4,1,6,0,0,2,3,1,36,14,10KP5183BS
+120241,KP ,Engineering,973,BS ,5183,"Nuclear, Plasma, Radiolgc Engr ",3913,"Power, Safety, and the Environ ",41,35,6,0,26,4,1,6,0,0,3,1,0,29,12,10KP5183BS
+120241,KP ,Engineering,973,BS ,5183,"Nuclear, Plasma, Radiolgc Engr ",3914,Plasma and Fusion Sci and Engr ,32,27,5,0,17,7,0,2,0,0,2,4,0,21,11,10KP5183BS
+120241,KP ,Engineering,973,BS ,5183,"Nuclear, Plasma, Radiolgc Engr ",3915,"Radiol, Medical, & Instr Apps ",8,7,1,0,4,2,1,1,0,0,0,0,0,7,1,10KP5183BS
+120241,KP ,Engineering,973,MENGR ,1211,Engineering ,5863,Plasma Engineering ,5,5,0,0,3,1,0,1,0,0,0,0,0,4,1,1PKS5863MENG
+120241,KP ,Engineering,973,MS ,5183,"Nuclear, Plasma, Radiolgc Engr ",  ,  ,11,10,1,0,7,1,1,0,0,0,1,1,0,6,5,10KS5183MS
+120241,KP ,Engineering,973,PHD ,5183,"Nuclear, Plasma, Radiolgc Engr ",  ,  ,83,70,13,0,27,5,2,4,0,0,2,40,3,22,61,10KS5183PHD
+120241,KP ,Engineering,973,PHD ,5183,"Nuclear, Plasma, Radiolgc Engr ",5511,Computational Sci & Engr ,5,5,0,0,0,1,0,0,0,0,0,4,0,0,5,10KS5183PHD
+120241,KR ,Fine & Applied Arts,447,NDEG ,67,Nondegree ,  ,  ,18,8,10,0,5,0,0,1,0,0,0,12,0,5,13,10KR0067NDEG
+120241,KR ,Fine & Applied Arts,495,AD ,265,Music ,  ,  ,8,3,5,0,5,0,0,0,0,0,0,3,0,4,4,10KS0265AD
+120241,KR ,Fine & Applied Arts,495,AMUSD ,265,Music ,  ,  ,1,1,0,0,0,1,0,0,0,0,0,0,0,1,0,10KS0265AMUS
+120241,KR ,Fine & Applied Arts,495,AMUSD ,265,Music ,3930,Choral Music ,6,4,2,0,4,0,0,1,0,0,0,1,0,0,6,10KS0265AMUS
+120241,KR ,Fine & Applied Arts,495,AMUSD ,265,Music ,5110,Performance and Literature ,76,31,45,0,27,9,0,3,0,0,4,33,0,10,66,10KS0265AMUS
+120241,KR ,Fine & Applied Arts,495,AMUSD ,265,Music ,5111,Music Composition ,13,9,4,0,4,1,1,0,0,0,0,7,0,2,11,10KS0265AMUS
+120241,KR ,Fine & Applied Arts,495,AMUSD ,265,Music ,5117,Vocal Coaching & Accompanying ,6,4,2,0,4,0,0,0,0,0,0,2,0,0,6,10KS0265AMUS
+120241,KR ,Fine & Applied Arts,495,AMUSD ,265,Music ,5118,Jazz Performance ,22,19,3,0,14,0,1,1,0,0,1,5,0,7,15,10KS0265AMUS
+120241,KR ,Fine & Applied Arts,495,AMUSD ,265,Music ,5314,Instrmntl Conducting Wind Band ,3,2,1,0,2,0,0,1,0,0,0,0,0,2,1,10KS0265AMUS
+120241,KR ,Fine & Applied Arts,495,AMUSD ,265,Music ,5315,Instrmntl Conducting Orchestra ,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,10KS0265AMUS
+120241,KR ,Fine & Applied Arts,495,BA ,265,Music ,  ,  ,74,50,24,0,31,16,8,7,0,0,6,6,0,60,14,10KR0265BA
+120241,KR ,Fine & Applied Arts,495,BMA ,5646,Lyric Theatre ,  ,  ,15,3,12,0,12,0,0,2,0,0,1,0,0,12,3,10KR5646BMA
+120241,KR ,Fine & Applied Arts,495,BMA ,5646,Lyric Theatre ,5644,Creative ,2,0,2,0,2,0,0,0,0,0,0,0,0,2,0,10KR5646BMA
+120241,KR ,Fine & Applied Arts,495,BMA ,5646,Lyric Theatre ,5645,Performance ,13,3,10,0,10,0,0,3,0,0,0,0,0,10,3,10KR5646BMA
+120241,KR ,Fine & Applied Arts,495,BME ,168,Music Education ,  ,  ,40,18,22,0,21,5,1,8,0,0,2,2,1,37,3,10KR0168BME
+120241,KR ,Fine & Applied Arts,495,BME ,168,Music Education ,3930,Choral Music ,31,6,25,0,20,4,1,6,0,0,0,0,0,27,4,10KR3930BME
+120241,KR ,Fine & Applied Arts,495,BME ,168,Music Education ,3931,Instrumental Music ,62,34,28,0,35,4,2,17,0,0,2,2,0,55,7,10KR3931BME
+120241,KR ,Fine & Applied Arts,495,BME ,168,Music Education ,5593,Technology ,6,3,3,0,1,0,1,2,0,0,2,0,0,6,0,10KR5593BME
+120241,KR ,Fine & Applied Arts,495,BMUS ,157,Voice ,  ,  ,10,4,6,0,5,0,1,0,0,0,4,0,0,7,3,10KR0157BMUS
+120241,KR ,Fine & Applied Arts,495,BMUS ,158,Instrumental Music ,  ,  ,52,32,20,0,33,8,3,2,0,0,4,1,1,37,15,10KR0158BMUS
+120241,KR ,Fine & Applied Arts,495,BMUS ,159,Music Composition ,  ,  ,15,13,2,0,8,1,0,2,0,0,3,1,0,13,2,10KR0159BMUS
+120241,KR ,Fine & Applied Arts,495,BMUS ,161,Open Studies ,  ,  ,3,0,3,0,2,0,0,0,0,0,0,1,0,2,1,10KR0161BMUS
+120241,KR ,Fine & Applied Arts,495,BMUS ,1481,Musicology ,  ,  ,2,1,1,0,1,1,0,0,0,0,0,0,0,1,1,10KR1481BMUS
+120241,KR ,Fine & Applied Arts,495,BMUS ,5045,Jazz Performance ,  ,  ,12,10,2,0,6,2,2,1,0,0,0,1,0,10,2,10KR5045BMUS
+120241,KR ,Fine & Applied Arts,495,BS ,5639,Computer Science and Music ,  ,  ,34,31,3,0,12,10,0,1,0,0,1,8,2,15,19,10KR5639BS
+120241,KR ,Fine & Applied Arts,495,MME ,168,Music Education ,  ,  ,12,5,7,0,4,4,0,2,0,0,0,2,0,6,6,10KS0168MME
+120241,KR ,Fine & Applied Arts,495,MMUS ,265,Music ,  ,  ,1,1,0,0,0,0,0,0,0,0,0,1,0,0,1,10KS0265MMUS
+120241,KR ,Fine & Applied Arts,495,MMUS ,265,Music ,5110,Performance and Literature ,43,15,28,0,26,2,1,3,0,0,0,9,2,7,36,10KS0265MMUS
+120241,KR ,Fine & Applied Arts,495,MMUS ,265,Music ,5111,Music Composition ,2,1,1,0,2,0,0,0,0,0,0,0,0,1,1,10KS0265MMUS
+120241,KR ,Fine & Applied Arts,495,MMUS ,265,Music ,5113,Musicology ,7,2,5,0,6,0,0,1,0,0,0,0,0,3,4,10KS0265MMUS
+120241,KR ,Fine & Applied Arts,495,MMUS ,265,Music ,5114,Piano Pedagogy ,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,10KS0265MMUS
+120241,KR ,Fine & Applied Arts,495,MMUS ,265,Music ,5115,Instrumental Conducting (Band) ,1,0,1,0,1,0,0,0,0,0,0,0,0,0,1,10KS0265MMUS
+120241,KR ,Fine & Applied Arts,495,MMUS ,265,Music ,5117,Vocal Coaching & Accompanying ,2,1,1,0,1,0,0,0,0,0,0,1,0,0,2,10KS0265MMUS
+120241,KR ,Fine & Applied Arts,495,MMUS ,265,Music ,5118,Jazz Performance ,7,6,1,0,5,0,1,0,0,0,0,1,0,4,3,10KS0265MMUS
+120241,KR ,Fine & Applied Arts,495,PHD ,168,Music Education ,  ,  ,7,5,2,0,3,1,1,1,0,0,0,1,0,2,5,10KS0168PHD
+120241,KR ,Fine & Applied Arts,495,PHD ,1481,Musicology ,  ,  ,13,3,10,0,9,0,0,2,0,0,0,1,1,1,12,10KS1481PHD
+120241,KR ,Fine & Applied Arts,495,PHD ,1481,Musicology ,5080,Medieval Studies ,1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,10KS1481PHD
+120241,KR ,Fine & Applied Arts,526,BASA ,5665,Studio Art ,  ,  ,8,2,6,0,2,1,1,1,0,0,0,3,0,5,3,10KR5665BASA
+120241,KR ,Fine & Applied Arts,526,BASA ,5665,Studio Art ,257,Painting ,7,2,5,0,2,2,1,1,0,0,1,0,0,7,0,10KR5665BASA
+120241,KR ,Fine & Applied Arts,526,BASA ,5665,Studio Art ,258,Photography ,1,1,0,0,1,0,0,0,0,0,0,0,0,1,0,10KR5665BASA
+120241,KR ,Fine & Applied Arts,526,BASA ,5665,Studio Art ,259,Printmaking ,1,1,0,0,1,0,0,0,0,0,0,0,0,1,0,10KR5665BASA
+120241,KR ,Fine & Applied Arts,526,BASA ,5665,Studio Art ,260,Sculpture ,2,0,2,0,0,0,0,2,0,0,0,0,0,2,0,10KR5665BASA
+120241,KR ,Fine & Applied Arts,526,BASA ,5665,Studio Art ,5647,New Media ,6,2,4,0,3,0,0,1,0,0,0,2,0,4,2,10KR5665BASA
+120241,KR ,Fine & Applied Arts,526,BASA ,5665,Studio Art ,5648,General Studio Art ,8,1,7,0,1,1,3,2,0,0,0,0,1,8,0,10KR5665BASA
+120241,KR ,Fine & Applied Arts,526,BASA ,5665,Studio Art ,5902,Fashion ,8,0,8,0,2,3,0,3,0,0,0,0,0,8,0,10KR5665BASA
+120241,KR ,Fine & Applied Arts,526,BFA ,148,Graphic Design ,  ,  ,204,59,145,0,79,62,15,23,0,1,10,11,3,172,32,10KR0148BFA
+120241,KR ,Fine & Applied Arts,526,BFA ,150,History of Art ,  ,  ,1,1,0,0,0,0,0,0,0,0,0,1,0,0,1,10KR0150BFA
+120241,KR ,Fine & Applied Arts,526,BFA ,151,Photography ,  ,  ,9,3,6,0,7,0,0,1,0,0,1,0,0,9,0,10KR0151BFA
+120241,KR ,Fine & Applied Arts,526,BFA ,153,Painting ,  ,  ,1,1,0,0,0,0,0,1,0,0,0,0,0,1,0,10KR0153BFA
+120241,KR ,Fine & Applied Arts,526,BFA ,169,Art Education ,  ,  ,38,5,33,0,24,3,1,9,0,0,1,0,0,38,0,10KR0169BFA
+120241,KR ,Fine & Applied Arts,526,BFA ,5720,Art and Art History ,  ,  ,10,1,9,0,7,0,1,1,0,0,0,1,0,9,1,10KR5720BFA
+120241,KR ,Fine & Applied Arts,526,BFA ,6142,Industrial Design ,  ,  ,169,92,76,1,57,44,6,17,0,0,4,38,3,93,76,10KR6142BFA
+120241,KR ,Fine & Applied Arts,526,BFASA ,5665,Studio Art ,  ,  ,16,2,14,0,7,0,0,2,0,0,0,6,1,10,6,10KR5665BFAS
+120241,KR ,Fine & Applied Arts,526,BFASA ,5665,Studio Art ,257,Painting ,10,2,8,0,3,2,0,2,0,0,1,2,0,8,2,10KR5665BFAS
+120241,KR ,Fine & Applied Arts,526,BFASA ,5665,Studio Art ,258,Photography ,5,1,4,0,2,1,1,1,0,0,0,0,0,5,0,10KR5665BFAS
+120241,KR ,Fine & Applied Arts,526,BFASA ,5665,Studio Art ,259,Printmaking ,2,0,2,0,1,1,0,0,0,0,0,0,0,2,0,10KR5665BFAS
+120241,KR ,Fine & Applied Arts,526,BFASA ,5665,Studio Art ,260,Sculpture ,4,1,3,0,2,0,0,1,0,0,0,1,0,3,1,10KR5665BFAS
+120241,KR ,Fine & Applied Arts,526,BFASA ,5665,Studio Art ,5647,New Media ,4,0,4,0,0,1,0,2,0,0,0,1,0,3,1,10KR5665BFAS
+120241,KR ,Fine & Applied Arts,526,BFASA ,5665,Studio Art ,5648,General Studio Art ,14,1,13,0,9,0,1,3,0,0,1,0,0,14,0,10KR5665BFAS
+120241,KR ,Fine & Applied Arts,526,BFASA ,5665,Studio Art ,5902,Fashion ,7,2,5,0,2,2,0,2,0,0,1,0,0,6,1,10KR5665BFAS
+120241,KR ,Fine & Applied Arts,526,EDM ,169,Art Education ,  ,  ,5,2,3,0,3,1,0,1,0,0,0,0,0,4,1,10KS0169EDM
+120241,KR ,Fine & Applied Arts,526,MA ,250,Art History ,  ,  ,4,1,3,0,4,0,0,0,0,0,0,0,0,0,4,10KS0250MA
+120241,KR ,Fine & Applied Arts,526,MFA ,252,Art and Design ,  ,  ,5,3,2,0,2,1,1,0,0,0,0,1,0,2,3,10KS0252MFA
+120241,KR ,Fine & Applied Arts,526,MFA ,252,Art and Design ,255,Industrial Design ,11,7,4,0,0,1,0,1,0,0,0,9,0,1,10,10KS0255MFA
+120241,KR ,Fine & Applied Arts,526,MFA ,252,Art and Design ,257,Painting ,5,2,3,0,4,0,1,0,0,0,0,0,0,1,4,10KS0257MFA
+120241,KR ,Fine & Applied Arts,526,MFA ,252,Art and Design ,258,Photography ,1,0,1,0,0,0,1,0,0,0,0,0,0,1,0,10KS0258MFA
+120241,KR ,Fine & Applied Arts,526,MFA ,252,Art and Design ,5920,Design for Responsible Innov ,6,1,5,0,1,0,1,0,0,0,1,3,0,2,4,10KS5920MFA
+120241,KR ,Fine & Applied Arts,526,NONE ,4090,Art Undeclared ,  ,  ,7,0,7,0,3,0,0,3,0,0,0,1,0,6,1,10KR4090NONE
+120241,KR ,Fine & Applied Arts,526,PHD ,169,Art Education ,  ,  ,18,5,13,0,6,1,0,1,0,0,1,9,0,4,14,10KS0169PHD
+120241,KR ,Fine & Applied Arts,526,PHD ,250,Art History ,  ,  ,7,2,5,0,4,0,0,0,0,0,0,3,0,0,7,10KS0250PHD
+120241,KR ,Fine & Applied Arts,526,PHD ,250,Art History ,5080,Medieval Studies ,1,0,1,0,0,0,0,1,0,0,0,0,0,0,1,10KS0250PHD
+120241,KR ,Fine & Applied Arts,569,BLA ,156,Landscape Architecture ,  ,  ,65,30,35,0,36,6,0,12,0,0,1,9,1,53,12,10KR0156BLA
+120241,KR ,Fine & Applied Arts,569,MLA ,156,Landscape Architecture ,  ,  ,29,10,19,0,8,0,0,0,0,0,0,21,0,5,24,10KS0156MLA
+120241,KR ,Fine & Applied Arts,569,MSUD ,5721,Sustainable Urban Design ,  ,  ,5,1,4,0,0,0,0,0,0,0,0,5,0,0,5,1PKS5721MSUD
+120241,KR ,Fine & Applied Arts,569,PHD ,156,Landscape Architecture ,  ,  ,12,2,10,0,2,1,0,0,0,0,0,9,0,3,9,10KS0156PHD
+120241,KR ,Fine & Applied Arts,644,BS ,5749,Sustainable Design ,  ,  ,95,30,65,0,50,12,6,15,0,0,6,5,1,85,10,10KR5749BS
+120241,KR ,Fine & Applied Arts,733,BA ,5504,Urban Studies and Planning ,  ,  ,23,16,7,0,12,1,3,2,0,0,2,3,0,18,5,10KR5504BA
+120241,KR ,Fine & Applied Arts,733,BA ,5504,Urban Studies and Planning ,5564,Sustainability ,18,9,9,0,11,2,2,2,0,0,0,1,0,15,3,10KR5504BA
+120241,KR ,Fine & Applied Arts,733,BA ,5504,Urban Studies and Planning ,5564,Sustainability ,1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,10KR5907BA
+120241,KR ,Fine & Applied Arts,733,BA ,5504,Urban Studies and Planning ,5565,Policy and Planning ,39,29,10,0,22,2,5,6,0,0,0,3,1,33,6,10KR5504BA
+120241,KR ,Fine & Applied Arts,733,BA ,5504,Urban Studies and Planning ,5567,Social Justice ,5,2,3,0,2,1,1,0,0,0,1,0,0,3,2,10KR5504BA
+120241,KR ,Fine & Applied Arts,733,BA ,5504,Urban Studies and Planning ,5907,BA USP / MUP UP ,2,1,1,0,2,0,0,0,0,0,0,0,0,2,0,10KR5907BA
+120241,KR ,Fine & Applied Arts,733,MS ,5638,Sustainable Urban Management ,  ,  ,2,1,1,0,1,0,0,0,0,0,0,1,0,1,1,1PKS5638MS
+120241,KR ,Fine & Applied Arts,733,MUP ,155,Urban Planning ,  ,  ,44,14,30,0,6,2,4,2,0,0,1,29,0,7,37,10KS0155MUP
+120241,KR ,Fine & Applied Arts,733,MUP ,155,Urban Planning ,5907,BA USP / MUP UP ,5,2,3,0,2,0,2,1,0,0,0,0,0,5,0,10KS5907MUP
+120241,KR ,Fine & Applied Arts,733,PHD ,274,Regional Planning ,  ,  ,14,4,10,0,4,1,1,0,0,0,0,8,0,0,14,10KS0274PHD
+120241,KR ,Fine & Applied Arts,767,BS ,146,Architectural Studies ,  ,  ,1,1,0,0,0,0,0,1,0,0,0,0,0,1,0,10KR0146BS
+120241,KR ,Fine & Applied Arts,767,BS ,4091,Architectural Studies ,  ,  ,422,187,235,0,185,59,28,85,0,0,20,41,4,358,64,10KR4091BS
+120241,KR ,Fine & Applied Arts,767,MARCH ,5642,Architecture ,247,Architecture - 2 Yr ,117,51,66,0,33,9,0,6,0,0,3,66,0,44,73,10KS0247MARC
+120241,KR ,Fine & Applied Arts,767,MARCH ,5642,Architecture ,248,Architecture Track 3 ,15,9,6,0,5,2,0,3,0,0,0,4,1,10,5,10KS0248MARC
+120241,KR ,Fine & Applied Arts,767,MS ,4091,Architectural Studies ,  ,  ,2,2,0,0,0,0,0,0,0,0,0,2,0,0,2,10KS4091MS
+120241,KR ,Fine & Applied Arts,767,PHD ,5642,Architecture ,  ,  ,11,4,7,0,1,0,0,0,0,0,0,10,0,1,10,10KS5642PHD
+120241,KR ,Fine & Applied Arts,801,BA ,261,Dance ,  ,  ,6,0,6,0,2,2,1,1,0,0,0,0,0,5,1,10KR0261BA
+120241,KR ,Fine & Applied Arts,801,BA ,261,Dance ,  ,  ,4,0,4,0,3,0,0,0,0,0,0,1,0,2,2,1DKR0261BA
+120241,KR ,Fine & Applied Arts,801,BFA ,261,Dance ,  ,  ,34,4,30,0,17,1,9,5,0,0,2,0,0,27,7,10KR0261BFA
+120241,KR ,Fine & Applied Arts,801,MFA ,261,Dance ,  ,  ,11,5,6,0,4,0,4,1,0,0,0,2,0,4,7,10KS0261MFA
+120241,KR ,Fine & Applied Arts,883,BFA ,162,Theatre ,3980,Stage Management ,19,2,17,0,15,1,0,2,0,0,1,0,0,13,6,10KR3980BFA
+120241,KR ,Fine & Applied Arts,883,BFA ,162,Theatre ,3985,Theatre Studies ,9,0,8,1,7,1,1,0,0,0,0,0,0,9,0,10KR3985BFA
+120241,KR ,Fine & Applied Arts,883,BFA ,162,Theatre ,4081,Acting ,58,22,36,0,35,2,10,6,0,0,4,1,0,53,5,10KR4081BFA
+120241,KR ,Fine & Applied Arts,883,BFA ,162,Theatre ,4082,Costume Design and Technology ,9,0,9,0,8,0,0,1,0,0,0,0,0,8,1,10KR4082BFA
+120241,KR ,Fine & Applied Arts,883,BFA ,162,Theatre ,4083,Scenic Technology ,11,2,9,0,9,0,0,1,0,0,0,1,0,9,2,10KR4083BFA
+120241,KR ,Fine & Applied Arts,883,BFA ,162,Theatre ,4084,Lighting Design and Technology ,8,5,3,0,4,0,2,2,0,0,0,0,0,8,0,10KR4084BFA
+120241,KR ,Fine & Applied Arts,883,BFA ,162,Theatre ,4085,Sound Design and Technology ,9,6,3,0,5,0,3,1,0,0,0,0,0,9,0,10KR4085BFA
+120241,KR ,Fine & Applied Arts,883,BFA ,162,Theatre ,4086,Scenic Design ,3,1,2,0,2,0,1,0,0,0,0,0,0,3,0,10KR4086BFA
+120241,KR ,Fine & Applied Arts,883,BFA ,162,Theatre ,5896,Arts & Entertainment Technolgy ,5,3,2,0,5,0,0,0,0,0,0,0,0,5,0,10KR5896BFA
+120241,KR ,Fine & Applied Arts,883,MA ,162,Theatre ,  ,  ,2,1,1,0,1,0,0,0,0,0,0,1,0,1,1,10KS0162MA
+120241,KR ,Fine & Applied Arts,883,MFA ,162,Theatre ,  ,  ,1,0,1,0,1,0,0,0,0,0,0,0,0,0,1,10KS0162MFA
+120241,KR ,Fine & Applied Arts,883,MFA ,162,Theatre ,271,Design and Technology ,40,15,25,0,30,2,2,2,0,0,1,3,0,5,35,10KS0271MFA
+120241,KR ,Fine & Applied Arts,883,MFA ,162,Theatre ,272,Acting ,9,3,6,0,4,0,3,2,0,0,0,0,0,1,8,10KS0272MFA
+120241,KR ,Grauduate College,883,PHD ,162,Theatre ,  ,  ,8,4,4,0,7,0,0,0,0,0,0,1,0,1,7,10KS0162PHD
+120241,KS ,Fine & Applied Arts,486,NDEG ,67,Nondegree ,  ,  ,4,1,3,0,2,1,0,0,0,0,1,0,0,3,1,10KS0067NDEG
+120241,KT ,Media,238,PHD ,5202,Communications and Media ,  ,  ,36,13,23,0,2,1,1,3,0,0,1,27,1,4,32,10KS5202PHD
+120241,KT ,Media,408,BS ,277,Advertising ,  ,  ,603,183,420,0,307,67,48,107,0,0,24,45,5,525,78,10KT0277BS
+120241,KT ,Media,408,BS ,5673,Computer Science & Advertising ,  ,  ,69,39,30,0,8,44,2,5,0,0,1,8,1,32,37,10KT5673BS
+120241,KT ,Media,408,MS ,277,Advertising ,  ,  ,30,10,20,0,3,1,0,2,0,0,1,23,0,4,26,10KS0277MS
+120241,KT ,Media,408,MS ,5420,Strategic Brand Communication ,  ,  ,36,17,19,0,16,1,10,3,0,0,1,0,5,23,13,1PKS5420MSU
+120241,KT ,Media,408,MS ,6159,Advertising ,  ,  ,2,1,1,0,0,0,0,0,0,0,0,2,0,0,2,10KS6159MS
+120241,KT ,Media,408,NDEG ,5420,Strategic Brand Communication ,  ,  ,3,2,1,0,1,0,0,0,0,0,1,0,1,0,3,1PKS5420NDEU
+120241,KT ,Media,436,BS ,5201,Media and Cinema Studies ,  ,  ,137,67,70,0,53,12,17,28,0,0,6,19,2,111,26,10KT5201BS
+120241,KT ,Media,642,BS ,278,Journalism ,  ,  ,143,51,92,0,82,10,20,21,0,0,1,9,0,126,17,10KT0278BS
+120241,KT ,Media,642,MS ,278,Journalism ,  ,  ,6,4,2,0,5,0,0,1,0,0,0,0,0,6,0,10KS0278MS
+120241,KT ,Media,934,NDEG ,67,Nondegree ,  ,  ,17,8,9,0,9,4,1,1,0,0,0,2,0,15,2,10KT0067NDEG
+120241,KU ,Law,853,JD ,385,Law ,  ,  ,518,272,241,5,271,60,26,47,0,1,13,54,46,217,301,10KU0385JD
+120241,KU ,Law,853,JSD ,281,Law ,  ,  ,8,3,5,0,0,0,0,0,0,0,0,8,0,0,8,10KS0281JSD
+120241,KU ,Law,853,LLM ,281,Law ,  ,  ,98,46,51,1,0,1,0,0,0,0,0,97,0,0,98,10KS0281LLM
+120241,KU ,Law,853,LLM ,281,Law ,5620,Corp Commercial Law & Trade ,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,10KS0281LLM
+120241,KU ,Law,853,MSL ,5223,Law ,  ,  ,5,1,4,0,4,1,0,0,0,0,0,0,0,4,1,10KS5223MSL
+120241,KU ,Law,853,NDEG ,385,Law ,  ,  ,6,2,4,0,0,1,0,0,0,0,0,5,0,0,6,10KU0385NDEG
+120241,KV ,LAS,241,BALAS ,340,Anthropology ,  ,  ,7,5,2,0,2,3,0,2,0,0,0,0,0,7,0,10KV0340BALA
+120241,KV ,LAS,241,BALAS ,340,Anthropology ,5043,Socioculturl & Linguistic Anth ,22,4,18,0,16,1,1,4,0,0,0,0,0,21,1,10KV0340BALA
+120241,KV ,LAS,241,BALAS ,340,Anthropology ,5043,Socioculturl & Linguistic Anth ,4,0,4,0,3,0,0,0,0,0,1,0,0,4,0,10KV8037BALA
+120241,KV ,LAS,241,BALAS ,340,Anthropology ,5536,Archaeology ,12,7,5,0,10,0,0,0,0,0,0,2,0,10,2,10KV0340BALA
+120241,KV ,LAS,241,BALAS ,340,Anthropology ,5536,Archaeology ,2,1,1,0,1,0,0,1,0,0,0,0,0,2,0,10KV8037BALA
+120241,KV ,LAS,241,BALAS ,340,Anthropology ,5537,Human Evolutionary Biology ,16,4,11,1,9,1,1,4,0,0,1,0,0,15,1,10KV0340BALA
+120241,KV ,LAS,241,BALAS ,340,Anthropology ,5537,Human Evolutionary Biology ,2,1,1,0,1,0,0,0,0,0,1,0,0,2,0,10KV8037BALA
+120241,KV ,LAS,241,BSLAS ,5348,Computer Sci & Anthropology ,  ,  ,24,15,9,0,5,11,0,1,0,0,4,2,1,13,11,10KV5348BSLA
+120241,KV ,LAS,241,BSLAS ,5348,Computer Sci & Anthropology ,  ,  ,1,1,0,0,1,0,0,0,0,0,0,0,0,1,0,10KV8037BSLA
+120241,KV ,LAS,241,NONE ,340,Anthropology ,  ,  ,28,9,19,0,15,2,1,6,0,0,0,4,0,23,5,10KV0340NONE
+120241,KV ,LAS,241,PHD ,340,Anthropology ,  ,  ,44,7,37,0,18,1,2,9,0,0,2,11,1,2,42,10KS0340PHD
+120241,KV ,LAS,253,BSLAS ,334,Atmospheric Sciences ,  ,  ,51,29,22,0,43,4,1,3,0,0,0,0,0,46,5,10KV0334BSLA
+120241,KV ,LAS,253,BSLAS ,334,Atmospheric Sciences ,  ,  ,2,2,0,0,0,1,1,0,0,0,0,0,0,2,0,10KV8037BSLA
+120241,KV ,LAS,253,MS ,334,Atmospheric Sciences ,  ,  ,22,13,9,0,17,1,0,1,0,0,0,3,0,7,15,10KS0334MS
+120241,KV ,LAS,253,MS ,334,Atmospheric Sciences ,5511,Computational Sci & Engr ,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,10KS0334MS
+120241,KV ,LAS,253,MS ,6046,Weather Climate Risk Analytics ,  ,  ,18,8,10,0,10,1,1,2,0,0,3,0,1,3,15,1PKS6046MSU
+120241,KV ,LAS,253,NDEG ,6046,Weather Climate Risk Analytics ,  ,  ,21,11,10,0,13,1,0,2,0,0,0,0,5,0,21,10KS6046NDEU
+120241,KV ,LAS,253,PHD ,334,Atmospheric Sciences ,  ,  ,26,15,11,0,7,1,0,2,0,0,0,16,0,6,20,10KS0334PHD
+120241,KV ,LAS,257,BSLAS ,439,Mathematics ,  ,  ,40,31,8,1,9,6,0,4,0,0,1,19,1,16,24,10KV0439BSLA
+120241,KV ,LAS,257,BSLAS ,439,Mathematics ,  ,  ,37,27,10,0,7,6,0,1,0,0,1,22,0,12,25,10KV8037BSLA
+120241,KV ,LAS,257,BSLAS ,439,Mathematics ,3895,Applied Mathematics ,24,20,4,0,2,8,0,0,0,0,0,13,1,6,18,10KV3895BSLA
+120241,KV ,LAS,257,BSLAS ,439,Mathematics ,3895,Applied Mathematics ,13,10,3,0,1,2,0,1,0,0,0,9,0,3,10,10KV8037BSLA
+120241,KV ,LAS,257,BSLAS ,439,Mathematics ,3896,Graduate Preparation ,1,1,0,0,0,0,0,0,0,0,0,1,0,0,1,10KV8037BSLA
+120241,KV ,LAS,257,BSLAS ,439,Mathematics ,3897,Mathematics Teaching Option ,18,5,13,0,8,5,0,4,0,0,1,0,0,17,1,10KV3897BSLA
+120241,KV ,LAS,257,BSLAS ,439,Mathematics ,3897,Mathematics Teaching Option ,2,0,2,0,1,1,0,0,0,0,0,0,0,2,0,10KV8037BSLA
+120241,KV ,LAS,257,BSLAS ,439,Mathematics ,6092,Data Optimization ,20,13,7,0,7,5,0,2,0,0,0,6,0,13,7,10KV6092BSLA
+120241,KV ,LAS,257,BSLAS ,439,Mathematics ,6092,Data Optimization ,12,9,3,0,0,1,0,1,0,0,0,10,0,1,11,10KV8037BSLA
+120241,KV ,LAS,257,BSLAS ,439,Mathematics ,6093,Math Doctoral Preparation ,9,9,0,0,5,1,0,0,0,0,1,2,0,6,3,10KV6093BSLA
+120241,KV ,LAS,257,BSLAS ,439,Mathematics ,6093,Math Doctoral Preparation ,2,2,0,0,0,1,0,0,0,0,0,1,0,0,2,10KV8037BSLA
+120241,KV ,LAS,257,BSLAS ,461,Actuarial Science ,  ,  ,148,99,49,0,65,40,4,15,0,0,6,17,1,118,30,10KV0461BSLA
+120241,KV ,LAS,257,BSLAS ,461,Actuarial Science ,  ,  ,39,23,16,0,13,11,0,2,0,0,0,13,0,26,13,10KV8037BSLA
+120241,KV ,LAS,257,BSLAS ,1438,Math & Computer Science ,  ,  ,273,230,43,0,35,113,3,1,0,1,4,110,6,93,180,10KV1438BSLA
+120241,KV ,LAS,257,BSLAS ,1438,Math & Computer Science ,  ,  ,13,10,3,0,0,5,0,0,0,0,0,8,0,2,11,10KV8037BSLA
+120241,KV ,LAS,257,MS ,290,Teaching of Mathematics ,  ,  ,2,2,0,0,1,0,0,0,0,0,1,0,0,1,1,10KS0290MS
+120241,KV ,LAS,257,MS ,327,Applied Mathematics ,  ,  ,7,6,1,0,1,0,0,1,0,0,0,5,0,1,6,10KS0327MS
+120241,KV ,LAS,257,MS ,439,Mathematics ,  ,  ,19,18,1,0,1,2,0,1,0,0,0,14,1,3,16,10KS0439MS
+120241,KV ,LAS,257,MS ,461,Actuarial Science ,  ,  ,16,7,9,0,1,4,0,0,0,0,0,11,0,2,14,10KS0461MS
+120241,KV ,LAS,257,MS ,6078,Predictive Analytic Risk Mgmt ,  ,  ,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,1PKS6078MS
+120241,KV ,LAS,257,MS ,6078,Predictive Analytic Risk Mgmt ,6070,Financial & Insurance Analytic ,34,22,12,0,0,4,0,0,0,0,0,30,0,2,32,1PKS6078MS
+120241,KV ,LAS,257,MS ,6078,Predictive Analytic Risk Mgmt ,6071,Enterprise Risk Management ,11,2,9,0,0,0,0,0,0,0,1,10,0,0,11,1PKS6078MS
+120241,KV ,LAS,257,NONE ,439,Mathematics ,  ,  ,345,239,105,1,87,54,1,18,0,0,12,169,4,139,206,10KV0439NONE
+120241,KV ,LAS,257,PHD ,439,Mathematics ,  ,  ,129,93,36,0,23,9,2,7,0,0,4,81,3,4,125,10KS0439PHD
+120241,KV ,LAS,257,PHD ,439,Mathematics ,5511,Computational Sci & Engr ,3,3,0,0,0,1,0,0,0,0,0,2,0,0,3,10KS0439PHD
+120241,KV ,LAS,257,PHD ,439,Mathematics ,5626,Actuarial Sci & Risk Analytics ,6,5,1,0,0,0,0,0,0,0,0,6,0,0,6,10KS0439PHD
+120241,KV ,LAS,265,BSLAS ,5313,"Earth, Soc, Env Sustainability ",  ,  ,82,24,58,0,42,8,4,10,0,0,5,12,1,66,16,10KV5313BSLA
+120241,KV ,LAS,265,BSLAS ,5313,"Earth, Soc, Env Sustainability ",  ,  ,4,1,3,0,3,0,0,0,0,0,1,0,0,4,0,10KV5313BSLU
+120241,KV ,LAS,265,BSLAS ,5313,"Earth, Soc, Env Sustainability ",  ,  ,1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,10KV8037BSLA
+120241,KV ,LAS,265,BSLAS ,5313,"Earth, Soc, Env Sustainability ",5103,Society and the Environment ,50,15,35,0,30,5,1,8,0,0,1,4,1,44,6,10KV5313BSLA
+120241,KV ,LAS,265,BSLAS ,5313,"Earth, Soc, Env Sustainability ",5103,Society and the Environment ,11,6,5,0,7,0,0,2,0,0,1,0,1,7,4,10KV5313BSLU
+120241,KV ,LAS,265,BSLAS ,5313,"Earth, Soc, Env Sustainability ",5103,Society and the Environment ,13,3,10,0,9,1,0,2,0,0,1,0,0,12,1,10KV8037BSLA
+120241,KV ,LAS,265,BSLAS ,5313,"Earth, Soc, Env Sustainability ",5104,Science of the Earth System ,27,9,18,0,10,0,3,8,0,0,3,3,0,24,3,10KV5313BSLA
+120241,KV ,LAS,265,BSLAS ,5313,"Earth, Soc, Env Sustainability ",5104,Science of the Earth System ,4,1,3,0,3,1,0,0,0,0,0,0,0,3,1,10KV5313BSLU
+120241,KV ,LAS,265,BSLAS ,5313,"Earth, Soc, Env Sustainability ",5104,Science of the Earth System ,3,2,1,0,0,1,1,1,0,0,0,0,0,3,0,10KV8037BSLA
+120241,KV ,LAS,292,MS ,314,Biology ,315,"Ecology, Ethology, Evolution ",3,1,2,0,3,0,0,0,0,0,0,0,0,1,2,10KS0315MS
+120241,KV ,LAS,292,PHD ,314,Biology ,315,"Ecology, Ethology, Evolution ",16,9,7,0,7,0,0,3,0,0,1,5,0,3,13,10KS0315PHD
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,  ,  ,21,3,18,0,6,3,4,5,0,0,1,2,0,18,3,10KV5535BSLA
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,  ,  ,15,1,14,0,9,3,2,0,0,0,0,1,0,12,3,10KV8037BSLA
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,5568,Behavioral Neuroscience ,55,16,39,0,19,17,2,7,0,0,5,5,0,46,9,10KV5535BSLA
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,5569,Clinical/Community Psychology ,265,52,212,1,107,49,25,50,0,0,18,15,1,229,36,10KV5535BSLA
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,5569,Clinical/Community Psychology ,38,5,33,0,17,5,5,7,0,0,1,3,0,34,4,10KV8037BSLA
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,5570,Cognitive Psychology ,22,6,16,0,8,5,1,2,0,0,1,5,0,15,7,10KV5535BSLA
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,5570,Cognitive Psychology ,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,10KV8037BSLA
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,5571,Developmental Psychology ,60,3,57,0,21,11,6,16,0,0,3,3,0,54,6,10KV5535BSLA
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,5571,Developmental Psychology ,10,1,9,0,5,4,0,1,0,0,0,0,0,10,0,10KV8037BSLA
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,5572,Organizational Psychology ,98,29,69,0,41,16,5,14,0,0,4,17,1,74,24,10KV5535BSLA
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,5572,Organizational Psychology ,12,4,8,0,6,3,0,1,0,0,0,2,0,9,3,10KV8037BSLA
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,5627,Intradisciplinary Psychology ,218,56,161,1,99,31,24,42,0,0,8,11,3,199,19,10KV5535BSLA
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,5627,Intradisciplinary Psychology ,48,10,38,0,18,7,0,8,0,0,5,9,1,35,13,10KV8037BSLA
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,5628,Diversity Science ,4,0,4,0,3,0,0,0,0,0,1,0,0,4,0,10KV5535BSLA
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,5629,Cognitive Neuroscience ,40,11,29,0,14,10,3,7,0,0,0,6,0,31,9,10KV5535BSLA
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,5629,Cognitive Neuroscience ,4,0,4,0,2,0,0,0,0,0,0,2,0,2,2,10KV8037BSLA
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,5630,Social Psychology ,39,15,24,0,11,10,4,8,0,0,2,4,0,31,8,10KV5535BSLA
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,5630,Social Psychology ,8,1,7,0,1,2,2,2,0,0,0,1,0,7,1,10KV8037BSLA
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,5631,Personality Psychology ,20,4,16,0,9,2,1,7,0,0,0,1,0,19,1,10KV5535BSLA
+120241,KV ,LAS,299,BSLAS ,5535,Psychology ,5631,Personality Psychology ,3,1,2,0,2,0,0,0,0,0,0,1,0,2,1,10KV8037BSLA
+120241,KV ,LAS,299,BSLAS ,5876,Brain and Cognitive Science ,  ,  ,135,38,97,0,35,59,8,13,0,0,11,8,1,105,30,10KV5876BSLA
+120241,KV ,LAS,299,BSLAS ,5876,Brain and Cognitive Science ,  ,  ,8,5,3,0,3,3,0,0,0,0,0,2,0,3,5,10KV8037BSLA
+120241,KV ,LAS,299,MS ,5625,Psychological Science ,  ,  ,16,7,9,0,6,2,0,0,0,0,0,8,0,2,14,1PKS5625MS
+120241,KV ,LAS,299,NONE ,5535,Psychology ,  ,  ,852,194,658,0,347,162,50,166,0,0,35,87,5,712,140,10KV5535NONE
+120241,KV ,LAS,299,PHD ,5535,Psychology ,  ,  ,128,50,78,0,42,14,5,10,0,1,4,52,0,16,112,10KS5535PHD
+120241,KV ,LAS,303,BALAS ,1008,African American Studies ,  ,  ,14,6,8,0,0,0,12,1,0,0,1,0,0,14,0,10KV1008BALA
+120241,KV ,LAS,324,BALAS ,344,Sociology ,  ,  ,187,54,133,0,56,18,24,46,0,0,2,41,0,135,52,10KV0344BALA
+120241,KV ,LAS,324,BALAS ,344,Sociology ,  ,  ,17,1,16,0,8,1,3,4,0,0,1,0,0,16,1,10KV8037BALA
+120241,KV ,LAS,324,PHD ,344,Sociology ,  ,  ,35,15,20,0,12,1,5,5,0,0,1,11,0,4,31,10KS0344PHD
+120241,KV ,LAS,361,MS ,324,Entomology ,  ,  ,12,7,5,0,8,2,1,1,0,0,0,0,0,7,5,10KS0324MS
+120241,KV ,LAS,361,PHD ,324,Entomology ,  ,  ,19,9,10,0,8,1,1,1,0,0,0,8,0,4,15,10KS0324PHD
+120241,KV ,LAS,362,BALAS ,285,E Asian Languages & Cultures ,  ,  ,27,14,13,0,8,5,2,5,0,0,4,2,1,22,5,10KV0285BALA
+120241,KV ,LAS,362,BALAS ,285,E Asian Languages & Cultures ,  ,  ,1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,10KV8037BALA
+120241,KV ,LAS,362,MA ,285,E Asian Languages & Cultures ,  ,  ,12,4,8,0,6,1,0,0,0,0,0,5,0,3,9,10KS0285MA
+120241,KV ,LAS,362,PHD ,285,E Asian Languages & Cultures ,  ,  ,26,9,17,0,1,0,1,0,0,0,0,24,0,0,26,10KS0285PHD
+120241,KV ,LAS,377,MS ,320,Plant Biology ,  ,  ,3,0,3,0,2,1,0,0,0,0,0,0,0,2,1,10KS0320MS
+120241,KV ,LAS,377,PHD ,320,Plant Biology ,  ,  ,19,11,8,0,5,1,2,2,0,0,0,9,0,3,16,10KS0320PHD
+120241,KV ,LAS,377,PHD ,320,Plant Biology ,5511,Computational Sci & Engr ,2,2,0,0,0,0,0,0,0,0,0,2,0,0,2,10KS0320PHD
+120241,KV ,LAS,383,BSLAS ,438,Integrative Biology ,  ,  ,436,146,288,2,202,83,39,70,1,0,27,10,4,409,27,10KV0438BSLA
+120241,KV ,LAS,383,BSLAS ,438,Integrative Biology ,  ,  ,20,6,14,0,8,5,1,2,0,0,3,1,0,19,1,10KV8037BSLA
+120241,KV ,LAS,383,BSLAS ,438,Integrative Biology ,5028,Honors Integrative Biology ,53,28,25,0,26,11,0,9,0,0,5,1,1,51,2,10KV5028BSLA
+120241,KV ,LAS,383,BSLAS ,438,Integrative Biology ,5028,Honors Integrative Biology ,3,1,2,0,2,1,0,0,0,0,0,0,0,3,0,10KV8037BSLA
+120241,KV ,LAS,383,BSLAS ,438,Integrative Biology ,6160,BSLAS/MS Integrative Biology ,17,5,12,0,7,1,2,4,0,0,0,3,0,13,4,10KV6160BSLA
+120241,KV ,LAS,383,MS ,5107,"Ecol, Evol, Conservation Biol ",  ,  ,5,1,4,0,2,0,1,1,0,0,0,1,0,2,3,10KS5107MS
+120241,KV ,LAS,383,MS ,5278,Teaching of Biological Science ,  ,  ,3,0,3,0,3,0,0,0,0,0,0,0,0,2,1,10KS5278MSU
+120241,KV ,LAS,383,MS ,6936,Integrative Biology ,  ,  ,11,4,7,0,5,1,1,1,0,0,0,2,1,7,4,1PKS6936MS
+120241,KV ,LAS,383,PHD ,5107,"Ecol, Evol, Conservation Biol ",  ,  ,36,16,20,0,15,2,1,6,0,0,4,8,0,8,28,10KS5107PHD
+120241,KV ,LAS,397,NONE ,314,Biology ,  ,  ,428,149,279,0,170,129,17,68,0,0,17,21,6,391,37,10KV0314NONE
+120241,KV ,LAS,404,BALAS ,5526,Asian American Studies ,  ,  ,2,0,2,0,0,2,0,0,0,0,0,0,0,2,0,10KV5526BALA
+120241,KV ,LAS,405,BALAS ,74,Economics ,  ,  ,710,506,204,0,181,120,33,74,0,0,13,283,6,367,343,10KV0074BALA
+120241,KV ,LAS,405,BALAS ,74,Economics ,  ,  ,81,46,35,0,37,13,0,3,0,0,0,25,3,51,30,10KV8037BALA
+120241,KV ,LAS,405,BSLAS ,5321,Econometrics & Quant Econ ,  ,  ,145,98,47,0,27,34,3,10,0,0,4,65,2,57,88,10KV5321BSLA
+120241,KV ,LAS,405,BSLAS ,5321,Econometrics & Quant Econ ,  ,  ,15,11,4,0,3,2,0,0,0,0,0,10,0,5,10,10KV8037BSLA
+120241,KV ,LAS,405,BSLAS ,5667,Computer Science & Economics ,  ,  ,207,159,48,0,21,128,3,4,0,0,7,39,5,91,116,10KV5667BSLA
+120241,KV ,LAS,405,BSLAS ,5667,Computer Science & Economics ,  ,  ,5,4,1,0,0,4,0,0,0,0,0,1,0,2,3,10KV8037BSLA
+120241,KV ,LAS,405,MS ,5591,Economics ,3925,Policy Economics ,100,67,33,0,1,0,0,2,0,0,1,96,0,4,96,10KS3925MS
+120241,KV ,LAS,405,PHD ,5591,Economics ,  ,  ,84,56,28,0,7,3,0,2,0,0,1,71,0,3,81,10KS5591PHD
+120241,KV ,LAS,413,BS ,335,Chemistry ,  ,  ,155,98,57,0,50,33,2,18,0,0,4,47,1,85,70,10KV0335BS
+120241,KV ,LAS,413,BS ,335,Chemistry ,5023,Environmental Chemistry ,3,3,0,0,2,0,0,0,0,0,0,1,0,2,1,10KV5023BS
+120241,KV ,LAS,413,BSLAS ,335,Chemistry ,  ,  ,252,106,146,0,99,64,12,32,0,0,19,24,2,210,42,10KV0335BSLA
+120241,KV ,LAS,413,BSLAS ,335,Chemistry ,  ,  ,17,7,10,0,8,6,0,2,0,0,1,0,0,15,2,10KV8037BSLA
+120241,KV ,LAS,413,BSLAS ,335,Chemistry ,3918,Chemistry Teaching Option ,1,1,0,0,0,0,0,0,0,0,0,1,0,1,0,10KV3918BSLA
+120241,KV ,LAS,413,BSLAS ,5350,Computer Sci & Chemistry ,  ,  ,27,15,12,0,4,18,0,1,0,0,0,3,1,15,12,10KV5350BSLA
+120241,KV ,LAS,413,MS ,335,Chemistry ,  ,  ,1,1,0,0,0,1,0,0,0,0,0,0,0,0,1,10KS0335MS
+120241,KV ,LAS,413,PHD ,335,Chemistry ,  ,  ,257,146,110,1,123,20,13,22,0,0,7,71,1,22,235,10KS0335PHD
+120241,KV ,LAS,415,BSLAS ,323,Neuroscience ,  ,  ,100,28,72,0,34,38,5,16,0,0,5,1,1,95,5,10KV0323BSLA
+120241,KV ,LAS,415,BSLAS ,323,Neuroscience ,  ,  ,7,4,3,0,3,4,0,0,0,0,0,0,0,5,2,10KV8037BSLA
+120241,KV ,LAS,415,BSLAS ,433,Molecular and Cellular Biology ,  ,  ,661,255,405,1,283,207,35,81,0,0,21,29,5,599,62,10KV0433BSLA
+120241,KV ,LAS,415,BSLAS ,433,Molecular and Cellular Biology ,  ,  ,36,9,27,0,9,19,0,2,0,0,4,2,0,30,6,10KV8037BSLA
+120241,KV ,LAS,415,BSLAS ,433,Molecular and Cellular Biology ,5121,Honors ,69,31,38,0,24,30,1,6,0,0,3,3,2,61,8,10KV0433BSLA
+120241,KV ,LAS,415,BSLAS ,433,Molecular and Cellular Biology ,5121,Honors ,4,3,1,0,2,2,0,0,0,0,0,0,0,4,0,10KV8037BSLA
+120241,KV ,LAS,415,MS ,433,Molecular and Cellular Biology ,  ,  ,6,3,3,0,1,1,1,1,0,0,0,2,0,4,2,10KS0433MS
+120241,KV ,LAS,415,NONE ,3854,Molecular&Cell Bio-undeclared ,  ,  ,1,1,0,0,1,0,0,0,0,0,0,0,0,0,1,10KS3854NONE
+120241,KV ,LAS,415,PHD ,319,Biophysics & Computnl Biology ,  ,  ,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,10KS0319PHD
+120241,KV ,LAS,415,PHD ,5414,Biophysics & Quant Biology ,  ,  ,45,34,11,0,13,6,0,1,0,0,1,23,1,4,41,10KS5414PHD
+120241,KV ,LAS,415,PHD ,5414,Biophysics & Quant Biology ,5511,Computational Sci & Engr ,4,4,0,0,1,0,0,0,0,0,0,3,0,0,4,10KS5414PHD
+120241,KV ,LAS,430,BSLAS ,333,Astronomy ,  ,  ,46,26,20,0,22,7,3,8,0,0,1,5,0,36,10,10KV0333BSLA
+120241,KV ,LAS,430,BSLAS ,333,Astronomy ,  ,  ,4,2,2,0,2,1,0,0,0,0,1,0,0,3,1,10KV8037BSLA
+120241,KV ,LAS,430,BSLAS ,5349,Computer Sci & Astronomy ,  ,  ,42,36,6,0,5,22,0,0,0,0,1,14,0,5,37,10KV5349BSLA
+120241,KV ,LAS,430,BSLAS ,6072,Astrophysics ,  ,  ,84,57,27,0,24,15,1,7,0,0,4,32,1,43,41,10KV6072BSLA
+120241,KV ,LAS,430,BSLAS ,6072,Astrophysics ,  ,  ,6,4,2,0,2,0,0,0,0,0,0,4,0,2,4,10KV8037BSLA
+120241,KV ,LAS,430,BSLAS ,6075,Astronomy + Data Science ,  ,  ,16,9,7,0,6,2,0,1,0,0,1,3,3,10,6,10KV6075BSLA
+120241,KV ,LAS,430,PHD ,333,Astronomy ,  ,  ,28,16,12,0,17,1,0,2,0,0,0,8,0,1,27,10KS0333PHD
+120241,KV ,LAS,430,PHD ,333,Astronomy ,5511,Computational Sci & Engr ,4,3,1,0,3,0,0,0,0,0,0,1,0,0,4,10KS0333PHD
+120241,KV ,LAS,438,BS ,318,Biochemistry ,  ,  ,289,132,157,0,117,111,5,17,0,0,13,22,4,250,39,10KV0318BS
+120241,KV ,LAS,438,PHD ,318,Biochemistry ,  ,  ,68,35,33,0,17,3,0,4,0,0,1,43,0,6,62,10KS0318PHD
+120241,KV ,LAS,451,BALAS ,342,History ,  ,  ,222,132,90,0,141,15,8,38,0,0,9,9,2,207,15,10KV0342BALA
+120241,KV ,LAS,451,BALAS ,342,History ,  ,  ,34,17,17,0,22,1,2,5,0,0,2,2,0,32,2,10KV8037BALA
+120241,KV ,LAS,451,BALAS ,342,History ,5280,Social Science: History Tchng ,53,32,21,0,35,4,1,8,0,0,5,0,0,52,1,10KV0342BALA
+120241,KV ,LAS,451,BALAS ,342,History ,5280,Social Science: History Tchng ,5,2,3,0,5,0,0,0,0,0,0,0,0,5,0,10KV8037BALA
+120241,KV ,LAS,451,MA ,342,History ,  ,  ,4,2,2,0,3,0,0,0,0,0,1,0,0,4,0,10KS0342MA
+120241,KV ,LAS,451,PHD ,342,History ,  ,  ,55,32,23,0,20,1,5,7,0,0,3,19,0,7,48,10KS0342PHD
+120241,KV ,LAS,451,PHD ,342,History ,5080,Medieval Studies ,3,1,2,0,3,0,0,0,0,0,0,0,0,0,3,10KS0342PHD
+120241,KV ,LAS,461,MA ,283,African Studies ,  ,  ,2,2,0,0,0,0,0,0,0,0,0,2,0,0,2,10KS0283MA
+120241,KV ,LAS,489,BALAS ,5164,Communication ,  ,  ,510,160,350,0,254,33,82,66,0,0,20,55,0,425,85,10KV5164BALA
+120241,KV ,LAS,489,BALAS ,5164,Communication ,  ,  ,12,2,10,0,3,1,1,4,0,0,1,2,0,9,3,10KV8037BALA
+120241,KV ,LAS,489,MA ,5164,Communication ,  ,  ,8,1,7,0,3,0,1,2,0,0,0,2,0,3,5,10KS5164MA
+120241,KV ,LAS,489,MS ,5285,Health Communication ,  ,  ,25,4,21,0,17,1,2,2,0,0,3,0,0,13,12,10KS5285MSU
+120241,KV ,LAS,489,NDEG ,5285,Health Communication ,  ,  ,7,7,0,0,3,0,3,0,0,0,0,0,1,0,7,1PKS5285NDEU
+120241,KV ,LAS,489,PHD ,5164,Communication ,  ,  ,39,9,30,0,25,4,2,4,0,0,0,4,0,8,31,10KS5164PHD
+120241,KV ,LAS,490,BALAS ,5197,Religion ,  ,  ,3,3,0,0,0,1,0,1,0,0,1,0,0,2,1,10KV5197BALA
+120241,KV ,LAS,490,MA ,5197,Religion ,  ,  ,6,2,4,0,2,1,0,0,0,0,1,1,1,3,3,10KS5197MA
+120241,KV ,LAS,499,BALAS ,311,English ,  ,  ,78,18,59,1,47,8,3,15,0,0,4,1,0,76,2,10KV0311BALA
+120241,KV ,LAS,499,BALAS ,311,English ,  ,  ,15,3,12,0,9,3,2,1,0,0,0,0,0,15,0,10KV8037BALA
+120241,KV ,LAS,499,BALAS ,311,English ,3916,English Teaching Option ,52,13,39,0,24,4,3,19,0,0,2,0,0,52,0,10KV3916BALA
+120241,KV ,LAS,499,BALAS ,311,English ,3916,English Teaching Option ,3,0,3,0,1,0,0,2,0,0,0,0,0,3,0,10KV8037BALA
+120241,KV ,LAS,499,BALAS ,311,English ,5735,Topics in English ,8,3,5,0,3,1,0,2,0,0,1,1,0,7,1,10KV5735BALA
+120241,KV ,LAS,499,BALAS ,311,English ,5735,Topics in English ,1,1,0,0,0,0,0,1,0,0,0,0,0,1,0,10KV8037BALA
+120241,KV ,LAS,499,BALAS ,311,English ,5748,English Concentration ,115,23,92,0,55,14,10,27,0,0,6,2,1,111,4,10KV0311BALA
+120241,KV ,LAS,499,BALAS ,311,English ,5748,English Concentration ,4,2,2,0,2,0,0,1,0,0,1,0,0,4,0,10KV8037BALA
+120241,KV ,LAS,499,BALAS ,5347,Creative Writing ,  ,  ,81,35,45,1,38,3,16,21,0,0,3,0,0,78,3,10KV5347BALA
+120241,KV ,LAS,499,BALAS ,5347,Creative Writing ,  ,  ,7,0,7,0,4,0,1,2,0,0,0,0,0,7,0,10KV8037BALA
+120241,KV ,LAS,499,MA ,311,English ,  ,  ,7,1,6,0,6,1,0,0,0,0,0,0,0,2,5,10KS0311MA
+120241,KV ,LAS,499,MFA ,1136,Creative Writing ,  ,  ,17,8,9,0,13,0,0,3,0,0,1,0,0,4,13,10KS1136MFA
+120241,KV ,LAS,499,NONE ,311,English ,  ,  ,15,3,12,0,10,2,1,1,0,0,1,0,0,14,1,10KV0311NONE
+120241,KV ,LAS,499,PHD ,311,English ,  ,  ,51,17,34,0,25,1,7,6,1,0,3,8,0,6,45,10KS0311PHD
+120241,KV ,LAS,499,PHD ,311,English ,5080,Medieval Studies ,4,0,4,0,3,0,0,0,0,0,1,0,0,0,4,10KS0311PHD
+120241,KV ,LAS,499,PHD ,311,English ,5139,Writing Studies ,6,2,4,0,6,0,0,0,0,0,0,0,0,0,6,10KS0311PHD
+120241,KV ,LAS,514,BALAS ,308,Classics ,5893,Classical Civilizations ,3,0,3,0,1,0,0,1,0,0,0,0,1,3,0,10KV0308BALA
+120241,KV ,LAS,514,BALAS ,308,Classics ,5894,Classical Languages ,4,1,3,0,2,1,1,0,0,0,0,0,0,2,2,10KV0308BALA
+120241,KV ,LAS,514,BALAS ,308,Classics ,5894,Classical Languages ,1,1,0,0,1,0,0,0,0,0,0,0,0,1,0,10KV8037BALA
+120241,KV ,LAS,514,MA ,308,Classics ,  ,  ,1,1,0,0,1,0,0,0,0,0,0,0,0,0,1,10KS0308MA
+120241,KV ,LAS,514,MA ,308,Classics ,310,Latin ,1,1,0,0,1,0,0,0,0,0,0,0,0,0,1,10KS0310MA
+120241,KV ,LAS,514,MA ,345,Teaching of Latin ,  ,  ,3,1,2,0,1,0,0,2,0,0,0,0,0,1,2,10KS0345MA
+120241,KV ,LAS,514,NONE ,308,Classics ,  ,  ,8,1,7,0,3,1,1,2,0,0,0,1,0,7,1,10KV0308NONE
+120241,KV ,LAS,514,PHD ,347,Classical Philology ,  ,  ,9,6,3,0,7,0,0,0,0,0,0,2,0,1,8,10KS0347PHD
+120241,KV ,LAS,514,PHD ,347,Classical Philology ,5080,Medieval Studies ,2,1,1,0,2,0,0,0,0,0,0,0,0,0,2,10KS0347PHD
+120241,KV ,LAS,553,BALAS ,4097,"Russian, E Eur, Eurasian St ",  ,  ,1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,10KV4097BALA
+120241,KV ,LAS,553,MA ,4097,"Russian, E Eur, Eurasian St ",  ,  ,2,0,2,0,2,0,0,0,0,0,0,0,0,0,2,10KS4097MA
+120241,KV ,LAS,563,BALAS ,5215,Global Studies ,  ,  ,92,24,68,0,37,19,6,16,0,0,4,10,0,79,13,10KV5215BALA
+120241,KV ,LAS,563,BALAS ,5215,Global Studies ,  ,  ,12,0,12,0,10,2,0,0,0,0,0,0,0,11,1,10KV8037BALA
+120241,KV ,LAS,580,BALAS ,150,History of Art ,  ,  ,14,1,13,0,7,1,2,0,0,0,1,3,0,7,7,10KV0150BALA
+120241,KV ,LAS,580,BALAS ,463,Individual Plans of Study ,  ,  ,1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,10KV0463BALA
+120241,KV ,LAS,580,BALAS ,3865,Interdisciplinary ,5353,Jewish Studies ,1,0,1,0,1,0,0,0,0,0,0,0,0,0,1,10KV5353BALA
+120241,KV ,LAS,580,BALAS ,5215,Global Studies ,  ,  ,1,1,0,0,1,0,0,0,0,0,0,0,0,1,0,10KV5215BALA
+120241,KV ,LAS,580,BALAS ,5215,Global Studies ,  ,  ,1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,10KV8037BALA
+120241,KV ,LAS,580,BS ,240,Physics ,  ,  ,31,29,2,0,8,8,1,2,0,0,0,12,0,15,16,10KV0240BS
+120241,KV ,LAS,580,BSLAS ,240,Physics ,  ,  ,7,7,0,0,1,2,1,0,0,0,0,3,0,4,3,10KV0240BSLA
+120241,KV ,LAS,580,BSLAS ,240,Physics ,  ,  ,3,3,0,0,2,0,0,0,0,0,0,1,0,1,2,10KV8037BSLA
+120241,KV ,LAS,580,BSLAS ,463,Individual Plans of Study ,  ,  ,3,2,1,0,1,0,0,1,0,0,0,1,0,3,0,10KV0463BSLA
+120241,KV ,LAS,580,NDEG ,67,Nondegree ,  ,  ,103,45,58,0,28,9,2,7,0,0,4,53,0,45,58,10KV0067NDEG
+120241,KV ,LAS,580,NONE ,390,General Curriculum ,  ,  ,175,111,64,0,37,37,27,35,0,0,8,30,1,128,47,10KV0390NONE
+120241,KV ,LAS,580,NONE ,5246,LAS - Undeclared ,  ,  ,135,35,100,0,9,4,50,71,0,0,1,0,0,135,0,10KV5246NONE
+120241,KV ,LAS,583,BSLAS ,329,Statistics ,  ,  ,369,248,121,0,79,110,3,21,0,0,10,141,5,187,182,10KV0329BSLA
+120241,KV ,LAS,583,BSLAS ,329,Statistics ,  ,  ,64,36,28,0,17,12,0,1,0,0,1,33,0,24,40,10KV8037BSLA
+120241,KV ,LAS,583,BSLAS ,464,Statistics & Computer Science ,  ,  ,315,254,61,0,22,188,0,3,1,0,9,84,8,119,196,10KV0464BSLA
+120241,KV ,LAS,583,BSLAS ,464,Statistics & Computer Science ,  ,  ,9,7,2,0,1,4,0,1,0,0,0,3,0,5,4,10KV8037BSLA
+120241,KV ,LAS,583,MS ,329,Statistics ,  ,  ,73,45,28,0,12,4,1,1,0,0,0,55,0,12,61,10KS0329MS
+120241,KV ,LAS,583,MS ,329,Statistics ,331,Applied ,8,5,3,0,0,0,0,1,0,0,0,7,0,0,8,10KS0331MS
+120241,KV ,LAS,583,MS ,329,Statistics ,5165,Analytics ,56,33,23,0,2,3,0,0,0,0,0,51,0,2,54,10KS5165MS
+120241,KV ,LAS,583,PHD ,329,Statistics ,  ,  ,59,48,11,0,7,6,0,1,0,0,0,45,0,0,59,10KS0329PHD
+120241,KV ,LAS,583,PHD ,329,Statistics ,5511,Computational Sci & Engr ,1,1,0,0,0,0,0,0,0,0,0,1,0,0,1,10KS0329PHD
+120241,KV ,LAS,583,PHD ,329,Statistics ,6091,Data Science and Engineering ,1,0,1,0,0,1,0,0,0,0,0,0,0,0,1,10KS0329PHD
+120241,KV ,LAS,584,PHD ,4094,Cell and Developmental Biology ,  ,  ,47,17,30,0,6,1,0,0,0,0,0,40,0,2,45,10KS4094PHD
+120241,KV ,LAS,585,BA ,297,Teaching of Spanish ,  ,  ,11,1,10,0,4,1,1,5,0,0,0,0,0,11,0,10KV0297BA
+120241,KV ,LAS,585,BALAS ,307,Spanish ,  ,  ,33,8,25,0,14,2,1,13,0,0,1,2,0,31,2,10KV0307BALA
+120241,KV ,LAS,585,BALAS ,307,Spanish ,  ,  ,3,1,2,0,0,0,0,3,0,0,0,0,0,3,0,10KV8037BALA
+120241,KV ,LAS,585,MA ,307,Spanish ,5122,Spanish Linguistics ,8,5,3,0,1,0,0,2,0,0,0,5,0,0,8,10KS0307MA
+120241,KV ,LAS,585,MA ,307,Spanish ,5363,Spanish Literatures & Cultures ,8,4,4,0,1,0,0,1,0,0,0,6,0,1,7,10KS0307MA
+120241,KV ,LAS,585,PHD ,307,Spanish ,  ,  ,30,11,19,0,3,0,0,9,0,0,0,18,0,2,28,10KS0307PHD
+120241,KV ,LAS,585,PHD ,307,Spanish ,5367,Sec Lang Acquis & Teacher Ed ,2,1,1,0,0,0,0,1,0,0,0,1,0,0,2,10KS0307PHD
+120241,KV ,LAS,604,PHD ,325,Molecular & Integrative Physi ,  ,  ,31,7,24,0,5,0,2,0,0,0,0,24,0,4,27,10KS0325PHD
+120241,KV ,LAS,655,BS ,336,Geology ,  ,  ,21,9,12,0,14,0,0,4,0,0,1,1,1,19,2,10KV0336BS
+120241,KV ,LAS,655,BS ,336,Geology ,3880,Geophysics ,2,1,1,0,0,1,0,0,0,0,1,0,0,1,1,10KV3880BS
+120241,KV ,LAS,655,BS ,336,Geology ,3881,Environmental Geology ,2,1,1,0,2,0,0,0,0,0,0,0,0,2,0,10KV3881BS
+120241,KV ,LAS,655,BSLAS ,336,Geology ,  ,  ,11,5,6,0,8,1,0,1,0,0,0,1,0,10,1,10KV0336BSLA
+120241,KV ,LAS,655,BSLAS ,336,Geology ,3882,Earth & Environmental Sciences ,3,1,2,0,2,0,0,1,0,0,0,0,0,3,0,10KV3882BSLA
+120241,KV ,LAS,655,BSLAS ,336,Geology ,3882,Earth & Environmental Sciences ,1,0,1,0,0,0,0,1,0,0,0,0,0,1,0,10KV8037BSLA
+120241,KV ,LAS,655,MS ,336,Geology ,  ,  ,9,6,3,0,7,0,0,0,0,0,0,2,0,4,5,10KS0336MS
+120241,KV ,LAS,655,MS ,6059,Environmental Geology ,  ,  ,7,3,4,0,6,0,0,1,0,0,0,0,0,2,5,1PKS6059MSU
+120241,KV ,LAS,655,NDEG ,6059,Environmental Geology ,  ,  ,8,4,4,0,4,0,0,2,0,0,1,0,1,0,8,1PKS6059NDEU
+120241,KV ,LAS,655,PHD ,336,Geology ,  ,  ,20,11,9,0,10,0,2,0,0,0,1,7,0,8,12,10KS0336PHD
+120241,KV ,LAS,670,MA ,5203,European Union Studies ,  ,  ,3,1,2,0,0,0,0,2,0,0,0,1,0,2,1,10KS5203MA
+120241,KV ,LAS,680,BALAS ,1279,Gender and Women's Studies ,  ,  ,33,0,33,0,13,5,3,4,0,0,0,7,1,25,8,10KV1279BALA
+120241,KV ,LAS,680,BALAS ,1279,Gender and Women's Studies ,  ,  ,2,1,1,0,1,0,0,1,0,0,0,0,0,2,0,10KV8037BALA
+120241,KV ,LAS,687,BS ,300,Chemical Engineering ,  ,  ,421,270,150,1,178,124,10,33,0,0,23,43,10,322,99,10KV0300BS
+120241,KV ,LAS,687,BS ,300,Chemical Engineering ,5029,Biomolecular Engineering ,10,5,5,0,4,5,0,0,0,0,0,1,0,9,1,10KV5029BS
+120241,KV ,LAS,687,PHD ,300,Chemical Engineering ,  ,  ,121,74,47,0,15,14,2,13,0,0,2,75,0,9,112,10KS0300PHD
+120241,KV ,LAS,687,PHD ,300,Chemical Engineering ,5511,Computational Sci & Engr ,7,5,2,0,2,1,0,0,0,0,1,3,0,0,7,10KS0300PHD
+120241,KV ,LAS,710,BALAS ,343,Political Science ,  ,  ,20,10,10,0,6,4,1,7,0,0,2,0,0,19,1,10KV0343BALA
+120241,KV ,LAS,710,BALAS ,343,Political Science ,  ,  ,11,4,7,0,7,0,0,3,0,0,1,0,0,10,1,10KV8037BALA
+120241,KV ,LAS,710,BALAS ,343,Political Science ,5472,Civic Leadership ,3,1,2,0,2,0,1,0,0,0,0,0,0,3,0,10KV0343BALA
+120241,KV ,LAS,710,BALAS ,343,Political Science ,5659,General Political Science ,73,39,34,0,36,13,3,11,0,0,6,3,1,66,7,10KV0343BALA
+120241,KV ,LAS,710,BALAS ,343,Political Science ,5659,General Political Science ,36,12,24,0,20,1,2,12,0,0,1,0,0,35,1,10KV8037BALA
+120241,KV ,LAS,710,BALAS ,343,Political Science ,5660,Citizen Politics ,20,6,14,0,8,4,1,4,0,0,3,0,0,17,3,10KV0343BALA
+120241,KV ,LAS,710,BALAS ,343,Political Science ,5660,Citizen Politics ,11,4,7,0,3,1,0,7,0,0,0,0,0,11,0,10KV8037BALA
+120241,KV ,LAS,710,BALAS ,343,Political Science ,5661,Public Policy & Democratic Ins ,42,22,20,0,18,3,8,13,0,0,0,0,0,41,1,10KV0343BALA
+120241,KV ,LAS,710,BALAS ,343,Political Science ,5661,Public Policy & Democratic Ins ,15,3,12,0,11,1,0,1,0,0,0,0,2,14,1,10KV8037BALA
+120241,KV ,LAS,710,BALAS ,343,Political Science ,5662,World Politics ,12,6,6,0,5,1,0,2,0,0,2,1,1,10,2,10KV0343BALA
+120241,KV ,LAS,710,BALAS ,343,Political Science ,5662,World Politics ,5,3,2,0,1,0,0,4,0,0,0,0,0,5,0,10KV8037BALA
+120241,KV ,LAS,710,BALAS ,343,Political Science ,5663,Law and Power ,108,42,66,0,59,9,13,23,0,0,2,0,2,100,8,10KV0343BALA
+120241,KV ,LAS,710,BALAS ,343,Political Science ,5663,Law and Power ,28,7,21,0,16,2,0,8,0,0,2,0,0,27,1,10KV8037BALA
+120241,KV ,LAS,710,BALAS ,343,Political Science ,5664,International Relations ,51,30,21,0,22,6,6,8,0,0,3,6,0,42,9,10KV0343BALA
+120241,KV ,LAS,710,BALAS ,343,Political Science ,5664,International Relations ,22,12,10,0,12,6,0,0,0,0,3,1,0,20,2,10KV8037BALA
+120241,KV ,LAS,710,NONE ,343,Political Science ,  ,  ,421,182,239,0,198,57,37,87,0,0,19,17,6,379,42,10KV0343NONE
+120241,KV ,LAS,710,PHD ,343,Political Science ,  ,  ,50,23,27,0,9,1,2,5,0,0,1,32,0,2,48,10KS0343PHD
+120241,KV ,LAS,715,BALAS ,332,Philosophy ,  ,  ,86,55,31,0,35,16,6,17,0,0,3,9,0,72,14,10KV0332BALA
+120241,KV ,LAS,715,BALAS ,332,Philosophy ,  ,  ,4,3,1,0,3,1,0,0,0,0,0,0,0,4,0,10KV8037BALA
+120241,KV ,LAS,715,BSLAS ,5679,Computer Science & Philosophy ,  ,  ,84,62,22,0,17,46,1,0,0,0,2,17,1,31,53,10KV5679BSLA
+120241,KV ,LAS,715,PHD ,332,Philosophy ,  ,  ,28,21,7,0,14,0,0,2,0,0,1,9,2,2,26,10KS0332PHD
+120241,KV ,LAS,729,MA ,286,Latin American Studies ,  ,  ,5,1,4,0,0,0,0,1,0,0,0,4,0,0,5,10KS0286MA
+120241,KV ,LAS,771,BALAS ,5868,Comparative & World Literature ,  ,  ,3,2,1,0,2,1,0,0,0,0,0,0,0,2,1,10KV5868BALA
+120241,KV ,LAS,771,BALAS ,5868,Comparative & World Literature ,3905,World Literature ,1,0,1,0,0,0,0,1,0,0,0,0,0,1,0,10KV8037BALA
+120241,KV ,LAS,771,PHD ,1120,Comparative Literature ,  ,  ,18,4,14,0,3,0,0,0,0,0,0,15,0,0,18,10KS1120PHD
+120241,KV ,LAS,771,PHD ,1120,Comparative Literature ,5080,Medieval Studies ,2,0,2,0,1,0,0,0,0,0,0,0,1,0,2,10KS1120PHD
+120241,KV ,LAS,787,MA ,5346,Translation and Interpreting ,  ,  ,11,5,6,0,6,0,0,1,0,0,0,4,0,4,7,10KS5346MA
+120241,KV ,LAS,787,MA ,5346,Translation and Interpreting ,  ,  ,20,3,17,0,9,3,0,5,0,0,0,0,3,5,15,10KS5346MAU
+120241,KV ,LAS,864,BALAS ,301,Linguistics ,  ,  ,59,23,36,0,30,10,2,7,0,0,6,4,0,49,10,10KV0301BALA
+120241,KV ,LAS,864,BALAS ,301,Linguistics ,  ,  ,4,1,3,0,1,2,0,1,0,0,0,0,0,3,1,10KV8037BALA
+120241,KV ,LAS,864,BALAS ,6039,Linguistics and Teaching ESL ,  ,  ,13,4,9,0,6,4,0,3,0,0,0,0,0,12,1,10KV6039BALA
+120241,KV ,LAS,864,BSLAS ,5351,Computer Sci & Linguistics ,  ,  ,94,64,30,0,12,61,0,2,0,0,3,14,2,29,65,10KV5351BSLA
+120241,KV ,LAS,864,BSLAS ,5351,Computer Sci & Linguistics ,  ,  ,4,4,0,0,2,2,0,0,0,0,0,0,0,2,2,10KV8037BSLA
+120241,KV ,LAS,864,MA ,299,Teaching of English Sec Lang ,  ,  ,23,4,19,0,3,1,0,1,0,0,0,18,0,3,20,10KS0299MA
+120241,KV ,LAS,864,PHD ,301,Linguistics ,  ,  ,34,15,19,0,11,1,0,5,0,0,1,16,0,4,30,10KS0301PHD
+120241,KV ,LAS,864,PHD ,301,Linguistics ,5367,Sec Lang Acquis & Teacher Ed ,2,0,2,0,0,0,0,0,0,0,0,2,0,0,2,10KS0301PHD
+120241,KV ,LAS,872,BALAS ,5330,Geography & Geographic Info Sc ,3884,Human Geography ,1,1,0,0,1,0,0,0,0,0,0,0,0,1,0,10KV5330BALA
+120241,KV ,LAS,872,BALAS ,5330,Geography & Geographic Info Sc ,3886,Geographic Information Science ,1,1,0,0,1,0,0,0,0,0,0,0,0,1,0,10KV5330BALA
+120241,KV ,LAS,872,BALAS ,5330,Geography & Geographic Info Sc ,5677,General Geography ,1,1,0,0,0,0,0,0,0,0,0,1,0,0,1,10KV5330BALA
+120241,KV ,LAS,872,BALAS ,5330,Geography & Geographic Info Sc ,5677,General Geography ,1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,10KV8037BALA
+120241,KV ,LAS,872,BSLAS ,5676,Computer Science & Geog & GIS ,  ,  ,18,14,4,0,3,9,0,0,0,0,0,5,1,11,7,10KV5676BSLA
+120241,KV ,LAS,872,BSLAS ,5694,Geography & Geographic Info Sc ,  ,  ,2,2,0,0,1,0,0,0,0,0,0,1,0,1,1,10KV5694BSLA
+120241,KV ,LAS,872,BSLAS ,5694,Geography & Geographic Info Sc ,3886,Geographic Information Science ,41,29,12,0,16,6,1,3,0,0,1,12,2,27,14,10KV5694BSLA
+120241,KV ,LAS,872,BSLAS ,5694,Geography & Geographic Info Sc ,3886,Geographic Information Science ,4,0,4,0,3,0,0,0,0,0,1,0,0,4,0,10KV8037BSLA
+120241,KV ,LAS,872,MA ,341,Geography ,  ,  ,2,0,2,0,1,0,0,1,0,0,0,0,0,0,2,10KS0341MA
+120241,KV ,LAS,872,MS ,5856,Geography ,3886,Geographic Information Science ,7,6,1,0,0,0,0,0,0,0,0,7,0,0,7,1PKS5856MS
+120241,KV ,LAS,872,MS ,6073,CyberGIS & Geospatial Data Sci ,  ,  ,9,6,3,0,5,0,2,1,0,0,0,0,1,5,4,1PKS6073MSU
+120241,KV ,LAS,872,NDEG ,6073,CyberGIS & Geospatial Data Sci ,  ,  ,3,1,2,0,2,0,0,0,0,0,0,0,1,1,2,1PKS6073NDEU
+120241,KV ,LAS,872,NONE ,5330,Geography & Geographic Info Sc ,  ,  ,7,5,2,0,2,2,0,1,0,0,0,2,0,3,4,10KV5330NONE
+120241,KV ,LAS,872,PHD ,341,Geography ,  ,  ,1,1,0,0,1,0,0,0,0,0,0,0,0,1,0,10KS0341PHD
+120241,KV ,LAS,872,PHD ,5856,Geography ,  ,  ,27,13,14,0,5,1,0,3,0,0,0,18,0,3,24,10KS5856PHD
+120241,KV ,LAS,872,PHD ,5856,Geography ,5511,Computational Sci & Engr ,2,0,2,0,1,0,0,0,0,0,0,1,0,0,2,10KS5856PHD
+120241,KV ,LAS,927,BA ,296,Teaching of German ,  ,  ,2,1,1,0,2,0,0,0,0,0,0,0,0,2,0,10KV0296BA
+120241,KV ,LAS,927,BALAS ,1292,Germanic Studies ,5548,German Bus & Commercial St ,1,1,0,0,0,0,0,1,0,0,0,0,0,1,0,10KV1292BALA
+120241,KV ,LAS,927,BALAS ,1292,Germanic Studies ,5586,German Culture and Literature ,3,2,1,0,2,1,0,0,0,0,0,0,0,3,0,10KV1292BALA
+120241,KV ,LAS,927,MA ,303,German ,  ,  ,3,1,2,0,2,0,0,0,0,0,0,1,0,2,1,10KS0303MA
+120241,KV ,LAS,927,NDEG ,303,German ,  ,  ,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,10KS0303NDEG
+120241,KV ,LAS,927,PHD ,303,German ,  ,  ,6,5,1,0,1,0,0,0,0,0,0,5,0,0,6,10KS0303PHD
+120241,KV ,LAS,927,PHD ,303,German ,5080,Medieval Studies ,1,1,0,0,1,0,0,0,0,0,0,0,0,1,0,10KS0303PHD
+120241,KV ,LAS,948,PHD ,322,Microbiology ,  ,  ,58,27,31,0,32,1,1,4,0,0,0,20,0,9,49,10KS0322PHD
+120241,KV ,LAS,954,MA ,5312,S Asian & Middle Eastern St ,  ,  ,1,1,0,0,0,0,0,0,0,0,0,1,0,0,1,10KS5312MA
+120241,KV ,LAS,958,BALAS ,5459,Slavic Studies ,  ,  ,3,3,0,0,1,0,0,1,0,0,1,0,0,3,0,10KV5459BALA
+120241,KV ,LAS,958,PHD ,302,Slavic Languages & Literature ,  ,  ,13,3,10,0,3,1,0,0,0,0,0,9,0,1,12,10KS0302PHD
+120241,KV ,LAS,968,PHD ,323,Neuroscience ,  ,  ,51,20,31,0,13,4,0,8,0,0,3,23,0,9,42,10KS0323PHD
+120241,KV ,LAS,982,BALAS ,5167,Latina/Latino Studies ,  ,  ,8,0,8,0,0,0,0,8,0,0,0,0,0,8,0,10KV5167BALA
+120241,KV ,LAS,982,BALAS ,5167,Latina/Latino Studies ,  ,  ,1,0,1,0,0,0,0,1,0,0,0,0,0,1,0,10KV8037BALA
+120241,KV ,LAS,985,BA ,295,Teaching of French ,  ,  ,1,1,0,0,0,0,0,1,0,0,0,0,0,1,0,10KV0295BA
+120241,KV ,LAS,985,BALAS ,304,French ,  ,  ,3,2,1,0,2,0,1,0,0,0,0,0,0,3,0,10KV0304BALA
+120241,KV ,LAS,985,BALAS ,304,French ,  ,  ,1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,10KV8037BALA
+120241,KV ,LAS,985,BALAS ,304,French ,3876,French Studies ,4,1,3,0,3,0,0,1,0,0,0,0,0,3,1,10KV3876BALA
+120241,KV ,LAS,985,BALAS ,305,Italian ,  ,  ,1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,10KV0305BALA
+120241,KV ,LAS,985,MA ,304,French ,  ,  ,2,1,1,0,0,0,2,0,0,0,0,0,0,1,1,10KS0304MA
+120241,KV ,LAS,985,MA ,305,Italian ,  ,  ,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,10KS0305MA
+120241,KV ,LAS,985,NDEG ,304,French ,  ,  ,2,0,2,0,0,0,0,0,0,0,0,2,0,0,2,10KS0304NDEG
+120241,KV ,LAS,985,PHD ,304,French ,  ,  ,14,5,9,0,9,0,1,0,0,0,1,3,0,2,12,10KS0304PHD
+120241,KV ,LAS,985,PHD ,305,Italian ,  ,  ,4,0,4,0,1,0,0,0,0,0,0,3,0,1,3,10KS0305PHD
+120241,KW ,General Studies,605,NONE ,5083,Undeclared ,  ,  ,1717,924,793,0,582,228,185,401,1,2,61,237,20,1430,287,10KW5083NONE
+120241,KY ,Applied Health Sci,581,BS ,349,Community Health ,  ,  ,113,37,76,0,33,22,28,28,0,0,1,1,0,105,8,10KY0349BS
+120241,KY ,Applied Health Sci,581,BS ,349,Community Health ,473,Health Education ,88,9,79,0,23,11,24,24,0,0,4,1,1,82,6,10KY0473BS
+120241,KY ,Applied Health Sci,581,BS ,349,Community Health ,474,Health Planning & Admin ,211,60,151,0,66,52,34,46,0,0,10,2,1,204,7,10KY0474BS
+120241,KY ,Applied Health Sci,581,BS ,349,Community Health ,495,Rehab & Disability Studies ,35,9,26,0,9,4,4,15,0,0,3,0,0,33,2,10KY0495BS
+120241,KY ,Applied Health Sci,581,BS ,351,Kinesiology ,  ,  ,619,299,319,1,311,104,44,107,0,1,31,16,5,568,51,10KY0351BS
+120241,KY ,Applied Health Sci,581,BS ,351,Kinesiology ,4049,Teacher Education K-12 ,23,16,7,0,16,2,2,0,0,0,2,0,1,23,0,10KY4049BS
+120241,KY ,Applied Health Sci,581,BS ,5460,Interdisciplinary Health Sci ,  ,  ,121,23,98,0,53,28,9,25,0,0,4,1,1,116,5,10KY5460BS
+120241,KY ,Applied Health Sci,581,BS ,5460,Interdisciplinary Health Sci ,5219,Health and Aging ,105,22,83,0,50,22,15,13,0,0,4,1,0,100,5,10KY5460BS
+120241,KY ,Applied Health Sci,581,BS ,5460,Interdisciplinary Health Sci ,5220,Health Behavior Change ,136,21,115,0,59,32,16,21,0,0,4,1,3,131,5,10KY5460BS
+120241,KY ,Applied Health Sci,581,BS ,5460,Interdisciplinary Health Sci ,5221,Health Diversity ,155,14,141,0,40,38,34,39,0,0,4,0,0,152,3,10KY5460BS
+120241,KY ,Applied Health Sci,581,BS ,5460,Interdisciplinary Health Sci ,6145,Health Technology ,28,6,22,0,6,12,5,3,0,0,1,1,0,26,2,10KY5460BS
+120241,KY ,Applied Health Sci,581,MHAD ,1300,Health Administration ,  ,  ,23,9,14,0,11,5,3,2,0,0,0,2,0,21,2,1PKS1300MHAD
+120241,KY ,Applied Health Sci,581,MPH ,1630,Public Health ,  ,  ,4,0,4,0,2,1,1,0,0,0,0,0,0,3,1,10KS1630MPH
+120241,KY ,Applied Health Sci,581,MPH ,1630,Public Health ,5913,BS i-Health/MPH Public Health ,2,0,2,0,1,0,1,0,0,0,0,0,0,2,0,1PKS5913MPH
+120241,KY ,Applied Health Sci,581,MPH ,1630,Public Health ,5914,BS ComHealth/MPH PublicHealth ,8,1,7,0,2,1,1,4,0,0,0,0,0,8,0,1PKS5914MPH
+120241,KY ,Applied Health Sci,581,MPH ,1630,Public Health ,5915,BS Kinesiology/MPH PubicHealth ,1,0,1,0,0,0,0,0,0,0,1,0,0,1,0,1PKS5915MPH
+120241,KY ,Applied Health Sci,581,MPH ,5884,Epidemiology ,  ,  ,13,3,10,0,1,1,0,1,0,0,0,10,0,3,10,1PKS5884MPH
+120241,KY ,Applied Health Sci,581,MPH ,5884,Epidemiology ,6036,BS Community Health/MPH Epidem ,3,1,2,0,1,0,2,0,0,0,0,0,0,3,0,1PKS6036MPH
+120241,KY ,Applied Health Sci,581,MS ,349,Community Health ,  ,  ,9,1,8,0,0,1,1,3,0,0,0,4,0,3,6,10KS0349MS
+120241,KY ,Applied Health Sci,581,MS ,351,Kinesiology ,  ,  ,13,6,7,0,6,2,1,0,0,0,0,4,0,7,6,10KS0351MS
+120241,KY ,Applied Health Sci,581,MS ,5875,Health Technology ,  ,  ,6,4,2,0,3,0,0,1,0,0,0,2,0,4,2,1PKS5875MS
+120241,KY ,Applied Health Sci,581,PHD ,349,Community Health ,  ,  ,40,18,22,0,5,3,3,1,0,0,0,28,0,6,34,10KS0349PHD
+120241,KY ,Applied Health Sci,581,PHD ,351,Kinesiology ,  ,  ,47,21,26,0,19,1,1,2,0,0,1,22,1,9,38,10KS0351PHD
+120241,KY ,Applied Health Sci,679,AUD ,1053,Audiology ,  ,  ,24,3,21,0,14,1,0,4,0,0,1,4,0,17,7,10KS1053AUD
+120241,KY ,Applied Health Sci,679,BS ,354,Speech & Hearing Science ,  ,  ,39,4,35,0,26,5,0,6,0,0,2,0,0,37,2,10KY0354BS
+120241,KY ,Applied Health Sci,679,BS ,354,Speech & Hearing Science ,4067,Audiology ,12,0,12,0,9,1,0,2,0,0,0,0,0,12,0,10KY4067BS
+120241,KY ,Applied Health Sci,679,BS ,354,Speech & Hearing Science ,4068,Speech-Language Pathology ,161,4,157,0,102,12,8,34,0,0,4,0,1,160,1,10KY4068BS
+120241,KY ,Applied Health Sci,679,BS ,354,Speech & Hearing Science ,5465,Cultural-Linguistic Diversity ,1,0,1,0,0,1,0,0,0,0,0,0,0,1,0,10KY5465BS
+120241,KY ,Applied Health Sci,679,MA ,354,Speech & Hearing Science ,  ,  ,48,0,48,0,31,3,4,5,0,0,3,1,1,44,4,10KS0354MA
+120241,KY ,Applied Health Sci,679,PHD ,354,Speech & Hearing Science ,  ,  ,14,3,11,0,6,0,0,0,0,0,0,8,0,2,12,10KS0354PHD
+120241,KY ,Applied Health Sci,682,NDEG ,67,Nondegree ,  ,  ,36,19,17,0,22,7,0,3,0,0,1,2,1,34,2,10KY0067NDEG
+120241,KY ,Applied Health Sci,714,BS ,4043,"Recreation, Sport, and Tourism ",  ,  ,13,10,3,0,8,0,3,2,0,0,0,0,0,10,3,10KY4043BS
+120241,KY ,Applied Health Sci,714,BS ,4043,"Recreation, Sport, and Tourism ",4044,Recreation Management ,10,3,7,0,5,1,2,2,0,0,0,0,0,9,1,10KY4044BS
+120241,KY ,Applied Health Sci,714,BS ,4043,"Recreation, Sport, and Tourism ",4045,Tourism Management ,19,5,14,0,11,1,3,2,0,0,2,0,0,18,1,10KY4045BS
+120241,KY ,Applied Health Sci,714,BS ,4043,"Recreation, Sport, and Tourism ",5266,Sport Management ,267,208,59,0,151,13,32,31,1,0,15,23,1,210,57,10KY5266BS
+120241,KY ,Applied Health Sci,714,BS ,4043,"Recreation, Sport, and Tourism ",5880,"BS/MS Recreation,Sport&Tourism ",2,2,0,0,1,0,1,0,0,0,0,0,0,2,0,10KY5880BS
+120241,KY ,Applied Health Sci,714,MS ,4043,"Recreation, Sport, and Tourism ",  ,  ,23,17,6,0,12,0,1,2,0,0,0,8,0,13,10,10KS4043MS
+120241,KY ,Applied Health Sci,714,MS ,4043,"Recreation, Sport, and Tourism ",  ,  ,23,17,6,0,16,1,3,1,0,0,0,0,2,11,12,10KS4043MSU
+120241,KY ,Applied Health Sci,714,MS ,4043,"Recreation, Sport, and Tourism ",5880,"BS/MS Recreation,Sport&Tourism ",3,1,2,0,2,0,0,0,0,0,1,0,0,3,0,10KS5880MS
+120241,KY ,Applied Health Sci,714,NDEG ,4043,"Recreation, Sport, and Tourism ",  ,  ,4,3,1,0,2,0,0,0,0,0,0,0,2,0,4,1PKS4043NDEU
+120241,KY ,Applied Health Sci,714,PHD ,4043,"Recreation, Sport, and Tourism ",  ,  ,31,16,15,0,5,0,4,3,0,0,1,18,0,5,26,10KS4043PHD
+120241,KY ,Applied Health Sci,754,NDEG ,67,Nondegree ,5464,Info Accessibility Dsgn&Policy ,14,3,11,0,9,3,0,2,0,0,0,0,0,0,14,1PKS5464NDEU
+120241,LC ,Applied Health Sci,282,MS ,5216,VMS - Pathobiology ,  ,  ,5,3,2,0,0,2,0,2,0,0,0,1,0,4,1,10KS5216MS
+120241,LC ,Applied Health Sci,282,PHD ,5216,VMS - Pathobiology ,  ,  ,53,29,24,0,10,0,0,1,0,0,0,41,1,6,47,10KS5216PHD
+120241,LC ,Applied Health Sci,444,DVM ,480,Veterinary Medicine ,  ,  ,566,86,480,0,434,26,9,68,1,0,21,5,2,327,239,10LC0480DVM
+120241,LC ,Applied Health Sci,444,MVS ,5921,Livestock Systems Health ,  ,  ,7,2,5,0,6,0,0,0,0,0,0,1,0,5,2,10KS5921MVS
+120241,LC ,Applied Health Sci,444,MVS ,5921,Livestock Systems Health ,  ,  ,62,12,50,0,41,1,5,7,0,0,1,0,7,21,41,1PKS5921MVSU
+120241,LC ,Applied Health Sci,444,NDEG ,480,Veterinary Medicine ,  ,  ,26,2,23,1,15,2,2,4,0,0,2,0,1,0,26,10LC0480NDEU
+120241,LC ,Applied Health Sci,598,MS ,359,VMS-Veterinary Clinical Medcne ,  ,  ,42,9,33,0,24,2,2,3,0,0,1,9,1,6,36,10KS0359MS
+120241,LC ,Applied Health Sci,873,MS ,5274,VMS - Comparative Biosciences ,  ,  ,2,1,1,0,0,0,0,0,0,0,0,2,0,0,2,10KS5274MS
+120241,LC ,Applied Health Sci,873,PHD ,5274,VMS - Comparative Biosciences ,  ,  ,30,8,22,0,4,2,3,0,0,0,0,21,0,2,28,10KS5274PHD
+120241,LG ,Labor & Employment,568,CERT ,5715,Human Resource Management ,  ,  ,3,3,0,0,2,0,0,0,0,0,1,0,0,2,1,1PKS5715CERU
+120241,LG ,Labor & Employment,568,CERT ,6125,Fundamentals of Human Resource ,  ,  ,1,1,0,0,0,0,1,0,0,0,0,0,0,1,0,1PKS6125CERU
+120241,LG ,Labor & Employment,568,CERT ,6126,Compensation Best Practices ,  ,  ,2,0,2,0,1,0,0,0,0,0,0,0,1,0,2,1PKS6126CERU
+120241,LG ,Labor & Employment,568,MHRIR ,364,Human Res & Industrial Rels ,  ,  ,110,39,71,0,36,20,9,11,0,0,1,33,0,67,43,10KS0364MHRI
+120241,LG ,Labor & Employment,568,MHRIR ,364,Human Res & Industrial Rels ,  ,  ,95,25,69,1,54,10,15,11,0,0,2,1,2,43,52,10KS0364MHRU
+120241,LG ,Labor & Employment,568,PHD ,364,Human Res & Industrial Rels ,  ,  ,15,3,12,0,2,1,0,1,0,0,0,11,0,1,14,10KS0364PHD
+120241,LL ,Social Work,783,BSW ,365,Social Work ,  ,  ,238,28,209,1,124,21,19,60,0,1,11,2,0,229,9,10LL0365BSW
+120241,LL ,Social Work,783,BSW ,365,Social Work ,  ,  ,22,4,18,0,18,1,1,2,0,0,0,0,0,22,0,10LL0365BSWX
+120241,LL ,Social Work,783,MSW ,365,Social Work ,5510,Advanced Clinical Practice ,129,14,114,1,66,10,14,32,0,0,7,0,0,124,5,10KS0365MSW
+120241,LL ,Social Work,783,MSW ,365,Social Work ,5510,Advanced Clinical Practice ,214,30,183,1,153,1,32,18,1,0,9,0,0,206,8,10KS0365MSWX
+120241,LL ,Social Work,783,MSW ,365,Social Work ,5559,Leadership and Social Change ,12,2,10,0,7,0,1,3,0,0,0,0,1,12,0,10KS0365MSW
+120241,LL ,Social Work,783,MSW ,365,Social Work ,5559,Leadership and Social Change ,35,9,26,0,22,1,5,6,0,0,1,0,0,29,6,10KS0365MSWX
+120241,LL ,Social Work,783,NDEG ,365,Social Work ,  ,  ,9,2,7,0,6,0,3,0,0,0,0,0,0,9,0,10KS0365NDEG
+120241,LL ,Social Work,783,NDEG ,365,Social Work ,  ,  ,1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,10LL0365NDEG
+120241,LL ,Social Work,783,PHD ,365,Social Work ,  ,  ,31,7,24,0,8,3,2,6,0,0,0,12,0,12,19,10KS0365PHD
+120241,LN ,Center Innov in Teach Learn ,641,NDEG ,1249,Nondegree-CE ,  ,  ,111,41,69,1,68,14,2,8,0,0,4,8,7,2,109,10LN1249NDEJ
+120241,LN ,Center Innov in Teach Learn ,641,NDEG ,1249,Nondegree-CE ,  ,  ,78,37,39,2,19,14,4,6,0,0,3,3,29,0,78,10LN1249NDEX
+120241,LP ,Ischool,468,PHD ,5094,Informatics ,  ,  ,70,39,31,0,14,8,6,2,0,0,0,40,0,18,52,10KS5094PHD
+120241,LP ,Ischool,992,BS ,5695,Information Sciences ,  ,  ,407,210,196,1,86,162,38,42,0,0,9,62,8,303,104,10LP5695BS
+120241,LP ,Ischool,992,BS ,6074,Information Sciences + DS ,  ,  ,186,115,71,0,35,73,2,8,0,0,4,62,2,86,100,10LP6074BS
+120241,LP ,Ischool,992,CAS ,370,Library & Information Science ,  ,  ,2,2,0,0,2,0,0,0,0,0,0,0,0,2,0,10KS0370CAS
+120241,LP ,Ischool,992,CAS ,370,Library & Information Science ,  ,  ,8,1,7,0,5,0,0,3,0,0,0,0,0,8,0,10KS0370CASU
+120241,LP ,Ischool,992,MS ,370,Library & Information Science ,  ,  ,204,38,165,1,136,13,9,21,0,0,13,11,1,108,96,10KS0370MS
+120241,LP ,Ischool,992,MS ,370,Library & Information Science ,  ,  ,374,52,306,16,277,21,17,38,0,0,14,2,5,226,148,10KS0370MSU
+120241,LP ,Ischool,992,MS ,4026,Bioinformatics ,5956,Information Sciences ,3,0,3,0,0,0,0,0,0,0,0,3,0,0,3,10KS5956MS
+120241,LP ,Ischool,992,MS ,5581,Information Management ,  ,  ,232,117,115,0,1,9,0,0,0,0,1,221,0,7,225,1PKS5581MS
+120241,LP ,Ischool,992,NDEG ,370,Library & Information Science ,  ,  ,52,4,48,0,28,2,3,5,0,0,0,0,14,0,52,10KS0370NDEU
+120241,LP ,Ischool,992,NDEG ,5695,Information Sciences ,  ,  ,6,6,0,0,2,1,2,1,0,0,0,0,0,6,0,10LP5695NDEG
+120241,LP ,Ischool,992,PHD ,370,Library & Information Science ,  ,  ,8,2,6,0,2,1,1,1,0,0,0,3,0,3,5,10KS0370PHD
+120241,LP ,Ischool,992,PHD ,5695,Information Sciences ,  ,  ,113,50,63,0,18,8,10,8,0,0,1,68,0,15,98,10KS5695PHD
+120241,LT ,Carle,869,MD ,5641,Medicine - Carle Illinois COM ,  ,  ,208,102,103,3,71,100,10,9,0,0,10,0,8,47,161,10LT5641MD
+120241,NB ,Provost,593,NDEG ,67,Nondegree ,  ,  ,3,3,0,0,2,0,1,0,0,0,0,0,0,3,0,10NB0067NDEG
+ ,,,,,,,,,,,,,,,,,,,,,,,,
+ ,,,,,,,,,,,,,,,,,,,,,,,,
