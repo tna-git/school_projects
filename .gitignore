@@ -1,0 +1,11 @@
+# archives
+*.zip
+
+# large datasets
+*.csv
+
+# checkpoints
+.ipynb_checkpoints/
+
+# OS junk
+desktop.ini
