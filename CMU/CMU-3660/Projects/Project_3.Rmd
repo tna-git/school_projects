@@ -1,0 +1,240 @@
+---
+title: Overview of Statistical Learning and Modeling -- 36-600
+subtitle: |
+  Project 3: Classification\
+  Due Friday, November 21, 11:59pm\
+author: |
+  Trishla Nair
+output:
+  pdf_document:
+    toc: false
+  html_document:
+    toc: false
+    code-overflow: wrap
+    code-fold: false
+    theme: spacelab
+urlcolor: blue
+---
+The goal of this project is to use classification to see if we can distinguish wine by its charcteristics. The dataset includes 12 features including the target and 6497 observations. The features examine the composition of the wines.
+```{r}
+library(tidyverse)
+library(ggplot2)
+
+df<- read.csv("C:/Users/Trish/Documents/CMU/CMU-3660/Projects/wineQuality.csv")
+df$label <- ifelse(df$label == "GOOD", 1, 0)
+df$label <- as.factor(df$label)
+y <-df$label
+print(summary(df))
+print(dim(df))
+
+boxplot(df)
+```
+based on the box plot, we can see there is general little variability except for the total.sd and free.sd features. As we are looking into wine I also looked into the disrtibutions of pH, sugar, and alcohol levels.
+
+
+```{r}
+ggplot(df, aes(pH)) + geom_histogram(bins = 30, fill = "red") + theme_minimal()
+```
+
+```{r}
+ggplot(df, aes(sugar)) + geom_histogram(bins = 30, fill = "blue") + theme_minimal()
+```
+
+
+```{r}
+ggplot(df, aes(alcohol)) + geom_histogram(bins = 30, fill = "gold") + theme_minimal()
+```
+After examining the distributions of these variables, they are generally unimodal, but visibly skewed, so I would need to standardized the data.
+
+After that, I generated a correlation matrix:
+```{r}
+library(corrplot)
+df$label <- as.numeric(as.character(df$label))
+corrplot(cor(df), method = "number",tl.cex =0.5)
+```
+Based on the matrix, the terms do not seem to be highly correlated withh the target variable. The highest correlation however seems to be between sugar and total. sd and total.sd and free.sd.
+
+I then ran a few logistic regression models with and without minteraction terms to see which would perform better based on the AUC.
+```{r}
+library(caret)
+set.seed(42)
+n <- nrow(df)
+train_idx <- sample(1:n, 0.7 * n)
+train_set <- df[train_idx,]
+test_set  <- df[-train_idx, ]
+
+predictor_cols <- setdiff(names(train_set), "label")
+
+# Standardize predictors
+preProc <- preProcess(train_set[, predictor_cols], method = c("center", "scale"))
+train_scaled <- train_set
+train_scaled[, predictor_cols] <- predict(preProc, train_set[, predictor_cols])
+test_scaled <- test_set
+test_scaled[, predictor_cols] <- predict(preProc, test_set[, predictor_cols])
+
+```
+
+```{r}
+library(pROC)
+
+logit_model <- glm(label ~ ., data = train_scaled, family = "binomial")
+summary(logit_model)
+
+probabilities <- predict(logit_model, newdata = test_scaled, type = "response")
+roc_obj <- roc(test_scaled$label, probabilities)
+plot(roc_obj)
+
+print(auc(roc_obj))
+```
+```{r}
+logit_model_interaction <- glm(label ~ alcohol * fix.acid, data = train_scaled, family = "binomial")
+summary(logit_model_interaction)
+
+probabilities <- predict(logit_model_interaction, newdata = test_scaled, type = "response")
+
+# Generate the ROC curve
+roc_obj <- roc(test_scaled$label, probabilities)
+
+# Plot the ROC curve
+plot(roc_obj)
+
+# Get Area Under the Curve (AUC)
+print(auc(roc_obj))
+```
+
+```{r}
+model <- glm(label ~ fix.acid + vol.acid + citric + sugar + chlorides + free.sd +
+                   total.sd + density + pH + sulphates + alcohol, 
+                   data = train_scaled, family = "binomial")
+summary(model)
+
+# Predict probabilities on the test set
+probabilities <- predict(model, newdata = test_scaled, type = "response")
+
+# Generate the ROC curve
+roc_obj <- roc(test_scaled$label, probabilities)
+
+# Plot the ROC curve
+plot(roc_obj)
+
+# Get Area Under the Curve (AUC)
+print(auc(roc_obj))
+
+```
+Based on the models I made, the one that performed the best was the one where all terms interacted with eachother. Then I computed Youden's J statisticb for the threshold.
+```{r}
+library(pROC)
+
+# Get all thresholds and statistics
+coords_df <- coords(roc_obj, x = "all", ret = c("threshold", "sensitivity", "specificity"))
+
+# Calculate Youden's J for all thresholds
+youden_J <- coords_df$sensitivity + coords_df$specificity - 1
+
+# Find the threshold that gives the maximum Youden's J
+optimal_idx <- which.max(youden_J)
+optimal_threshold <- coords_df$threshold[optimal_idx]
+optimal_J <- youden_J[optimal_idx]
+print(optimal_J)
+```
+The calculated threshold is 0.4558348. Using that, I reclassified the predicted values from the scaled test set and generated the classification matrix. The calculated accuracy was 0.7128 and the misclassification rate is 0.2871795. 
+```{r}
+library(pROC)
+library(caret)
+
+predicted_class <- ifelse(probabilities > optimal_threshold, 1, 0)
+
+cm <- confusionMatrix(as.factor(predicted_class), as.factor(test_set$label))
+print(cm)
+
+misclass_rate <- 1 - cm$overall['Accuracy']
+print(misclass_rate)
+```
+I was then curious to see if other models could perform better than my logistic regression, so I tried an XGB Boost and an SVM as shown below. Neither model's accuracy is any better than my logistic regression's, even after examining the J statistic. 
+```{r}
+library(xgboost)
+library(Matrix)
+library(caret)
+library(pROC)
+
+train_matrix <- as.matrix(train_scaled[, predictor_cols])
+test_matrix <- as.matrix(test_scaled[, predictor_cols])
+label_train <- as.numeric(as.character(train_scaled$label))
+label_test <- as.numeric(as.character(test_scaled$label))
+
+xgb_model <- xgboost(data = train_matrix, label = label_train,
+                     max.depth = 3, eta = 0.1, nrounds = 50,
+                     objective = "binary:logistic", verbose = 0)
+probabilities <- predict(xgb_model, newdata = test_matrix, type = "response")
+
+# Generate the ROC curve
+roc_obj <- roc(label_test, probabilities)
+plot(roc_obj)
+print(auc(roc_obj))
+
+# Get all thresholds and statistics
+coords_df <- coords(roc_obj, x = "all", ret = c("threshold", "sensitivity", "specificity"))
+
+# Calculate Youden's J for all thresholds
+youden_J <- coords_df$sensitivity + coords_df$specificity - 1
+
+# Find the threshold that gives the maximum Youden's J
+optimal_idx <- which.max(youden_J)
+optimal_threshold <- coords_df$threshold[optimal_idx]
+optimal_J <- youden_J[optimal_idx]
+print(optimal_J)
+
+xgb_prob <- predict(xgb_model, test_matrix)
+xgb_pred <- ifelse(xgb_prob > optimal_threshold, 1, 0)
+cm_xgb <- confusionMatrix(as.factor(xgb_pred), as.factor(label_test))
+
+print(cm_xgb)
+```
+```{r}
+# Extract feature importance from the XGBoost model
+importance_matrix <- xgb.importance(feature_names = colnames(train_matrix), model = xgb_model)
+print(importance_matrix)
+xgb.plot.importance(importance_matrix)
+```
+
+```{r}
+library(e1071)
+library(caret)
+library(pROC)
+
+# Ensure your label is a factor
+train_scaled$label <- as.factor(train_scaled$label)
+test_scaled$label <- as.factor(test_scaled$label)
+
+# Train SVM with probability estimates enabled
+svm_model <- svm(label ~ fix.acid + vol.acid + citric + sugar + chlorides + free.sd +
+                 total.sd + density + pH + sulphates + alcohol,
+                 data = train_scaled,
+                 kernel = "linear",
+                 probability = TRUE)
+
+# Predict probabilities on test set
+svm_pred_prob <- attr(predict(svm_model, test_scaled, probability = TRUE), "probabilities")[, "1"]
+
+# ROC Curve and AUC
+roc_obj <- roc(test_scaled$label, svm_pred_prob)
+plot(roc_obj, main = "ROC Curve for SVM")
+auc_val <- 
+print(auc(roc_obj))
+
+# Compute Youden's J statistic for threshold selection
+coords_df <- coords(roc_obj, x = "all", ret = c("threshold", "sensitivity", "specificity"))
+youden_J <- coords_df$sensitivity + coords_df$specificity - 1
+optimal_idx <- which.max(youden_J)
+optimal_threshold <- coords_df$threshold[optimal_idx]
+optimal_J <- youden_J[optimal_idx]
+print(paste("Optimal Youden's J:", optimal_J))
+print(paste("Optimal threshold:", optimal_threshold))
+
+# Class prediction using optimal threshold
+svm_pred <- factor(ifelse(svm_pred_prob > optimal_threshold, "1", "0"), levels = levels(test_scaled$label))
+
+cm_svm <- confusionMatrix(svm_pred, test_scaled$label)
+print(cm_svm)
+```
+Based on all the models that were made, the best by far is the logistic regression as it is the most robust. However the model's accuracy can be greatly improved by testing if other parameters and adding a term to handle noise would improve the model's accuracy.

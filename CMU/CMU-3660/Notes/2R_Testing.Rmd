@@ -1,0 +1,232 @@
+---
+title: "The Basics of Hypothesis Testing"
+author: "36-600"
+date: '9/4/2025'
+output:
+  xaringan::moon_reader:
+    nature:
+      ratio: '16:9'
+      beforeInit: "macros.js"
+---
+layout: true
+background-image: url(background.png)
+background-size: cover
+---
+
+<style type="text/css">
+.remark-slide-content {
+    font-size: 16px;
+    padding: 1em 4em 1em 4em;
+}
+a { 
+    color: blue; 
+}
+.remark-slide-content h1 {
+    font-family: cabin;
+}
+.remark-slide-content h2 {
+    font-family: cabin;
+}
+.remark-slide-content h3 {
+    font-family: cabin;
+}
+.remark-slide-number {
+    font-size: 8pt;
+    margin-bottom: -5.6px;
+    margin-right: 1145px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+.remark-code {
+    font-size: 16px;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 65% !important;
+}
+</style>
+
+```{css,echo=FALSE}
+table {
+  font-size: 12px;
+}
+```
+
+
+## Hypothesis Testing: the Basic Idea
+
+- A *hypothesis test* is the evaluation of a *pre-conceived notion*, often about the value of a population distribution's parameter $\theta$ (the symbol we use for an arbitrary parameter); we call this notion the *null hypothesis*
+
+  + e.g., the true mean human height is $\mathcal{H}_0: \mu_0 = 65$ inches
+
+- Before looking at any data, we specify:
+
+  + the null and alternative hypotheses (where the alternative is most commonly of the forms: $\theta < \theta_0$, $\theta > \theta_0$, or $\theta \neq \theta_0$)
+  
+  + a Type I error, conventionally denoted $\alpha$, that represents a "tolerance" for rejecting the null hypothesis when it is indeed **correct**; $\alpha$ is, by convention, often set to 0.05 
+  
+- To perform the hypothesis test, we:
+
+  + specify a statistic (e.g., the sample mean $\overline{X}$)
+  
+  + specify the sampling distribution for that statistic, *assuming the null is true*
+  
+  + determine a *p-value* $-$ the probability that we would observe a test statistic *as or more extreme* than that value of the test statistic we actually calculated from the data, *assuming the null is true*
+  
+  + reject the null hypothesis if $p < \alpha$ (or fail to reject otherwise)
+  
+- Note that in a hypothesis test, **we are not proving anything!**  A hypothesis test is simply a mechanism by which to make a (potentially incorrect) decision about the viability of a particular null hypothesis.
+
+
+---
+
+## Hypothesis Test: Extended Illustrative Example
+
+- In an experiment, I will collect $n$ measurements, where $n$ is my *sample size*.  Now I have to make some choices; let's assume the following:
+
+  + $\mathcal{H}_0$ (the null hypothesis) $-$ we'll assume we are concerned with the mean of the distribution from which the data are to be sampled $-$ specifically we'll assume $\mu = \mu_0 = 10$
+
+  + $\mathcal{H}_A$ (the alternative hypothesis) $-$ concerning the same parameter as the null hypothesis $-$ let's assume it to be $\mu > \mu_0$ (and thus, I will thus conduct an *upper-tail test*, as opposed to a *lower-tail test*, wherein $\mu < \mu_0$, or a *two-tail test*, which would be specified as $\mu \neq \mu_0$)
+  
+  + $\alpha = 0.05$
+  
+  + The statistic is the sample mean, $\overline{X}$ (in order to have any hope, we'll need to choose a statistic with *some* relationship to my parameter of interest; we won't worry about how they're found, but there is often at least one statistic *designed for estimating* any particular parameter)
+  
+  + I assume the data are normally distributed with true mean $\mu$ and true standard deviation $\sigma$, and therefore under the null, $\big(\overline{X}-\mu_0\big)/\big(S/\sqrt{n}\big)$ is sampled from a $t$-distribution with $n-1$ degrees of freedom (its only parameter; note that we'll take this result as a statement, and not something I would expect you to just *know*)
+
+
+---
+
+## Hypothesis Test: Extended Illustrative Example
+
+- Let's assume that the value of the statistic increases, on average, as the
+parameter value increases (this is usually true, e.g., the average value of
+$\overline{X}$ would increase if we increase the normal mean $\mu$)
+
+  + the $p$-value for a lower-tail test is
+```
+p <- [cumulative distribution function]([arguments])
+```
+
+  + the $p$-value for an upper-tail test is
+```
+p <- 1 - [cumulative distribution function]([arguments])
+```
+
+  + the $p$-value for a two-tail test is
+```
+p <- 2*min(c([p for lower tail], [p for upper tail]))
+```
+
+  + if the value of the statistic *decreases* on average as the parameter value
+increases, we'd then flip the equations for the lower- and upper-tail tests
+
+- <b>&iexcl;MUY IMPORTANTE&excl;</b> **A $p$-value is not the probability that the null hypothesis is correct!** 
+
+  + a hypothesis is an idea, not a random variable, nor an event, and thus there is no probability associated with it!
+
+
+---
+
+## Hypothesis Test: Extended Illustrative Example
+
+- Now I collect some data:
+
+```{r echo=FALSE}
+set.seed(202)
+x = rchisq(50, df = 12)
+print(round(x, 4))
+cat("The sample mean is ", mean(x))
+```
+
+- The $p$-value is the probability that I would observe the value 11.54, **or something greater** (i.e., more extreme, in this context of an upper-tail test), **if actually** $\mu = \mu_0 = 10$
+  
+  + So, in `R` code:
+  
+```{r}
+n <- length(x)
+1 - pt((mean(x)-10) / (sd(x)/sqrt(n)), n-1)
+```
+
+- It appears that $p < \alpha = 0.05$, so I make the decision to reject the null hypothesis
+
+
+---
+
+## Hypothesis Test: Extended Illustrative Example
+
+```{r crit-p-value, fig.show = 'hide', echo = FALSE}
+library(ggplot2)
+t  <- seq(-4, 4, by = 0.01)
+ft <- dt(t, 49)
+df <- data.frame(t, ft)
+ggplot(data = df, mapping = aes(x = t, y = ft)) +
+  geom_line(col = "dodgerblue", lwd = 2) +
+  ylab(expression(f[T]*"(t)")) +
+  geom_vline(xintercept = (mean(x)-10) / (sd(x)/sqrt(n)), 
+             col = "seagreen", lwd = 2) +
+  geom_vline(xintercept = qt(0.95, 49), col = "firebrick1", lwd = 2)
+```
+
+<br><br>
+
+.pull-left[
+
+- Let's draw a $t$ distribution for $n-1 = 49$ degrees of freedom:
+
+  + the blue curve is the sampling distribution for $\big(\overline{X}-\mu_0\big)/\big(S/\sqrt{n}\big)$
+  
+  + the red line is the rejection-region boundary, i.e., the statistic value for
+  which $p = \alpha$ exactly
+  
+  + the green line is the observed statistic (for which $p = 0.009$)
+]
+
+.pull-right[
+![:scale 80%](./crit-p-value.png)
+
+<!-- ```{r ref.label = 'crit-p-value', echo = FALSE, fig.width = 4, fig.height = 4} -->
+<!-- ``` -->
+]
+
+- For more details about hypothesis testing, see, e.g., Chapters 1 and 2 of [this book](https://mpsibook.github.io)
+
+
+---
+
+## Hypothesis Testing: Beware Multiple Comparisons!
+
+- Suppose I perform 100 independent hypothesis tests with Type I error $\alpha$, and that for all 100 tests, the underlying truth is that $\mathcal{H}_0$ is actually correct
+
+  + We know that $p$-values are distributed uniformly between 0 and 1 when the null
+  hypothesis is correct, so we expect 5% of the $p$-values to be less than 0.05
+  
+  + thus we will, on average, falsely reject the null hypothesis five times
+
+- Upside(?): if you test enough (truly) null hypotheses, you *will* find an apparently significant result
+
+- Downside: that method would make for a very poor way to suggest how the data-generating mechanism actually works.  Testing multiple hypotheses, without correcting for *multiple comparisons*, is called *p-hacking*
+
+- Corrections for multiple comparisons include the following:
+
+  + the *Bonferroni correction*: if you run $k$ tests, change $\alpha$ to $\alpha/k$ (this tends to be overly conservative)
+
+  + the *False Discovery Rate*: this implements a correction that changes error rate to something between $\alpha$ and $\alpha/k$ (this tends to work well in practice)
+
+
+---
+
+## Hypothesis Testing for Distributions
+
+- In the extended example above, we assumed that our data were distributed normally
+
+  + what if we want to test that assumption?  We could do it!
+
+- Examples of hypothesis tests for distributions include:
+
+  + the *one-sample Kolmogorov-Smirnov (KS) test* $-$ was a sample of data drawn from a hypothesized continuous distribution?
+
+  + the *two-sample Kolmogorov-Smirnov (KS) test* $-$ were two samples of data drawn from the same unknown continuous distribution?
+
+  + the *Shapiro-Wilk test* $-$ was a sample of data drawn from a Gaussian distribution?
+
+

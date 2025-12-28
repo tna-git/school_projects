@@ -1,0 +1,267 @@
+---
+title: Overview of Statistical Learning and Modeling -- 36-600
+subtitle: |
+  Lab 2T: Hypothesis Testing\
+  Due Friday, September 5, 11:59pm\
+author: Trishla Nair
+output:
+  html_document:
+    toc: false
+    code-overflow: wrap
+    code-fold: false
+    theme: spacelab
+  pdf_document:
+    toc: false
+urlcolor: blue
+---
+
+
+## Question 1
+
+In an experiment, you sample $n = 10$ data from a normal distribution with unknown mean $\mu$ and *known* standard deviation $\sigma$, and you wish to perform a lower-tail hypothesis test.  Your null hypothesis is that $\mu_0 = 6$, the sample mean is $\overline{X} = 5$, the known standard deviation is $\sigma$ = 4, and $\alpha = 0.05$.  What do you need to know to carry out this test?
+
+1. The sampling distribution for $\overline{X}$, under the null, is a normal with mean $\mu_0$ and standard deviation $\sigma/\sqrt{n}$.
+2. The appropriate cumulative distribution function is thus `pnorm()` (whose arguments can be looked up by, e.g., typing `help(pnorm)` at the prompt in the `Console` pane).  (Note that the first argument, `q`, will be the observed statistic value.)
+
+Go back to the notes to determine the appropriate equation for the $p$-value for a lower-tail test.
+
+```{r}
+#Ho <-6
+#xbar <-5
+#sigma <-4
+alpha <- 0.5
+se = 4/sqrt(10)
+z = (5-6)/se
+p_lower <-pnorm(z, mean = 0, sd = 1, lower.tail = TRUE)
+p_lower
+```
+
+What is the $p$-value for this test?  Do you reject or fail to reject the null?  
+
+```
+The P-value tht was calculated was 0.2145977. Because it is more than the alpha, we fail to reject the null hypothesis.
+```
+
+
+## Question 2
+
+What if we had decided to do a two-tail test instead?  What would the $p$-value be?
+
+```{r}
+p_upper<- pnorm(z, lower.tail = FALSE)
+p_tt<-2*min(c(p_lower, p_upper))
+p_tt
+```
+
+
+## Question 3
+
+Now assume that instead of 10 data, you have 100 data.  What is the $p$-value now, for a lower-tail test?  Do we reject or fail to reject the null?
+
+```{r}
+alpha <- 0.5
+se = 4/sqrt(100)
+z = (5-6)/se
+p_lower <-pnorm(z, lower.tail = TRUE)
+p_lower
+```
+
+```
+We reject the null hypothesis.
+```
+
+
+## Question 4
+
+A concept that we did not cover in the notes is the concept of test power.
+
+The power of a hypothesis test is the rate at which we would reject a stated null hypothesis given a arbitrary true value of $\mu$.  For instance, above we assume a null value of $\mu_0 = 6$, and let's say we use that null value but it turns out that $\mu = 5.5$ instead, we would then reject the null more than $100\alpha$-percent of the time.  But how would we quantify this?
+
+We will need to do two things.  First, we need to determine the value of $\overline{X}$ that lies on the boundary of the rejection region, i.e., the value such that if $\overline{X}$ is smaller, we reject the null, and if $\overline{X}$ is larger, we fail to reject the null.  In general, this boundary is determined using an inverse cumulative distribution function:
+
+```
+boundary <- [inverse cdf]([arguments])
+```
+
+For the lower-tail test with a normal sampling distribution, the function is `qnorm()` and the arguments are `alpha`, `mean = mu.o`, and `sd = sigma / sqrt(n)`.  Call the output `x.bar.rr` (with `rr` standing for "rejection region").
+
+Second, to compute the power, we would use the exact same code that we use to compute the $p$-value, except we would swap out $\overline{X}$ for $\overline{X}_{RR}$ and we would swap out $\mu_0$ for $\mu$.  (Assume $n = 10$.)  You should observe a power of 0.11: 11% of the time that we replicate the experiment, we would reject the null, if our null is $\mu_0 = 6$ and if the true value is actually $\mu = 5.5$.  (To increase the test power, we can (a) increase the sample size $n$, and/or (b) increase the difference between $\mu_0$ and $\mu$.)
+
+```{r}
+se = 4/sqrt(10)
+x.bar.rr<-qnorm(0.05, mean = 6, sd =se)
+z = (-5.5+x.bar.rr)/se
+p_lower<-pnorm(z, lower.tail = TRUE)
+p_lower
+```
+
+
+## Question 5
+
+Now assume that we have the following data:
+
+```{r}
+set.seed(101)
+n <- 15
+x <- rgamma(n, shape = 3, scale = 3)
+```
+
+Here, $n = 15$ and the true mean is $3 \cdot 3 = 9$.  However, we don't know the mean, and we wish to conduct an upper-tail test of $\mu_0 = 7.5$.  How would we do this?
+
+First, we need to assume a distribution.  We can assume that our data are sampled from a normal distribution.  But is this a valid supposition?
+
+To determine this, we can use the *Shapiro-Wilk test*.  For this test, the null hypothesis is that the data are normally distributed; if we fail to reject the null, then it means that the assumption of normality is valid and that we can use, e.g., `pnorm()` to compute the $p$-value if the standard deviation is known or, e.g., `pt()` if it is not.
+
+Pass the data into the `shapiro.test()` function below and make a conclusion as to whether or not we can assume the data are normally distributed.
+
+```{r}
+shapiro.test(x)
+```
+
+```
+Since the p-value is greater than alpha, we fail to reject the null hypothesis.
+```
+
+
+## Question 6
+
+In the previous question, you should have come to the conclusion that the data are plausibly normally distributed.  Carry out the hypothesis test described in that question using code given in the lecture notes and determine whether or not we reject the null hypothesis that $\mu_0 = 7.5$.
+
+```{r}
+# n= 15
+#Ho = 7.5
+#mu = 9
+p_upper <-pt((7.5-9) / (sd(x)/sqrt(15)),lower.tail = FALSE, df = 14)
+p_upper
+```
+
+```
+Since the p-value is smaller than the alpha, we fail to reject the null hypothesis.
+```
+
+
+## Question 7
+
+Let's confirm the result in Question 6 using the `t.test()` function.
+
+Look at the documentation for the `t.test()` function by typing `help(t.test)` at the prompt in the `Console` pane.  The relevant arguments are `x` (which represents our data), `alternative` (which here should be set to `"greater"`), and `mu` (which is the null value: 7.5).
+
+```{r}
+t.test(x, alternative = "greater", mu = 7.5)
+```
+
+
+## Question 8
+
+Let's use the same data to perform a lower-tail test of the null hypothesis that the population variance, $\sigma^2$, is equal to 25.
+
+What statistic should we use?  It stands to reason that we should use the *sample variance* $S^2$, which we compute using the function `var()`.
+
+What is the sampling distribution for this statistic?  Well...it's complicated to write down, but that's alright; something simpler that we *can* write down instead is $(n-1)S^2 / \sigma^2$, which, under the null, is distributed as a chi-square distribution with $n-1$ degrees of freedom.  (Hence you'd use `pchisq()` to compute the $p$-value.)
+
+That should be sufficient information for you to be able to compute the $p$-value.  Call us over if you need a little help.  You should get a $p$-value of 0.029.
+
+```{r}
+statistic = 14*var(x)/25
+pchisq(statistic, 14)
+```
+
+
+## Question 9
+
+Let's confirm the result in Question 8 using the `varTest()` function from the `EnvStats` package.
+
+First, install the package if it is not installed already.  To do that, go to the `Packages` pane, click on `Install`, and type in `EnvStats`.  (Then uncomment the `suppressMessages(library(EnvStats))` function call below.)
+
+Second, run `varTest()`, passing in the data along with the arguments `alternative = "less"` and `sigma.squared = 25`.  Note that if you don't want to see all the output but rather just the $p$-value, you can tack `$p.value` onto the end of the function call -- this says that out of all the elements in the list that gets outputted by `varTest()`, you just want to print out the value of the one element called `p.value`.
+
+```{r}
+suppressMessages(library(EnvStats))
+varTest(x,alternative = "less", sigma.squared = 25)$p.value
+```
+
+
+## Question 10
+
+Let's do one last hypothesis test.  Let's assume that we sample $n = 5$ data from an exponential distribution with mean value $\mu = 2$:
+
+```{r}
+set.seed(202)
+n <- 5
+x <- rexp(n, rate = 1/2)
+```
+
+Now, we don't know that the mean is 2, and our goal is to perform an upper-tail test of the null hypothesis $\mu = \mu_0 = 1$, assuming $\alpha = 0.05$.
+
+To carry out this test, it suffices to know that
+
+1. the statistic we will use is $\overline{X}$ (or `mean(x)`); and
+2. the sampling distribution for $\overline{X}$ is, under the null, a gamma distribution with `shape` parameter `n` and `scale` parameter `1/n` (hence we use `pgamma()`).
+
+If your $p$-value is 0.008, you've gotten the correct answer!
+
+```{r}
+#Ho = 1
+#alpha = 0.5
+# xbar = mean(x)
+#samp dist: gamma(shape = n, scale = 1/n)
+p_upper <- pgamma(mean(x),shape =5, scale = 0.2, lower.tail = FALSE)
+p_upper
+```
+
+
+# Question 11
+
+In the notes, we mention that if the null is true, the distribution for the $p$-value is uniform, with values between 0 and 1.  Let's demonstrate that here.
+
+```{r}
+set.seed(404)
+p <- rep(NA, 1000)         # set aside storage for 1000 p-values
+n <- 100                   # assume a sample size of 100 for each experiment
+for (ii in 1:1000) {       # do 1000 experiments
+  x     <- rnorm(n)        # sample 100 values from a standard normal
+  p[ii] <- pnorm(mean(x), mean = 0, sd = sd(x) / sqrt(n))   # do a lower-tail test
+}
+hist(p, col = "seagreen")  # make a histogram of p-values
+```
+
+What do you observe?  Is it plausible to conclude that when the null hypothesis is true, the $p$-values are distributed uniformly?
+
+```
+Based on the histogram, it is reasonable to assume that when the Ho is true, the p-value becomes uniformally distributed.
+```
+
+
+## Question 12
+
+Here we will use the Kolmogorov-Smirnov test to test the null hypothesis that the $p$-values generated in Question 11 are uniformly distributed between 0 and 1.
+
+Look at the documentation for the function `ks.test()`.  Let's look at three arguments here:
+
+- `x`: as we will do a one-sample KS test here, that would be the variable $p$ from the last question;
+- `y`: as we will test to see if the $p$-values are uniformly distributed, we will need to provide the name of a cdf function -- here, this would be `"punif"`; and
+- `alternative`: you need not specify this, as we will do a default two-sided test, but you should realize this is where you can make a choice of specific alternative hypotheses.
+
+So, now: test whether the $p$-values derived in Question 11 are uniformly distributed.  Print the $p$-value for the KS test and state a qualitative conclusion.
+
+```{r}
+ks.test(x = p,y = "punif")
+```
+
+```
+Based on the calcukated p-value, since it s very large, it is reasonably to conclude that we fail to reject the null hypothesis.
+```
+
+As a parting note, let's look at what the KS test is actually doing.
+
+```{r}
+plot(ecdf(p), xlab = "p", ylab = expression(F[P]*"(p)"), main = NULL)
+lines(c(-1, 0, 1, 2), c(0, 0, 1, 1), col = "red")
+```
+
+
+The KS test statistic is the maximum vertical distance from the red line (the cumulative distribution function for a Uniform(0, 1) distribution) to the black curve (the empirical cumulative distribution function for the $p$-values).  That distance is a random variable whose distribution, under the null, is the Kolmogorov distribution.  If the observed maximum distance is sufficiently large, then we would reject the null hypothesis and conclude that the $p$-values are *not* uniformly distributed. 
+
+**It is good to reiterate here that hypothesis testing is all about specifying a test statistic (computed from the data), its sampling distribution under the null, and determining the probability of observing the test statistic or a value at least as extreme (this probability is the $p$-value).  Everything else is test-specific detail.**
+
+

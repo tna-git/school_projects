@@ -1,0 +1,99 @@
+---
+title: "Project 1"
+author: "Trishla Nair"
+date: "2025-09-23"
+output:
+  pdf_document: default
+  html_document: default
+---
+The data we are examining is from CMU's github. We are investigating if sleep patterns can affect GPA of freshman.
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(corrplot)
+library(RColorBrewer)
+
+df <- read.csv("C:/Users/Trish/Documents/CMU/CMU-3660/Labs/cmu-sleep.csv")
+df <- df%>% select(-subject_id)
+print(head(df))
+```
+
+Firstly, I removed subject id as it had the least relelvance to what I wish to examine (that being the relationship between sleep and cummulative gpa). Then, using only quantitative data, I examined the data for outliers.
+```{r}
+numeric_cols <- sapply(df, is.numeric)
+df_numeric <- df[, numeric_cols]
+
+boxplot(df_numeric, main = "Box Plots",
+        xlab = "Features", ylab = "Values", las = 2, cex.axis = 0.5, col = brewer.pal(n = 10, name = "Paired"))
+```
+
+ Based on the boxplots, it seems for the columns related to sleep, have the most outliers. So, next I factorized the demo_ columns and checked for rows with Nan values to remove them.
+```{r}
+df <- df %>%
+  mutate(cohort = as.factor(cohort),
+         demo_gender = as.factor(demo_gender), 
+         demo_firstgen = as.factor(demo_firstgen), 
+         demo_race = as.factor(demo_race), 
+         cohort = as.factor(cohort))
+```
+Check for NaN's
+```{r}
+colSums(sapply(df, is.nan))
+summary(df)
+```
+Remove Nan's
+```{r}
+df_cleaned <- df %>% drop_na()
+summary(df_cleaned)
+```
+I then built a bar graph of mean sleep of each cohort per gender to see if there possibly wether the school or gender may yeild interesting insights on the average sleep a freshamn gets.
+```{r}
+#
+pl<- df_cleaned %>%group_by(cohort, demo_gender) %>%
+  summarize(mean_sleep = mean(TotalSleepTime, na.rm = TRUE), .groups = 'drop')
+
+ggplot(pl, aes(x = cohort, y = mean_sleep, fill = demo_gender)) +
+  geom_col(position = position_dodge(width = 1)) +
+  geom_text(aes(label = round(mean_sleep, 3)),
+            position = position_dodge(width = 1),
+            vjust = -0.5) +
+  scale_fill_brewer(palette = "Pastel2") +
+  labs(title = "Mean sleep time per cohort based on Gender",x = "Cohort", y = "Mean Sleep Time", fill = "Gender")
+```
+I then constructed a paired plot examining total sleep and midpoint sleep per cohort to see if the school plays a factor into wether sleep affects gpa.
+```{r}
+sleep <- df_cleaned %>%
+  pivot_longer(cols = c(TotalSleepTime, midpoint_sleep),
+               names_to = "Measure",
+               values_to = "Value")
+ggplot(sleep, aes(x = Measure, y = Value, group = cohort, color = cohort)) +
+  geom_line(alpha = 0.5) +
+  geom_point(size = 2) +
+  facet_wrap(~ cohort) +   # <-- split into panels
+  labs(title = "Paired Plot of Total Sleep vs Midpoint Sleep per Cohort",
+       x = "Sleep features",
+       y = "Length in minutes")
+```
+Based on the pair plots, the UW cohorts seem to sleep longer compared to the LAC cohorts, as indicated by the fact the LAC cohorts seems to have midpoint_sleep time much later than the UW students. I then did a chi-square test to examine the possible correlation between mean sleep time and mean gpa.
+```{r}
+cor.test(df_cleaned$TotalSleepTime, df_cleaned$term_gpa, use = "complete.obs")
+lm_gpa <- lm(term_gpa ~ TotalSleepTime, data = df_cleaned)
+summary(lm_gpa)
+```
+Based on my findings, since the p value is so small, we reject the null hypothesis and see that there is a significant correlation between the 2. Thus, I created a correlation matrix to see what other variables might affect term_gpa.
+```{r}
+num_cols <- sapply(df_cleaned, is.numeric)
+df_num <- df_cleaned[, num_cols]
+matrix<-cor(df_num)
+corrplot(matrix, method="number", number.cex = 0.5, col = brewer.pal(n = 8, name = "Spectral"))
+```
+After running a correlation matrix, the only feature that may possess a strong correlation with term GPA is the cumulative GPA. I then ran a hypothesis test to examine whether the time may effect the term gpa by comparing the first and fifth studies at a 95% confidence level.
+```{r}
+s_1 <- df_cleaned%>%select(term_gpa, study)%>%filter(study == 1)
+s_5 <- df_cleaned%>%select(term_gpa, study)%>%filter(study == 5)
+t_test_result <- t.test(s_1$term_gpa, s_5$term_gpa,alternative = "less", var.equal = FALSE, conf.level = 0.95)
+
+print(t_test_result)
+
+```
+Given how large the pvalue is, we fail to reject the null hypothesis and thus there is no difference in term GPA's between studies 1 and 5.

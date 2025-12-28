@@ -1,0 +1,281 @@
+---
+title: "Unsupervised Learning II"
+author: "36-600"
+date: '9/18/2025'
+output:
+  xaringan::moon_reader:
+    nature:
+      ratio: '16:9'
+      beforeInit: "macros.js"
+---
+layout: true
+background-image: url(background.png)
+background-size: cover
+---
+
+<style type="text/css">
+.remark-slide-content {
+    font-size: 16px;
+    padding: 1em 4em 1em 4em;
+}
+a { 
+    color: blue; 
+}
+.remark-slide-content h1 {
+    font-family: cabin;
+}
+.remark-slide-content h2 {
+    font-family: cabin;
+}
+.remark-slide-content h3 {
+    font-family: cabin;
+}
+.remark-slide-number {
+    font-size: 8pt;
+    margin-bottom: -5.6px;
+    margin-right: 1145px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+.remark-code {
+    font-size: 16px;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 65% !important;
+}
+</style>
+
+```{css,echo=FALSE}
+table {
+  font-size: 12px;
+}
+```
+
+
+## The Setting, You'll Recall
+
+- The setting for *unsupervised learning* is that you have:
+
+  + a collection of $p$ measurements (recorded in columns of a data frame),
+  
+  + for each of $n$ objects (recorded in rows of a data frame)
+  
+- "Unsupervised" simply means that none of the variables is a response variable: we are not trying to predict the value of a measurement
+
+- One can think of unsupervised learning as being an extension of EDA
+
+  + in EDA, the goal is to visualize *projected* data to build intuition and to visually assess potential associations between variables
+  
+  + in unsupervised learning, we implement statistical algorithms to uncover potential structure in the data in their native space, i.e., quantitatively accounting for those potential associations between variables
+
+- A main, overarching issue with unsupervised learning is that *there are no universally accepted mechanisms for model assessment or selection, i.e., there will almost never be a uniquely correct answer!*
+
+
+---
+
+## Hierarchical Clustering
+
+- The algorithm for hierarchical clustering is, like that for $k$-means, straightforward:
+
+.center[
+  ![:scale 50%](./alg_10-2.png)
+]
+
+- Note the sentence: "Treat each observation as its own cluster." 
+
+  + this is "bottom-up" or *agglomerative* clustering
+  
+  + a primary limitation of agglomerative clustering is that all clusters lie within other clusters (hence the name "hierarchical")
+
+
+---
+
+## Hierarchical Clustering: Example
+
+- Here's an example of that *dendrogram* referenced for *complete-linkage hierarchical clustering*
+
+  + the "height" along the vertical axis at which two clusters fuse indicates their dissimilarity $-$ the greater the vertical height of a merge point, the greater the dissimilarity between the merged clusters
+  
+```{r echo=FALSE}
+set.seed(101)
+x  <- c(rnorm(30), rnorm(30, mean = 2.25))
+y  <- c(rnorm(30), rnorm(30, mean = 2.25))
+s  <- c(rep(2, 30), rep(19, 30))
+df <- data.frame(x, y)
+```
+
+```{r fig.height=4.5,fig.width=4.5,fig.align="center"}
+hc.out <- hclust(dist(scale(df)), method = "complete")   # we use the same data as we did for k-means
+plot(hc.out)
+```
+
+
+---
+
+## Hierarchical Clustering: Tree Cutting
+
+<br>
+
+.center[
+  ![:scale 45%](./cut_tree.png)
+]
+
+<br>
+
+(An old figure courtesy Erik Velldal.)
+
+
+---
+
+## Hierarchical Clustering: Linkage
+
+- In agglomerative clustering, clusters are built up piece-by-piece by *linking* them together
+
+  + there is no uniquely correct algorithm for how that linking is done
+  
+  + commonly used methods are single, complete, and average linkage
+
+<br>
+
+.center[
+  ![:scale 45%](./linkage.png)
+]
+
+
+---
+
+## Hierarchical Clustering: Linkage
+
+.center[
+  ![:scale 60%](./linkage_diagram.png)
+]
+
+
+---
+
+## Hierarchical Clustering: the Elbow Method
+
+```{r warning=FALSE,fig.height=4.5,fig.width=4.5,fig.align="center"}
+suppressMessages(library(factoextra))
+fviz_nbclust(scale(df), FUN = hcut, method = "wss")
+```
+
+- Note that in the examples shown in *this* set of slides, we'll exclusively use functions from the `factoextra` package.
+
+
+---
+
+## Hierarchical Clustering: the Silhouette Method
+
+```{r sil,warning=FALSE,fig.show='hide'}
+fviz_nbclust(scale(df), FUN = hcut, method = "silhouette")
+```
+
+<br>
+
+```{r ref.label='sil',echo=FALSE,fig.height=4.5,fig.width=4.5,fig.align="center"}
+```
+
+---
+
+## Hierarchical Clustering: the Gap Statistic
+
+```{r warning=FALSE,fig.height=4.5,fig.width=4.5,fig.align="center"}
+library(cluster)
+gs <- clusGap(scale(df), FUN = hcut, nstart = 20, K.max = 10, B = 50)
+fviz_gap_stat(gs)
+```
+
+
+---
+
+## K-Means and Hierarchical Clustering: Wrap-Up
+
+- So: which of these options should you use?
+
+- Quoting *ISLR*: 
+
+  + "we recommend performing clustering with different choices of [methods and parameters], and looking at the full set of results in order to see what patterns consistently emerge"
+
+- That said:
+
+  + in $k$-means, you specify the number of clusters before running the algorithm, as opposed to hierarchical clustering, where you specify the number of clusters afterwards by cutting the a dendrogram
+
+  + dendrograms can be *really* hard to read when the sample size is large
+
+  + all data get assigned to a cluster in these algorithms
+
+
+---
+
+## About That Last Point...
+
+- Perhaps we would like to implement an algorithm that does not necessarily force every datum into a cluster
+
+  + one example of such an algorithm is the [Gaussian Mixture Model](http://www.ee.iisc.ac.in/new/people/faculty/prasantg/downloads/GMM_Tutorial_Reynolds.pdf)
+
+<br>
+
+.center[
+  ![:scale 30%](./gmm.png)
+]
+
+<br>
+
+([Courtesy this web page](https://www.python-course.eu/expectation_maximization_and_gaussian_mixture_models.php))
+
+
+---
+
+## GMM: Example
+
+- Here we will use the `ClusterR` package to determine the probabilities that data belong to one of a pre-defined number of Gaussian-shaped clusters
+
+  + a limitation of this model is that the Gaussians are *diagonal*: the longest axis lies along the $x$ or $y$ axis, and is not allowed to rotate away from those axes
+
+<br><br>
+
+.center[
+  ![:scale 80%](./gmm2.png)
+]
+
+
+---
+
+## GMM: Example
+
+```{r warning=FALSE}
+suppressMessages(library(ClusterR))
+gmm.out <- GMM(df, gaussian_comps = 2)
+pred    <- predict_GMM(df, gmm.out$centroids, gmm.out$covariance_matrices, gmm.out$weights)
+gmm.out$centroids
+names(pred)
+```
+
+- In this output:
+
+  + `log_likelihood` is the natural logarithm of the probability density function values at each data point
+
+  + `cluster_proba` is a matrix of probabilities: each row represents a data point, and each column the probability that the data point is in that cluster
+
+  + `cluster_labels` is the predicted cluster; it's the identity of which column had the highest probability for that data point
+
+
+---
+
+## GMM: Example
+
+- Our simulated data were drawn from two normal distributions, thus we might expect to see that they map to one of the two normals under the GMM with high probability
+
+  + the plot below shows the probability of each data point belonging to *cluster 1*
+  
+<br>
+  
+```{r echo=FALSE,fig.height=4.5,fig.width=4.5,fig.align="center"}
+suppressMessages(library(tidyverse))
+df <- data.frame("p" = pred$cluster_proba[, 1])
+ggplot(data = df, mapping = aes(x = p, y = after_stat(density))) +
+  geom_histogram(bins = 40, fill = "mediumorchid")
+```
+
+

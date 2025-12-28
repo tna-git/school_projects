@@ -1,0 +1,322 @@
+---
+title: "Machine Learning + Trees"
+author: "36-600"
+date: '10/28/2025'
+output:
+  xaringan::moon_reader:
+    nature:
+      ratio: '16:9'
+      beforeInit: "macros.js"
+---
+layout: true
+background-image: url(background.png)
+background-size: cover
+---
+
+<style type="text/css">
+.remark-slide-content {
+    font-size: 16px;
+    padding: 1em 4em 1em 4em;
+}
+a { 
+    color: blue; 
+}
+.remark-slide-content h1 {
+    font-family: cabin;
+}
+.remark-slide-content h2 {
+    font-family: cabin;
+}
+.remark-slide-content h3 {
+    font-family: cabin;
+}
+.remark-slide-number {
+    font-size: 8pt;
+    margin-bottom: -5.6px;
+    margin-right: 1145px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+.remark-code {
+    font-size: 16px;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 65% !important;
+}
+</style>
+
+```{css,echo=FALSE}
+table {
+  font-size: 12px;
+}
+```
+
+
+## What is Machine Learning?
+
+- The short version:
+
+  + machine learning (ML) is a subset of statistical learning that focuses on prediction
+
+- The longer version:
+
+  + ML is the idea of constructing data-driven algorithms that *learn*, rather than *assume*, the mapping between predictor variables and response variable(s)
+
+  + we suppose no parametric form for the mapping *a priori*, even if technically one can write one down *a posteriori* (for example, by translating a tree model to a indicator-variable-filled mathematical expression)
+
+  + linear regression, for instance, is not an ML algorithm since we can write down the linear equation ahead of time, but (we'll see that) a random forest is an ML algorithm since we've no idea what the number of splits will end up being in each of its individual trees
+
+
+---
+
+## Machine Learning: the Broader Context
+
+.center[
+  ![:scale 60%](./ml_broad_context.png)
+]
+
+
+---
+
+## Machine Learning: Which Algorithm is Best?
+
+.pull-left[
+
+- That's actually not the right question to ask
+
+- The right question is ask is: why should I try different algorithms?
+
+  + because you (generally) cannot visualize the distribution of predictor variables in their native space
+
+  + the performance of different algorithms is predicated on how predictor data are distributed, e.g., 
+
+- The picture to the right shows data for which there are two predictor variables (along the $x$-axis and the $y$-axis) and for which the response variable is binary: "x"s and "o"s
+
+  + an algorithm that places linear boundaries or that segments the plane into rectangles will do well given the data to the left
+
+  + whereas, an algorithm that places circular boundaries will fare better given the data to the right
+
+  + "do well/fare better": will do a better job at predicting whether a new datum is actually an "x" or an "o", with consideration to the required model complexity
+  
+]
+
+.pull-right[
+
+  <br><br><br><br><br>
+  .center[
+  ![:scale 90%](./data_geometry.png)
+  ]
+  
+]
+
+
+---
+
+## Your First ML Model: the Decision Tree
+
+.pull-left[
+
+<br>
+
+- A decision tree is a model that segments a predictor space into disjoint $p$-dimensional hyper-rectangles, where $p$ is the number of predictor variables
+
+  + for a regression tree, the predicted response in a hyper-rectangle is the average of the response values of the training data in that hyper-rectangle
+
+  + for a classification tree, the predicted class in a hyper-rectangle is, by default, that class that is most represented in the training data in that hyper-rectangle
+  
+- Should I use this model?
+
+  + yes: it is easy(ish) to explain to non-statisticians and easy to visualize/predict with
+
+  + no: trees do not generalize as well as other models (i.e., they tend to have higher test-set MSEs) as they *can* suffer from high variance if not constrained
+  
+]
+
+.pull-right[
+
+<br><br><br><br>
+.center[
+  ![:scale 100%](./Figure_8.3.png)
+]
+
+(Figure 8.3, *Introduction to Statistical Learning* by James et al.)
+
+]
+
+
+---
+
+## Decision Tree: Algorithmic Details
+
+.center[
+  ![:scale 45%](./Algorithm_8.1.png)
+]
+
+(Algorithm 8.1, *Introduction to Statistical Learning* by James et al.)
+
+- The classification tree algorithm is similar: instead of splits based on reduction of the residual sum-of-squares (RSS), the splits would be based on, e.g., reduction of the *Gini coefficient*, a metric whose value becomes smaller as each node becomes more "pure," i.e., populated more and more by objects of a single class
+
+
+---
+
+## Decision Tree: Regression Example
+
+.center[
+  ![:scale 35%](./rss_0.png)
+  ![:scale 35%](./rss_1.png)
+]
+
+- The dataset above has two predictor variables and (let's call it) a quantitative response (1, 2, or 3)
+
+  + pre-split: $\widehat{Y} = \overline{Y} = 1.875$, with RSS = 16.625
+
+  + post-split: $\widehat{Y}_{\rm left} = 1$ and $\widehat{Y}_{\rm right} = 2.5$ (total RSS = 3.5): the change in RSS is sufficient to accept the proposed split
+
+
+---
+
+## Decision Tree: Regression Example
+
+.center[
+  ![:scale 35%](./rss_1.png)
+  ![:scale 35%](./rss_2.png)
+]
+
+- The splitting process continues separately in each new segment
+
+  + no further proposed splits are possible to the left
+
+  + the proposed split to the right reduces the overall RSS to zero
+
+  + no further splits can be made at upper right or lower right: the tree-building is done
+
+
+---
+
+## Decision Tree: Caveats
+  
+- The decision tree algorithm is a *greedy algorithm* which implements top-down *recursive binary splitting* to build the model, so the final model may not be "globally optimal" (i.e., it may not have the smallest possible overall RSS, MCR, or Gini value)
+
+- Overfitting is an issue: a tree that places a hyper-rectangle around each datum will be highly flexible (with training set MSE or MCR equal to zero!), but will not generalize well (very poor testing set performance)
+
+  + a strategy to mitigate overfitting is to grow a large tree, then apply *cost complexity* (or *weakest link*) pruning
+
+
+---
+
+## Decision Tree: Example - Fitting
+
+- Our dataset has 25 predictor variables and a response variable that is a binary celestial object type: 385 galaxies and 243 stars
+
+  + we do a 70-30 split of the dataset to create training/test sets
+  
+```{r echo=FALSE}
+file.path = "https://github.com/FSKoerner/F25-36600-data/raw/refs/heads/main/rosat_classify.Rdata"
+load(url(file.path))
+rm(file.path)
+w            <- which(response == "GALAXY  " | response == "STAR    ")
+df           <- data.frame(predictors[w, ], "class" = response[w])
+df$class     <- as.character(df$class)
+w            <- which(df$class == "GALAXY  ")
+df$class[w]  <- "GALAXY"
+df$class[-w] <- "STAR"
+df$class     <- factor(df$class)
+suppressMessages(library(tidyverse))
+df %>% dplyr::select(., -Z_BEST) -> df
+df$class <- droplevels(df$class)
+set.seed(909)
+s        <- sample(nrow(df), round(0.7 * nrow(df)))
+df.train <- df[s, ]
+df.test  <- df[-s, ]
+```
+
+```{r warning=FALSE}
+library(rpart)
+rpart.out  <- rpart(class ~ ., data = df.train)
+class.prob <- predict(rpart.out, newdata = df.test, type = "prob")[, 2]
+class.pred <- ifelse(class.prob > 0.5, "STAR", "GALAXY")
+round(mean(class.pred != df.test$class), 3)
+table(class.pred, df.test$class)
+```
+
+- A classification tree does much better than simply classifying all the data as galaxies!  (I.e., the "null MCR" is 0.387)
+
+
+---
+
+## Decision Tree: Example - Interpreting
+
+.pull-left[
+
+- Interpretation is done via examination of the tree
+
+  + test-set prediction is done by sending each test-set datum "down" the displayed tree and seeing where it ends up
+  
+```{r eval=FALSE,fig.width=6,fig.height=6,fig.align="center"}
+library(rpart.plot)
+rpart.plot(rpart.out, extra = 104)
+# Re: "extra" - see the rpart.plot documentation
+```
+
+]
+
+.pull-right[
+
+```{r warning=FALSE,echo=FALSE,fig.width=6,fig.height=6,fig.align="center"}
+library(rpart.plot)
+rpart.plot(rpart.out, extra = 104)   
+# Re: "extra" - see the rpart.plot documentation
+```
+
+]
+
+
+---
+
+## Decision Tree: Example - Pruning
+
+.pull-left[
+
+- From the `plotcp()` documentation: a "good choice of `cp` for pruning is often the leftmost value for which the mean lies below the horizontal line"
+
+  + here, that would be 0.045, which corresponds to 5 leaves
+
+```{r eval=FALSE,fig.width=4,fig.height=4,fig.align="center"}
+plotcp(rpart.out)
+```
+
+]
+
+.pull-right[
+
+```{r echo=FALSE,fig.width=6,fig.height=6,fig.align="center"}
+plotcp(rpart.out)
+```
+
+]
+
+
+---
+
+## Decision Tree: Example - Pruning
+
+```{r}
+rpart.pruned <- prune(rpart.out, cp = 0.045)
+class.prob   <- predict(rpart.pruned, newdata = df.test, type = "prob")[, 2]
+class.pred   <- ifelse(class.prob > 0.5, "STAR", "GALAXY")
+round(mean(class.pred != df.test$class), 3)
+table(class.pred, df.test$class)
+```
+
+- The pruned tree's MCR is the same than the unpruned tree's MCR, so in this case, pruning, or lack thereof, did not adversely impact the model's generalizability
+
+
+---
+
+## Decision Tree: Example - Pruning
+
+```{r fig.width=6,fig.height=6,fig.align="center"}
+rpart.plot(rpart.pruned, extra = 104)
+```
+
+

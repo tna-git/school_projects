@@ -1,0 +1,433 @@
+---
+title: "Random Forest and Boosting"
+author: "36-600"
+date: '10/30/2025'
+output:
+  xaringan::moon_reader:
+    nature:
+      ratio: '16:9'
+      beforeInit: "macros.js"
+---
+layout: true
+background-image: url(background.png)
+background-size: cover
+---
+
+<style type="text/css">
+.remark-slide-content {
+    font-size: 16px;
+    padding: 1em 4em 1em 4em;
+}
+a { 
+    color: blue; 
+}
+.remark-slide-content h1 {
+    font-family: cabin;
+}
+.remark-slide-content h2 {
+    font-family: cabin;
+}
+.remark-slide-content h3 {
+    font-family: cabin;
+}
+.remark-slide-number {
+    font-size: 8pt;
+    margin-bottom: -5.6px;
+    margin-right: 1145px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+.remark-code {
+    font-size: 16px;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 65% !important;
+}
+</style>
+
+```{css,echo=FALSE}
+table {
+  font-size: 12px;
+}
+```
+
+
+## Motivation
+
+- Decision trees are interpretable enough, but they do have issues:
+
+  + they are highly variable; for instance, if you split a dataset in half and grow trees for each half, they may end up looking **very** different
+
+  + they do not generalize as well as other models, i.e., they tend to have higher test-set MSE values (again, largely due to their variability issues)
+
+- To counteract these issues, one can use *bootstrap aggregation*, or *bagging* 
+
+  + bootstrap: (*recall*) sample the training data *with replacement*
+
+  + aggregation: aggregate many trees, each constructed with a different bootstrap sample of the original training set
+
+
+---
+
+## Bootstrapping
+
+```{r}
+set.seed(101)
+sample(10, 10, replace = TRUE)
+sample(10, 10, replace = TRUE)
+```
+
+- Above is an example of bootstrapping; think of it as randomly selecting rows of a ten-row dataset, with replacement
+
+  + in the first example, 3 and 9 are each repeated three times, while 2, 4, 5, and 8 don't appear at all
+
+  + in the second example, we get two 1's and two 5's, but zero 7's and 9's
+
+  + the probability that a number in the set $[1,\,2,\,\ldots,\,n]$ is sampled at least once asymptotically approaches $\approx$ 63.2%, as the sample size $n$ goes to infinity
+
+- Bootstrapping is a clever way to "repeat" an experiment that you cannot actually repeat, and it has been shown theoretically to provide useful results
+
+
+---
+
+## Bagging: Algorithm
+
+- The bagging, or bootstrap aggregation, algorithm can now be written down as follows:
+
+```
+     Specify number of trees : k
+
+     For each tree 1,2,...,k :
+       - construct a bootstrap sample from the training dataset
+       - grow a deep and unpruned tree (i.e., overfit!)
+  
+     Pass a test datum through all k trees :
+       - if regression:     the prediction is average of the predictions observed for each tree
+       - if classification: by default, predicted class for each tree is the most-represented 
+                            class in the eventual leaf; overall prediction is the majority vote 
+                            (but we could override this!)
+```
+
+- Bagging improves prediction accuracy at the expense of interpretability
+
+  + one can "read" a single tree, but if you have, say, 500 trees, what could you do? 
+
+- *Variable importance* is a metric that represents the average improvement in, e.g., RSS or the Gini index when splits are made on a particular predictor variable
+
+  + the larger the average improvement, the more important the predictor variable
+
+
+---
+
+## Random Forest: Algorithm
+
+- The random forest algorithm is just the bagging algorithm, but with a tweak
+
+  + for each bootstrap-sampled dataset, we randomly select a subset of the predictor variables, and we build a tree using only that subset of variables
+  
+  + by default, the size of that subset $m = \sqrt{p}$; if $m = p$, then we recover the bagging algorithm
+
+- Selecting a variable subset for each tree allows us to get around the issue of the first split (almost always) being made on the same predictor variable, if there exists such a dominantly informative predictor variable
+
+  + subsetting variables therefore acts to partially "decorrelate" all the resulting trees
+
+
+---
+
+## Random Forest: Variable Importance
+
+- The preferred measures of variable importance are `%IncMSE` for regression, and `MeanDecreaseAccuracy` for classification
+
+- For variable importance assessment:
+
+  + specify `importance = TRUE` as an argument in your call to `randomForest()`
+
+  + specify `type = 1` as an argument in your call to `varImpPlot()` to base the importance on *accuracy* (in the classification setting)
+
+- `%IncMSE` denotes what happens if you take a column of data and randomize its values (while leaving all other variables orderings intact)
+
+  + the more statistically informative a column's data are, the more randomization of the data will impact fitting, and the more the MSE will rise; the most important variables will have the highest `%IncMSE` values
+
+- `MeanDecreaseAccuracy` is computed similarly, but for classification models
+
+  + the most important variables have the highest `MeanDecreaseAccuracy` values
+  
+  + (note that "accuracy" is simply $1-\text{MCR}$)
+
+
+---
+
+## Random Forest: Regression Example
+
+.pull-left[
+
+- We load in a dataset with 10,000 rows, 6 predictor variables and a response (`redshift`) measuring distance from the Earth, and we perform a 70-30 data split
+
+```{r echo=FALSE}
+df <- read.csv("https://raw.githubusercontent.com/FSKoerner/F25-36600-data/refs/heads/main/PhotoZ.csv")
+df <- df[, -8]
+set.seed(808)
+s        <- sample(nrow(df), 0.7 * nrow(df))
+df.train <- df[s, ]
+df.test  <- df[-s, ]
+```
+
+- Here, we learn a random forest model:
+
+```{r eval=FALSE,fig.height=4,fig.width=4,fig.align="center"}
+suppressMessages(library(tidyverse))
+suppressMessages(library(randomForest))
+rf.out    <- randomForest(redshift ~ ., 
+                          data = df.train, 
+                          importance = TRUE)
+resp.pred <- predict(rf.out, newdata = df.test)
+ggplot(data = data.frame("x" = df.test$redshift, 
+                         "y" = resp.pred), 
+       mapping = aes(x = x, y = y)) +
+  geom_point(size = 0.1, color = "saddlebrown") + 
+  xlim(0, 2) + ylim(0, 2) +
+  geom_abline(intercept = 0, slope = 1, 
+              color = "red")
+```
+
+]
+
+.pull-right[
+
+```{r echo=FALSE,fig.height=6,fig.width=6,fig.align="center"}
+suppressMessages(library(tidyverse))
+suppressMessages(library(randomForest))
+rf.out    <- randomForest(redshift ~ ., data = df.train, importance = TRUE)
+resp.pred <- predict(rf.out, newdata = df.test)
+ggplot(data = data.frame("x" = df.test$redshift, "y" = resp.pred), 
+       mapping = aes(x = x, y = y)) +
+  geom_point(size = 0.1, color = "saddlebrown") + 
+  xlim(0, 2) + ylim(0, 2) +
+  geom_abline(intercept = 0, slope = 1, color = "red")
+```
+
+]
+
+
+---
+
+## Random Forest: Regression Example
+
+.pull-left[
+
+- Variable importance plots are really the extent to which we can do inference with a random forest model
+
+- The plot to the right indicates that y-, r-, and g-band magnitudes are the more important variables for predicting redshift, however, note the $x$-axis limits!
+
+```{r eval=FALSE,fig.height=4,fig.width=4,fig.align="center"}
+round(mean((resp.pred - df.test$redshift)^2), 3)
+varImpPlot(rf.out, type = 1)
+```
+
+```{r echo=FALSE}
+round(mean((resp.pred - df.test$redshift)^2), 3)
+```
+
+]
+
+.pull-right[
+
+```{r echo=FALSE,fig.height=6.5,fig.width=6.5,fig.align="center"}
+varImpPlot(rf.out, type = 1)
+```
+
+]
+
+
+---
+
+## Aside: Prediction in (Binary) Classification Models
+
+- Let's pause for an opportunity to look at how we might extract Class 1 probabilities for the classification models we've seen thus far
+
+- Logistic regression
+
+.center[`out.pred <- predict(out.mod, newdata = df.test, type = "response")`]
+
+- Classification tree
+
+.center[`out.pred <- predict(out.mod, newdata = df.test, type = "prob")[, 2]`]
+
+- Random forest
+
+.center[`out.pred <- predict(out.mod, newdata = df.test, type = "prob")[, 2]`]
+
+
+---
+
+## Boosting: Context
+
+- "Can a set of weak learners create a single strong learner?"
+
+  + Kearns & Valiant
+
+- A "weak learner" might be, e.g., a decision tree with a single split (i.e., a "decision stump")
+
+- A "set of weak learners" is, e.g., the repeated generation of stumps given some iterative rule, such as "let's upweight currently misclassified observations during the next round of model fitting, i.e., in sequentially learning the next decision stump"
+
+  + through iteration, a "strong learner" is created
+
+- *Boosting* is a so-called "meta-algorithm": it dictates how to repeatedly apply another algorithm
+
+  + boosting can thus be applied to many models, like linear regression, but it's most often associated with trees
+
+- There are also many different kinds of boosting (i.e., many different ways to define the meta-algorithm)
+
+  + the most popular boosting algorithm currently is perhaps *extreme gradient boosting*
+
+
+---
+
+## Gradient Boosting
+
+.pull-left[
+
+.center[
+  ![:scale 80%](./Algorithm_8.2.png)
+  ]
+  
+(Algorithm 8.2, *Introduction to Statistical Learning* by James et al.  Note that this is specifically *not* the extreme gradient boosting algorithm, which uses a slightly more complex sequence of optimizers.)
+
+]
+
+.pull-right[
+
+<br><br>
+
+- The core idea of boosting is that it *slowly* learns a model by fitting, in each step, the model *residuals* from the previous fit
+
+  + each iteration of boosting attempts *to home in on those data that were not well fit previously*, i.e., those data for which the residual values $r_i$ continue to be large
+
+  + the smaller the value of $\lambda$, the more slowly and conservatively the final tree is grown
+
+- The contrast with bagging is that here, boosting grows one tree sequentially by adding a weighted series of stumps, whereas bagging involves growing many separate deep trees that then get aggregated
+
+  + boosting is a bonsai garden rather than a forest
+  
+]
+
+
+---
+
+## Gradient Boosting
+
+<br><br><br>
+
+.center[
+  ![:scale 49%](./gb_1.png)
+  ![:scale 49%](./gb_2.png)
+]
+
+<br><br><br>
+
+(See [this web page](https://www.kaggle.com/code/grroverpr/gradient-boosting-simplified/notebook).)
+
+
+---
+
+## Gradient Boosting: Regression Example
+
+- Let's apply extreme gradient boosting, or `xgboost`, to the same dataset from before
+
+  + note the function calls given below look "weird" because the `xgboost` package developers didn't bother to try to even approximately match the usual `R` modeling function syntax (i.e., to use *formulas*)
+  
+- **IMPORTANT**: off-the-shelf `xgboost` currently works only with continuous (or quantitative) predictor variables!
+
+```{r warning=FALSE}
+set.seed(101)
+suppressMessages(library(xgboost))
+train      <- xgb.DMatrix(data = as.matrix(df.train[, 1:6]), label = df.train$redshift)
+test       <- xgb.DMatrix(data = as.matrix(df.test[, 1:6]), label = df.test$redshift)
+xgb.cv.out <- xgb.cv(params = list(objective = "reg:squarederror"), train, nrounds = 30, nfold = 5, verb = 0)
+rmse.vec   <- xgb.cv.out$evaluation_log$test_rmse_mean
+cat("The optimal number of rounds is ", which.min(rmse.vec), "\n")
+xgb.out    <- xgboost(train, nrounds = which.min(rmse.vec), 
+                      params = list(objective = "reg:squarederror"), verbose = 0)
+resp.pred  <- predict(xgb.out, newdata = test)
+round(mean((resp.pred - df.test$redshift)^2), 3)
+```
+
+
+---
+
+## Gradient Boosting: Regression Example
+
+.pull-left[
+
+<br><br><br><br><br>
+
+```{r eval=FALSE,fig.height=5,fig.width=5,fig.align="center"}
+ggplot(data = data.frame("x" = df.test$redshift, 
+                         "y" = resp.pred),
+       mapping = aes(x = x, y = y)) +
+  geom_point(size = 0.1, color = "saddlebrown") +
+  xlim(0, 2) + ylim(0, 2) +
+  geom_abline(intercept = 0, slope = 1, 
+              color = "red")
+```
+
+]
+
+.pull-right[
+
+```{r echo=FALSE,fig.height=6,fig.width=6,fig.align="center"}
+ggplot(data = data.frame("x" = df.test$redshift, 
+                         "y" = resp.pred), 
+       mapping = aes(x = x, y = y)) +
+  geom_point(size = 0.1, color = "saddlebrown") + 
+  xlim(0, 2) + ylim(0, 2) +
+  geom_abline(intercept = 0, slope = 1, 
+              color = "red")
+```
+
+]
+
+
+---
+
+## Gradient Boosting: Regression Example
+
+- Like with random forests, boosting allows one to measure variable importance
+
+  + the $x$-axis here is the *gain*: the "fractional contribution of each feature to the model based on the total gain of this feature’s splits.  Higher percentage means a more important predictive feature."
+
+.pull-left[
+
+<br><br><br><br>
+
+```{r eval=FALSE}
+imp.out <- xgb.importance(model = xgb.out)
+xgb.plot.importance(importance_matrix = imp.out, 
+                    col = "blue")
+```
+
+]
+
+.pull-right[
+
+```{r echo=FALSE,fig.height=5,fig.width=8,fig.align="center"}
+imp.out <- xgb.importance(model = xgb.out)
+xgb.plot.importance(importance_matrix = imp.out, 
+                    col = "blue")
+```
+
+]
+
+---
+
+## Prediction for (Binary) Classification Models
+
+- We've been looking at regression models, but you'll need to alter some of the arguments passed to the relevant functions in order to successfully do (and evaluate the results of) binary classification:
+
+  + when calling `xgb.cv()` and `xgboost()`, change `objective = "reg:squarederror"` to `objective = "binary:logistic"`
+
+  + when calling `xgboost()`, change the string `evaluation_log$test_rmse_mean` to `evaluation_log$test_error_mean`
+
+  + when calling `xgb.cv()` and `xgboost()`, add the argument `eval_metric = "error"`
+
+

@@ -1,0 +1,79 @@
+---
+title: Overview of Statistical Learning and Modeling -- 36-600
+subtitle: |
+  Lab 14T: Data Analysis Workflow Review\
+  Due Wednesday, December 3, 11:59pm
+author: "Trishla Nair"
+output:
+  pdf_document:
+    toc: false
+  html_document:
+    toc: false
+    code-overflow: wrap
+    code-fold: false
+    theme: spacelab
+urlcolor: blue
+---
+
+This week's lab is very much DIY.  There is a file called `creditDefault.csv` on the course Github page.  Your boss wants to know if any of the variables included in this file, apart from `Default` itself, are important for predicting whether a person will default on their credit-card balance rather than paying it back.
+
+From just the information above, you should eventually construct an appropriate answer to the question.  Note that regardless of whether you think a non-ML model is sufficient, you should always check to see if an ML model gives much better predictive results.  Also note that your boss is not necessarily looking for plots here, but you'd always want to do *some* EDA, if for no other reason than to ensure you don't have missing data or outliers!
+
+```{r}
+df <- read.csv("https://raw.githubusercontent.com/FSKoerner/F25-36600-data/refs/heads/main/creditDefault.csv", stringsAsFactors = TRUE)
+
+```
+
+```{r}
+boxplot(df)
+```
+
+```{r}
+hist(df$Balance)
+```
+
+```{r}
+hist(df$Income)
+```
+
+```{r}
+set.seed(42)
+s        <- sample(nrow(df), round(0.7 * nrow(df)))
+df.train <- df[s, ]
+df.test  <- df[-s, ]
+
+logit.out <- glm(Default ~ ., data = df.train, family = binomial)
+summary(logit.out)
+```
+```{r}
+balance.grid <- seq(min(df.train$Balance), max(df.train$Balance), length = 300)
+
+# Predict for non-student
+pred.non <- predict(logit.out,
+                    newdata = data.frame(
+                      Student = "No",
+                      Balance = balance.grid,
+                      Income = mean(df.train$Income)
+                    ),
+                    type = "response")
+
+# Predict for student
+pred.stud <- predict(logit.out,
+                     newdata = data.frame(
+                       Student = "Yes",
+                       Balance = balance.grid,
+                       Income = mean(df.train$Income)
+                     ),
+                     type = "response")
+
+# PLot
+plot(balance.grid, pred.non, type = "l", lwd = 2,
+     xlab = "Balance", ylab = "Predicted Probability of Default",
+     main = "Logistic Regression: Predicted Probability of Default")
+
+lines(balance.grid, pred.stud, lwd = 2, col = "blue")
+legend("topleft", legend = c("Non-Student", "Student"),
+       col = c("black", "blue"), lwd = 2)
+```
+
+Based on our analysis of the logistic regression model, we can see that Balance is significant in determining if a someone is likely to default.

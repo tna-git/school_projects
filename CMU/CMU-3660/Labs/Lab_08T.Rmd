@@ -1,0 +1,219 @@
+---
+title: Overview of Statistical Learning and Modeling -- 36-600
+subtitle: |
+  Lab 8T: Logistic Regression\
+  Due Wednesday, October 22, 11:59pm\
+author: Trishla Nair
+output:
+  pdf_document:
+    toc: false
+  html_document:
+    toc: false
+    code-overflow: wrap
+    code-fold: false
+    theme: spacelab
+urlcolor: blue
+---
+
+
+## Data
+
+Democracy day is coming up - let's take a look at one aspect of how political movements have shaken out over the years.  We'll begin by importing data on political movements (this is a subset of columns from the original NAVCO dataset, which has since grown substantially; see [this page](https://dataverse.harvard.edu/dataverse/navco)).
+
+```{r echo=FALSE}
+load(url("https://github.com/FSKoerner/F25-36600-data/raw/refs/heads/main/movement.Rdata"))
+f <- function(variable, level0 = "NO", level1 = "YES"){
+  n               <- length(variable)
+  new.variable    <- rep(level0, n)
+  w               <- which(variable == 1)
+  new.variable[w] <- level1
+  return(factor(new.variable))
+}
+predictors$nonviol      <- f(predictors$nonviol)
+predictors$sanctions    <- f(predictors$sanctions)
+predictors$aid          <- f(predictors$aid)
+predictors$support      <- f(predictors$support)
+predictors$viol.repress <- f(predictors$viol.repress)
+predictors$defect       <- f(predictors$defect)
+levels(response)        <- c("FAILURE", "SUCCESS")
+df                      <- cbind(predictors, response)
+names(df)[9]            <- "label"
+rm(id.half, id, predictors.half, predictors, response)
+```
+
+These data, as processed, contain information on 218 political movements.  The predictor variables are largely categorical: `nonviol`, for instance, is `YES` if the movement was non-violent, etc.  In particular, `aid` indicates if the government being targeted received foreign aid to deal with the movement, and `defect` indicates whether substantial portions of the military and police sided with the movement.  `democracy` ranges from -10 for authoritarian regimes to 10 for fully democratic regimes. 
+
+
+# Questions
+
+
+## Question 1
+
+Summarize the data via `summary()`.  Which variable looks like it might benefit from a transform to mitigate right-skewness?  Create a histogram for that variable, then make the transformation (by, e.g., doing `df$x <- sqrt(df$x)`, where `x` should be replaced with the variable name, and yes, that's `sqrt()`, not `log()`, this time) and create a histogram of the transformed variable.
+
+```{r}
+summary(df)
+df$duration <- sqrt(df$duration)
+```
+Duration should be transformed.
+
+## Question 2
+
+Split the data into training and test sets.  Remember to set the seed!
+
+```{r}
+set.seed(42)
+train_index <- sample(x = 1:nrow(df),size = floor(0.7 * nrow(df)),replace = FALSE)
+
+train_set <- df[train_index, ]
+test_set <- df[-train_index, ]
+
+```
+
+
+## Question 3
+
+Carry out a logistic regression analysis (predicting the response variable `df$label`, i.e., the ultimate success/failure of the movement, from all other covariates), and display both the misclassification rate and a table of predictions versus true responses on the test-set (i.e., display the confusion matrix).  (Beyond the notes, you might want to look at the code on pp. 156-158 of ISLR, 1st ed.)  What is your misclassification rate?  (Save the output of your call to `table()` as `tab` so that we can use it later.)
+
+```{r}
+out.log <- glm(label ~ ., data = train_set, family = binomial, control = list(maxit = 100))
+
+
+resp.prob <- predict(out.log, newdata = test_set, type ="response")
+resp.pred <- ifelse(resp.prob > 0.5, "SUCCESS", "FAILURE")
+resp.pred <- factor(resp.pred, levels = levels(train_set$label))
+
+y_true <- test_set$label
+
+misclassification_rate <- mean(resp.pred != y_true)
+print(paste("Misclassification Rate:", round(misclassification_rate, 4)))
+
+# Confusion matrix
+tab <- table(Predicted = resp.pred, Actual = y_true)
+print("Confusion Matrix:")
+print(tab)
+
+```
+
+```
+My misclassification rate is 0.2727.
+```
+
+
+## Question 4
+
+What are the class proportions for the (test-set!) response variable?  Use these numbers to determine the "null MCR," i.e., the misclassification rate if we simply guess that all data belong to the majority class.  Recall that summing the output of logical operations (e.g., `sum(df.test$label == "NO")`) is a concise way to display the counts of "yes" and "no".  How does this null rate compare to that found via logistic regression?
+
+```{r}
+class_counts <- table(test_set$label)
+class_props  <- prop.table(class_counts)
+
+print("Class proportions in test set:")
+print(class_props)
+
+majority_class <- names(which.max(class_counts))
+null_mcr <- sum(test_set$label != majority_class) / nrow(test_set)
+
+cat("Null model MCR:", null_mcr)
+
+pred_prob <- predict(out.log, newdata = test_set, type ="response")
+
+pred_class <- ifelse(pred_prob > 0.5, "YES", "NO")
+logistic_mcr <- mean(pred_class != test_set$label)
+
+cat("Logistic regression MCR:", logistic_mcr)
+
+```
+
+```
+The null rate is approximately half of the logistic rate.
+```
+
+
+## Question 5
+
+While statisticians often shoe-horn results into the facade of test-produced error rates, in many contexts other rates are used.  Compute the *sensitivity* and *specificity* of logistic regression using definitions on [this web page](https://en.wikipedia.org/wiki/Confusion_matrix).  There can be some ambiguity regarding labeling results of tables: assume that predicting success for a movement that was successful is a "true positive," while predicting failure for a successful movement is a "false negative," etc.
+
+Don't hard-code any counts/rates!  If you saved your confusion matrix above to the variable `tab`, then, e.g.:
+
+```
+TP <- tab[2, 2] # second row, second column (i.e., bottom right)
+FP <- tab[2, 1] # second row, first column (i.e., bottom left)
+                # etc.
+```
+
+Map your table to `TP`, `FP`, `TN`, and `FN`, and use these to compute sensitivity and specificity, and then define each of these in words.  In a perfect world, the sum of sensitivity and specificity would be 2.
+
+```{r}
+TP <- tab[2, 2]
+FP <- tab[2, 1]
+FN <- tab[1, 2]
+TN <- tab[1, 1]
+sensitivity<- TP/(TP+FN)
+specififcity<- TN/(TN+FP)
+print(sensitivity)
+print(specififcity)
+```
+Sensitivity measures ability of a model to correctly identify if a protest was nonviolent. Sensitivity measures ability of a model to correctly identify if a protest was violent.
+## Question 6
+
+A political scientist might be more interested to know what proportion of movements that are predicted to be successful actually are successful.  Compute this quantity and determine from the aforementioned confusion matrix (Wikipedia) page what this quantity is usually called.
+
+```{r}
+precision<- TP/(TP+FP)
+print(precision)
+```
+
+```
+This is precision.
+```
+
+
+## Question 7
+
+Let's go back to the output from the logistic regression fit to the training data.  Pass that output to the `summary()` function here.  Look at the output, but before you interpret it, let's review what the output for a categorical predictor variable means.  Take `aid`, for instance.  The reference level is `NO`, meaning the government did not receive foreign aid specifically to quell the movement...and for that reference level, the coefficient is implicitly zero (and never explicitly shown in the output).  For `YES`, the coefficient is (for my data split) -0.148.  (Your coefficient may be and probably will be slightly different.)  You can think of what this means in terms of relative odds: is foreign aid to the government "under attack" associated with an increase the probability of success, or a decrease?  If we compute
+
+$$
+e^{-0.148} = 0.862 \,,
+$$
+
+we see that, all else being equal, having foreign aid reduces the odds of a movement's success by about 14%, i.e., aid helps governments repress movements, on average.  This all being said: identify the variable that is most informative about predicting *successful* movements, and the variable that is most informative about predicting *failed* movements.  (And definitely don't include the intercept term here!)
+
+```{r}
+summary(out.log)
+print(exp(2.277147)) # Odds ratio for nonviolYES
+print(exp(-1.105202)) # Odds ratio for viol.repressYES
+
+```
+
+```
+The odds ratio for nonviolent protests of 9.748827 shows that they are more likely to succeed. The odds ratio for violent protests of 0.331144 shows that they are more likely to fail.
+```
+
+
+## Question 8
+
+Is the logistic regression model *significant*, in a statistical sense?  In other words, is at least one of the coefficients in the model truly non-zero?  Go back to the summary and see the lines indicating the `Null deviance` and the `Residual deviance`.  If you named your output from `glm()` as `log.out`, then you can get the null deviance from `log.out$null.deviance` and the residual deviance from `log.out$deviance`.  Similarly, you can get the associated numbers of degrees of freedom from `log.out$df.null` and `log.out$df.residual`.  Why would you want to do this?  Well, if you took the absolute value of the difference in deviances (call this `dev.diff`) and the difference in degrees of freedom (`df.diff`), you could then do a formal hypothesis test: for a useful model, `dev.diff` should **not** be chi-square distributed with `df.diff` degrees of freedom.  In other words, if the $p$-value `1 - pchisq(dev.diff, df.diff)` is less than 0.05, at least one of the coefficients is truly non-zero.  (This is analogous to doing an $F$-test in a linear regression models; there, the null hypothesis is that all the slopes are zero.)  Compute the $p$-value here.  Do you reject the null hypothesis that all the coefficients are truly zero?
+
+```{r}
+print(out.log$null.deviance)
+print(out.log$df.null)
+
+print(out.log$deviance)
+print(out.log$df.residual)
+
+dev.diff <- abs(out.log$null.deviance - out.log$deviance)
+
+df.diff <- abs(out.log$df.null - out.log$df.residual)
+print(dev.diff)
+print(df.diff)
+
+p_value <- 1 - pchisq(dev.diff, df.diff)
+print(p_value)
+```
+
+```
+Since the p-value is so small, I reject the null hypothesis that all the coefficients are truly zero.
+```
+
+

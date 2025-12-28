@@ -1,0 +1,453 @@
+---
+title: "Unsupervised Learning I"
+author: "36-600"
+date: '9/16/2025'
+output:
+  xaringan::moon_reader:
+    nature:
+      ratio: '16:9'
+      beforeInit: "macros.js"
+---
+layout: true
+background-image: url(background.png)
+background-size: cover
+---
+
+<style type="text/css">
+.remark-slide-content {
+    font-size: 16px;
+    padding: 1em 4em 1em 4em;
+}
+a { 
+    color: blue; 
+}
+.remark-slide-content h1 {
+    font-family: cabin;
+}
+.remark-slide-content h2 {
+    font-family: cabin;
+}
+.remark-slide-content h3 {
+    font-family: cabin;
+}
+.remark-slide-number {
+    font-size: 8pt;
+    margin-bottom: -5.6px;
+    margin-right: 1145px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+.remark-code {
+    font-size: 16px;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 65% !important;
+}
+</style>
+
+```{css,echo=FALSE}
+table {
+  font-size: 12px;
+}
+```
+
+
+## The Setting
+
+- The setting for *unsupervised learning* is that you have:
+
+  + a collection of $p$ measurements (recorded in columns of a data frame),
+  
+  + for each of $n$ objects (recorded in rows of a data frame)
+  
+- "Unsupervised" simply means that none of the variables is a response variable: we are not trying to predict the value of a measurement
+
+- One can think of unsupervised learning as being an extension of EDA
+
+  + in EDA, the goal is to visualize *projected* data to build intuition and to visually assess potential associations between variables
+  
+  + in unsupervised learning, we implement statistical algorithms to uncover potential structure in the data in their native space, i.e., quantitatively accounting for those potential associations between variables
+
+- A main, overarching issue with unsupervised learning is that *there are no universally accepted mechanisms for model assessment or selection, i.e., there will almost never be a uniquely correct answer!*
+
+
+---
+
+## Digression: Similarity
+
+- Unsupervised learning relies on notions of *similarity*: how similar or dissimilar are two data points?
+
+- In the wider world of statistics and machine learning, there are many, many ways to quantify similarity
+
+  + here we focus on the most intuitive, the $L^2$-norm, better known as the Euclidean distance:
+$$d_{ij} = \sqrt{(X_{i1}-X_{j1})^2 + \cdots + (X_{ip}-X_{jp})^2}$$
+
+  + $i$ and $j$ are the indices for two data points (i.e., the indices for two rows in a data frame) and $X_1$ through $X_p$ represent the $p$ measurements associated with each datum
+
+- To compute pairwise distances in `R`, use `dist()` (which by default assumes the Euclidean distance)
+
+  + the output is a (symmetric) matrix
+  
+  + *beware*: if your data frame has more than, say, 20,000 rows, your computer may encounter issues surrounding insufficient memory to store the matrix
+
+
+---
+
+## Clustering
+
+- What is clustering?
+
+  + it is the partitioning of data into *homogeneous subgroups*
+
+- What is the goal of clustering?
+
+  + to define clusters for which the *within-cluster variation* is relatively small, in contrast to their *between-cluster variation*
+
+- So, what now?
+
+  + because we know the Euclidean distances between each datum, we can determine the average squared distance between data *within defined clusters* and compare that to the same measure between *all data*
+  
+  + if the ratio of the first number to the second number is small, we've found small tight clusters that lie far apart
+
+
+---
+
+## Clustering
+
+- What are the caveats?
+
+  + there is **no guarantee** that the data are distributed across multiple, effectively discontiguous clusters, i.e., unsupervised learning is never guaranteed to generate an "actionable result"
+
+  + commonly applied clustering algorithms **are not applicable to categorical data** (however, we will mention some less commonly applied algorithms later)
+
+  + in many clustering methods, **all** data are forced into clusters; this may not be optimal
+
+  + any method that relies on distances will be impacted by units
+
+
+---
+
+## Standardization
+
+- Regarding "impacted by units"...
+
+  + it is common practice to *standardize* (or *scale*) the data within each column of the data frame:
+$$X \rightarrow \frac{X-\overline{X}}{S_X} \,,$$
+
+  + $\overline{X}$ and $S_X$ are the sample mean and sample standard deviation of the data, respectively
+  
+  + the mean and the standard deviation of the scaled distribution will then be 0 and 1, respectively
+
+- To standardize the data separately in each column of a data frame, use the `scale()` function, e.g.:
+
+```
+df.scaled <- scale(df)
+```
+
+
+---
+
+## $k$-Means Clustering
+
+- The algorithm for $k$-means clustering is straightforward:
+
+.center[
+  ![:scale 50%](./alg_10-1.png)
+]
+
+- Note the following:
+
+  + as previously stated, there is no universally accepted metric that would lead us to conclude that a particular value of $k$ is the optimal one
+
+  + the results depend on an initial random assignment; your results can therefore change from run to run unless you explicitly set a random number seed immediately before calling `kmeans()`
+
+
+---
+
+## $k$-Means Clustering
+
+.center[
+  ![:scale 35%](./kmeans.png)
+]
+
+<br>
+
+(ISLR; Figure 12.8)
+
+
+---
+
+## $k$-Means Clustering: Example
+
+```{r echo=FALSE}
+suppressMessages(library(tidyverse))
+```
+
+<br>
+
+.pull-left[
+<br>
+
+- Let's generate some fake data:
+
+```{r kmeans,fig.show='hide'}
+set.seed(101)
+x <- c(rnorm(30), rnorm(30, mean = 2.25))
+y <- c(rnorm(30), rnorm(30, mean = 2.25))
+s <- c(rep(2, 30), rep(19, 30))
+df <- data.frame(x, y)
+ggplot(data = df, mapping = aes(x = x, y = y)) + 
+  geom_point(color = "firebrick", 
+             shape = s, cex = 2)
+```
+]
+
+.pull-right[
+```{r ref.label='kmeans',echo=FALSE,fig.height=4.25,fig.width=4.25,fig.align="center"}
+```
+]
+
+---
+
+## $k$-Means Clustering: Example
+
+<br><br>
+
+.pull-left[
+- What happens if we assume two clusters?
+
+```{r eval=FALSE,fig.height=4,fig.width=4,fig.align="center"}
+# run clustering in the standardized space...
+km.out <- kmeans(scale(df), 2, nstart = 20)
+color  <- km.out$cluster
+# ...but visualize in the native space
+ggplot(data = df, mapping = aes(x = x, y = y)) +
+  geom_point(color = color, shape = s)
+```
+
+- Initially, the algorithm randomly associates data to clusters; to mitigate this aspect of randomness, set the `nstart` argument in the function call to a large number (e.g., 20)
+
+- *Note*: we standardize the input to $k$-means, but visualize the results in the data's native space
+]
+
+.pull-right[
+```{r echo=FALSE,fig.height=4.25,fig.width=4.25,fig.align="center"}
+km.out <- kmeans(scale(df), 2, nstart = 20)
+color <- km.out$cluster
+ggplot(data = df, mapping = aes(x = x, y = y)) +
+  geom_point(color = color, shape = s)
+```
+]
+
+
+---
+
+## $k$-Means Clustering: Output
+
+```{r}
+km.out
+```
+
+
+---
+
+## $k$-Means Clustering: Output
+
+- Look at the output from the last slide:
+
+  + `totss`: the average squared distance between any one data point and all other data points
+
+  + `tot.withinss`: the average squared distance between any one data point and all other data points *in its cluster* (we want this to be small relative to `totss`)
+
+  + `betweenss` is `totss` - `tot.withinss` (we want this to be large relative to `totss`)
+  
+```{r}
+c(km.out$totss, km.out$tot.withinss, km.out$betweenss)
+```
+
+<br>
+
+- As $k \rightarrow n$, `(between_SS/total_SS)` goes to 100%
+
+  + 100% is *not* the goal: you'd be "overfitting" the data at that point, with each data point in its own "cluster"
+
+
+---
+
+## $k$-Means Clustering: Example
+
+<br><br><br>
+
+.pull-left[
+<br>
+
+- What happens if we assume three clusters?
+
+```{r eval=FALSE,fig.height=4,fig.width=4,fig.align="center"}
+km.out <- kmeans(scale(df), 3, nstart = 20)
+color  <- km.out$cluster
+ggplot(data = df, mapping = aes(x = x, y = y)) + 
+  geom_point(color = color, shape = s)
+```
+
+- It works (there's no reason it shouldn't), but the result appears *perhaps* visually less clean
+]
+
+.pull-right[
+```{r echo=FALSE,fig.height=4.25,fig.width=4.25,fig.align="center"}
+km.out <- kmeans(scale(df), 3, nstart = 20)
+color  <- km.out$cluster
+ggplot(data = df, mapping = aes(x = x, y = y)) + 
+  geom_point(color = color, shape = s)
+```
+]
+
+
+---
+
+## $k$-Means Clustering: Example
+
+```{r}
+km.out
+```
+
+
+---
+
+## $k$-Means Clustering: Choosing $k$
+
+- Just because there are no *universally agreed-upon metrics* for choosing $k$ doesn't mean there aren't any metrics at all; some commonly used ones include:
+
+  + the elbow method;
+
+  + the silhouette method; and
+
+  + the gap statistic
+
+
+---
+
+## $k$-Means Clustering: the Elbow Method
+
+<br><br>
+
+.pull-left[
+```{r eval=FALSE,fig.height=4.25,fig.width=4.25,fig.align="center"}
+wss <- rep(NA, 10)
+for (ii in 1:10) { 
+  km.out  <- kmeans(scale(df), ii, nstart = 20)
+  wss[ii] <- km.out$tot.withinss
+}
+df.plot <- data.frame("k" = 1:10, wss)
+ggplot(data = df.plot, 
+       mapping = aes(x = k, y = wss)) +
+  geom_point(col = "seagreen") +
+  geom_line(col = "seagreen") +
+  ylab("Within-Cluster Sum-of-Squares")
+```
+
+- The "elbow" is around $k$ = 2 (or 3?)
+
+  + Don't put too much faith in the elbow method consistently delivering the right choice
+]
+
+.pull-right[
+```{r echo=FALSE,fig.height=4.25,fig.width=4.25,fig.align="center"}
+wss <- rep(NA, 10)
+for (ii in 1:10) { 
+  km.out  <- kmeans(scale(df), ii, nstart = 20)
+  wss[ii] <- km.out$tot.withinss
+}
+df.plot <- data.frame("k" = 1:10, wss)
+ggplot(data = df.plot, 
+       mapping = aes(x = k, y = wss)) +
+  geom_point(col = "seagreen") +
+  geom_line(col = "seagreen") +
+  ylab("Within-Cluster Sum-of-Squares")
+```
+]
+
+
+---
+
+## $k$-Means Clustering: the Silhouette Method
+
+<br>
+
+.pull-left[
+```{r eval=FALSE,fig.height=4.25,fig.width=4.25,fig.align="center"}
+library(cluster)
+ss <- rep(NA, 10)
+for (ii in 2:10) { 
+  km.out <- kmeans(scale(df), ii, nstart = 20)
+  ss[ii] <- mean(silhouette(km.out$cluster,
+                            dist(scale(df)))[, 3])
+}
+df.plot <- data.frame("k" = 2:10, "ss" = ss[2:10])
+ggplot(data = df.plot, 
+       mapping = aes(x = k, y = ss)) +
+  geom_point(col = "seagreen") +
+  geom_line(col = "seagreen") +
+  ylab("Average Silhouette")
+```
+
+- The highest score is for $k$ = 2, indicating that two clusters is optimal
+
+- See, e.g., the wikipedia page on ["Silhouette (clustering)"](https://en.wikipedia.org/wiki/Silhouette_(clustering)
+]
+
+.pull-right[
+<br>
+
+```{r warning=FALSE,echo=FALSE,fig.height=4.25,fig.width=4.25,fig.align="center"}
+library(cluster)
+ss <- rep(NA, 10)
+for (ii in 2:10) { 
+  km.out <- kmeans(scale(df), ii, nstart = 20)
+  ss[ii] <- mean(silhouette(km.out$cluster, 
+                            dist(scale(df)))[, 3])
+}
+df.plot <- data.frame("k" = 2:10, "ss" = ss[2:10])
+ggplot(data = df.plot, 
+       mapping = aes(x = k, y = ss)) +
+  geom_point(col = "seagreen") +
+  geom_line(col = "seagreen") +
+  ylab("Average Silhouette")
+```
+]
+
+
+---
+
+## $k$-Means Clustering: the Gap Statistic
+
+- The [gap statistic](https://uc-r.github.io/kmeans_clustering#optimal) method attempts, essentially, to perform on-the-fly hypothesis testing
+  
+```{r warning=FALSE,fig.height=4.25,fig.width=4.25,fig.align="center"}
+suppressMessages(library(factoextra))
+gs <- clusGap(scale(df), FUN = kmeans, nstart = 20, K.max = 10, B = 50)
+fviz_gap_stat(gs)
+```
+
+- The highest score is for $k$ = 2, indicating that two clusters is optimal
+
+
+---
+
+## $k$-Prototypes and $k$-Modes
+
+- What if our data have categorical variables?
+
+- Two options for analyzing categorical or mixed-type data are:
+
+  + $k$-*modes*: we would use this algorithm if our data consist *completely* of factor variables.  An example implementation is `kmodes()` in `R`'s `klaR` package
+  
+  + $k$-*prototypes*: we would use this algorithm if our data consist of a mix of factor and numeric variables.  An example implementation is `kproto()` in `R`'s `clustMixType` package
+
+- Both of these algorithms alter the distance calculation to take into account the categorical nature of the factor variables
+
+  + one can find more details about $k$-prototypes in [this paper](https://journal.r-project.org/archive/2018/RJ-2018-048/RJ-2018-048.pdf), by one of the packages' authors
+
+  + and one can find a short study on approaches for clustering mixed-type data with reference to both packages in [this paper](https://link.springer.com/article/10.1007/s11634-024-00595-5), by some of the packages' authors
+
+

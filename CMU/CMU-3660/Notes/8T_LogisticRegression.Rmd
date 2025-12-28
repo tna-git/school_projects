@@ -1,0 +1,455 @@
+---
+title: "GLMs and Logistic Regression"
+author: "36-600"
+date: '10/21/2025'
+output:
+  xaringan::moon_reader:
+    nature:
+      ratio: '16:9'
+      beforeInit: "macros.js"
+---
+layout: true
+background-image: url(background.png)
+background-size: cover
+---
+
+<style type="text/css">
+.remark-slide-content {
+    font-size: 16px;
+    padding: 1em 4em 1em 4em;
+}
+a { 
+    color: blue; 
+}
+.remark-slide-content h1 {
+    font-family: cabin;
+}
+.remark-slide-content h2 {
+    font-family: cabin;
+}
+.remark-slide-content h3 {
+    font-family: cabin;
+}
+.remark-slide-number {
+    font-size: 8pt;
+    margin-bottom: -5.6px;
+    margin-right: 1145px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+.remark-code {
+    font-size: 16px;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 65% !important;
+}
+</style>
+
+```{css,echo=FALSE}
+table {
+  font-size: 12px;
+}
+```
+
+
+## Review: Probability Distributions
+
+.pull-left[
+
+<br>
+
+- A probability distribution is a mathematical function $f_X(x \mid \theta)$ where
+
+  + $x$ is discretely or continuously valued
+
+  + $\theta$ is a set of one or more parameters governing the shape and location of the distribution (e.g., $\theta = \{\mu,\,\sigma^2\}$ for a normal)
+
+- When $x$ is discretely valued, $f_X(x \mid \theta)$ is called a *probability mass function*, or *p.m.f.*
+
+- When $x$ is continuously valued, $f_X(x \mid \theta)$ is called a *probability density function* or *p.d.f.*
+
+]
+
+.pull-right[
+
+```{r echo=FALSE,fig.align="center",fig.height=3,fig.width=5}
+library(ggplot2)
+x <- seq(-4, 4, by = 0.01)
+y <- dnorm(x)
+ggplot(data = data.frame(x, y), mapping = aes(x = x, y = y)) + 
+  geom_line(color = "red") + ylab(expression(f[X]*"(x)")) + ggtitle("Normal")
+```
+
+```{r echo=FALSE,fig.align="center",fig.height=3,fig.width=5}
+x <- 0:10
+y <- dbinom(x, size = 10, prob = 0.3)
+ggplot(data = data.frame(x, y), mapping = aes(x = x, y = y)) + 
+  geom_point(color = "red", size = 2) + ylab(expression(p[X]*"(x)")) + 
+  ggtitle("Binomial")
+```
+
+]
+
+
+---
+
+## Probability Distributions and Regression
+
+- We're returning to discussing distributions because, in parameterized regression, we make assumptions about how the response variable is distributed around the true regression line
+
+- For instance, for Gaussian simple linear regression, we assumed that for every $x$:
+
+  + the mean of the normal distribution is $\mu \mid x = \mathbb{E}(Y \mid x) = \beta_0 + \beta_1 x$
+
+  + the variance of the normal distribution is $\sigma^2$, which is a **constant** (i.e., does not vary with $x$)
+
+  + the distribution governing the possible values of $Y \mid x$ has a theoretically infinite domain (*note*: we *assumed* that the errors took a normal distribution)
+
+- But,
+
+  + what if $Y \mid x$ does not have an infinite domain? 
+  
+  + what if $Y \mid x$ is not continuously valued?
+
+- If one or both of these is the case, we would consider using *generalized linear models*, or *GLMs*
+
+
+---
+
+## Generalization: Choosing a Distribution
+
+- In practice, there will be many possibilities for the following choices, and we might not know which one is "correct", but any assumption we make *should* be consistent with how the response is distributed
+  
+- Common assumptions that are made in practice:
+
+| Domain of $Y$ | Consistent Distributions |
+| ------------- | ------------------------ |
+| $(-\infty,\,\infty)$ | normal |
+| $[0,\,\infty)$ | Poisson, gamma, exponential, chi-square |
+| $[0,\,n]$ | multinomial |
+| $[0,\,1]$ | beta, binomial |
+
+- Some of the distributions above are appropriate for continuous data (gamma, exponential, chi-square, beta) and some for discrete data (Poisson, multinomial, binomial)
+
+  + foreshadowing: logistic regression (today's primary example) assumes the binomial distribution
+
+
+---
+
+## Generalization: Link Functions
+
+.pull-left[
+
+- Let's assume we have one predictor, where the linear function relating $x$ to some appropriate $g(Y)$ is
+
+$$
+\beta_0 + \beta_1 x
+$$
+
+- We use a *link function* $g(\,\cdot\,)$ to map this line to a restricted domain 
+
+- There is rarely a uniquely correct transformation, but there are some that are commonly used:
+
+  + to map to the domain $Y \mid x \geq 0$ (top right):
+$$
+g(\mu \mid x) = \log(\mu \mid x) = \beta_0 + \beta_1 x ~\Rightarrow~ \mu \mid x = e^{\beta_0 + \beta_1 x}
+$$
+
+  + to map to the domain $Y \mid x \in [0,\,1]$ (bottom right):
+
+$$
+g(\mu \mid x) = \log\left(\frac{\mu}{1 - \mu}\mid x\right) = \beta_0 + \beta_1 x ~\Rightarrow~ \mu \mid x = \frac{e^{\beta_0 + \beta_1 x}}{1+e^{\beta_0 + \beta_1 x}}
+$$
+
+]
+
+.pull-right[
+
+```{r echo=FALSE,fig.height=3,fig.width=3}
+library(ggplot2)
+x <- seq(-5, 5, by = 0.1)
+y <- x
+ggplot(data = data.frame(x, y), mapping = aes(x = x, y = y)) + 
+  geom_line(color = "red") + ylab("Y")
+y <- exp(x)
+ggplot(data = data.frame(x, y), mapping = aes(x = x, y = y)) + 
+  geom_line(color = "red") + ylab("Y")
+y <- x
+ggplot(data = data.frame(x, y), mapping = aes(x = x, y = y)) + 
+  geom_line(color = "red") + ylab("Y")
+y <- exp(x)/(1+exp(x))
+ggplot(data = data.frame(x, y), mapping = aes(x = x, y = y)) + 
+  geom_line(color = "red") + ylab("Y")
+```
+
+]
+
+
+---
+
+## Generalization: Optimization
+
+- Estimates of $\beta_0$ and $\beta_1$ are made via maximization of the *likelihood function*, e.g.,
+$${\cal L} = \prod_{i=1}^{n_{\rm train}} f_{Y}(y_i \mid \mu_i = e^{\beta_0 + \beta_1 x_i})$$
+  
+  + how to read this: plug in guesses $\beta_0$ and $\beta_1$, determine $\mu_i$ given those guesses, evaluate the probability density function amplitude for $Y_i$ given $\mu_i$, and repeat for all data (and multiply the results together)
+  
+  + change $\beta_0$ and $\beta_1$ until this function attains its maximum value
+  
+  + the MLE is found via *numerical* optimization and thus GLMs are much slower to learn than ordinary least squares models
+
+- Of course, we need to *pick an appropriate distribution* (cf. slide 4) so that we have the functional form for $f_Y(y_i \mid \mu_i)$
+
+
+---
+
+## Logistic Regression
+
+.center[
+  ![:scale 80%](./Figure_4.2.png)
+]
+
+(Figure 4.2, *Introduction to Statistical Learning* by James et al.)
+
+- To the left is a linear regression fit.  The regression line output *is not* limited to lie within the domain $[0,\,1]$
+
+- To the right is a logistic regression fit.  The regression line output *is* limited to lie within the range $[0,\,1]$
+
+
+---
+
+## Logistic Regression
+
+- *Logistic regression* is appropriate for datasets where the response variable takes on two discrete values (we almost always just map these to 0 and 1, by default)
+
+  + the underlying distribution is the *binomial distribution*, whose parameter is $p$, the probability of success (seeing outcome 1)
+
+- Why is it named "logistic regression" and not "binomial regression"? 
+
+  + the conventional choice for the link function $g(p \mid x)$ is the *logit* function, seen on a previous slide (*note*: here, $\mu \rightarrow p$):
+
+\begin{align*}
+\log\left(\frac{p}{1-p}\mid x\right) = \beta_0 + \beta_1 x
+\end{align*}
+
+- The probability of sampling a datum of class 1 at coordinate $x_i$ is therefore:
+
+\begin{align*}
+p_i \mid x_i = \frac{e^{\beta_0 + \beta_1 x_i}}{1 + e^{\beta_0 + \beta_1 x_i}}
+\end{align*}
+
+- The likelihood function to be optimized is
+\begin{align*}
+{\cal L} = \left( \prod_{i:\, Y_i=1} p_i \mid x_i \right) \left( \prod_{i:\, Y_i=0} (1 - p_i \mid x_i) \right)
+\end{align*}
+
+  + *key takeaway*: we want $p_i \mid x_i$ to be large when $Y_i = 1$ and $p_i \mid x_i$ to be small when $Y_i = 0$
+
+
+---
+
+## Logistic Regression: Inference
+
+- In logistic regression, inference is done via the *odds*
+
+  + assume we have one predictor variable, and a datum with predicted response $p_i \mid x_i = 0.8$
+  
+  + that would mean: if we were to repeatedly sample response values at a specified $x_i$, we would expect class 1 to be sampled four times as often as class 0:
+\begin{align*}
+O_i = \frac{p_i \mid x_i}{1-p_i \mid x_i} = \frac{p_i}{1-p_i} \mid x_i = \frac{0.8}{1-0.8} = 4 = e^{\beta_0+\beta_1 x_i}
+\end{align*}
+  
+  + the odds $O_i$ are 4, or, as often conveyed, 4-1 ("four to one") in favor of class 1
+
+- How do the odds change if we change the value of the predictor variable by one unit?
+\begin{align*}
+O_{\rm new} = e^{\beta_0+\beta_1(x_i+1)} = e^{\beta_0+\beta_1x_i}e^{\beta_1} = e^{\beta_1}O_{\rm old}
+\end{align*}
+  
+  + if $\beta_1 > 0$, the odds go up as $x_i$ increases
+  
+  + if $\beta_1 \gg 0$, the odds go up *quickly*; the sigmoid function $p \mid x$ quickly transitions from 0 to 1
+
+  
+---
+
+## Logistic Regression: Output
+
+.pull-left[
+
+```{r eval=FALSE,fig.height=6,fig.width=6,fig.align="center"}
+out.log <- glm(y ~ x, family = binomial)
+ggplot(data = data.frame(x = x, 
+                         y = out.log$fitted), 
+       mapping = aes(x = x, y = y)) + 
+  geom_line(color = "red") + 
+  geom_point(data = data.frame(x = x, y = y), 
+             mapping = aes(x = x, y = y), 
+             color = "blue") + 
+  geom_abline(slope = 0.05, intercept = 0, 
+              linewidth = 1.2, color = "green", 
+              linetype = "dashed")
+```
+
+- *Note*: a logistic function is "only so flexible" and may often not replicate the truth.  E.g., here:
+
+  + the true $p \mid x$ is given by the green dashed line
+
+  + the estimated $p \mid x$ is given by the red line
+
+
+]
+
+.pull-right[
+
+```{r echo=FALSE,fig.height=6,fig.width=6,fig.align="center"}
+suppressMessages(library(tidyverse))
+set.seed(101)
+x <- 1:19
+y <- rbinom(length(x), 1, 0.05*x)
+out.log <- glm(y ~ x, family = binomial)
+suppressMessages(library(tidyverse))
+ggplot(data = data.frame(x = x, y = out.log$fitted.values), 
+       mapping = aes(x = x, y = y)) + 
+  geom_line(color = "red") +
+  geom_point(data = data.frame(x = x, y = y), 
+             mapping = aes(x = x, y = y), color = "blue") +
+  geom_abline(slope = 0.05, intercept = 0, linewidth = 1.2, 
+              color = "green", linetype = "dashed")
+```
+
+]
+
+
+---
+
+## Logistic Regression: Output
+
+.pull-left[
+```{r}
+summary(out.log)
+```
+]
+.pull-right[
+```{r}
+logLik(out.log)   # the maximum log-likelihood value
+```
+]
+
+
+---
+
+## Logistic Regression: Output
+
+- An analog to the familiar residual can be computed for each datum; it's called the *deviance residual*:
+\begin{align*}
+d_i = \mbox{sign}(y_i-\widehat{p_i}) \sqrt{-2\big(y_i \log \widehat{p_i} + (1-y_i) \log (1 - \widehat{p_i})\big)}
+\end{align*}
+  
+  + the sum of squares of the deviance residuals is $-2\log{\cal L}$, called the model's overall *deviance*
+
+<br><br>
+
+```
+    Coefficients:
+               Estimate Std. Error z value Pr(>|z|)  
+    (Intercept)  -5.2800     2.3424  -2.254   0.0242 *
+    x             0.4186     0.1843   2.271   0.0231 *
+```
+
+<br>
+
+- Some useful interpretations:
+
+  + the intercept, $\widehat{p\,}\mid x=0$, is $e^{-5.28}/(1+e^{-5.28}) \approx 0.005$ 
+
+  + the odds ratio associated with a one unit change in $x$ is $O_{\rm new}/O_{\rm old} = e^{0.4186} \approx 1.520$
+
+
+---
+
+## Logistic Regression: Output
+
+```
+        Null deviance: 25.008  on 18  degrees of freedom
+    Residual deviance: 14.236  on 17  degrees of freedom
+    AIC: 18.236
+    ...
+    'log Lik.' -7.117803 (df=2)
+```
+
+- The maximum value of the log-likelihood function is -7.118
+
+  + the deviance (of the sum-of-squares of the residual deviances) is -2 times -7.118, or 14.236
+  
+  + the AIC is $2k - 2\log{\cal L}$ = $2 \cdot 2 - 2 \cdot (-7.118)$ = 18.236, where $k$ is the number of degrees of freedom (here, `df` = 2)
+  
+  + note that these metrics do *not* tell you whether the model represents the data-generating process well in any absolute sense (see the Hosmer-Lemeshow test for further details), only relative to other models (using the same, if any, transformation of $Y$)
+
+- *Recall*: when selecting models, we select the one with the *lowest* AIC
+
+
+---
+
+## Logistic Regression: Predictions
+
+- In the previous example, there was no training/testing split
+
+- In "real" data analyses, there would be; you'd learn the model and generate test-set predictions by running code like:
+
+```{r eval=FALSE}
+    resp.prob <- predict(out.log, newdata = pred.test, type = "response")
+    resp.pred <- rep(NA, length(resp.prob))
+    for (ii in 1:length(resp.prob)) {
+      if (resp.prob[ii] > 0.5) {
+        resp.pred[ii] <- "<class 1>"   # FILL IN THE NAME OF CLASS 1
+      } else {
+        resp.pred[ii] <- "<class 0>"   # FILL IN THE NAME OF CLASS 0
+      }
+    }
+```
+
+- `resp.prob` is a number between 0 and 1: if that number is less than 0.5, we would predict that the test datum is associated with class 0, otherwise we'd predict it to be associated with class 1
+
+- In a future class, we'll re-examine our use of 0.5 as a threshold for class splitting
+
+
+---
+
+## Model Diagnostics: Classification
+
+- The most straightforward diagnostic tool for assessing a *classification model*, like logistic regression, is the *confusion matrix*
+
+  + the rows are predicted classes 
+  
+  + the columns are observed classes
+  
+- To create a confusion matrix: 
+
+```{r eval=FALSE}
+    resp.prob <- predict(out.log, newdata = pred.test, type = "response")   # same as on the last slide
+    resp.pred <- ifelse(resp.prob > 0.5, "<class 1>", "<class 0>")          # compressed if-else
+    mean(resp.pred != resp.test)                                            # compressed MCR calculator
+    table(resp.pred, resp.test)                                             # confusion matrix
+```
+
+
+---
+
+## Model Diagnostics: Classification
+
+- Here's an example of a confusion matrix:
+
+.center[
+  ![:scale 20%](./Classification_Diagnostic.png)
+]
+
+- There are *many* metrics associated with confusion matrices
+
+  + the *misclassification rate*, or *MCR*, is the ratio of the sum of the off-diagonal values in the confusion matrix (top right and bottom left) to the overall table sum (0.223 above)
+  
+  + *accuracy* is simply 1 $-$ MCR
+  
+  + see, e.g., [this web page](https://en.wikipedia.org/wiki/Confusion_matrix) to be overwhelmed by all the possible choices
+
+

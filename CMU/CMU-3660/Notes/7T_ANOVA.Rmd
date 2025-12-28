@@ -1,0 +1,515 @@
+---
+title: "Experimental Design and One-Way ANOVA"
+author: "36-600"
+date: '10/7/2025'
+output:
+  xaringan::moon_reader:
+    nature:
+      ratio: '16:9'
+      beforeInit: "macros.js"
+---
+layout: true
+background-image: url(background.png)
+background-size: cover
+---
+
+<style type="text/css">
+.remark-slide-content {
+    font-size: 16px;
+    padding: 1em 4em 1em 4em;
+}
+a { 
+    color: blue; 
+}
+.remark-slide-content h1 {
+    font-family: cabin;
+}
+.remark-slide-content h2 {
+    font-family: cabin;
+}
+.remark-slide-content h3 {
+    font-family: cabin;
+}
+.remark-slide-number {
+    font-size: 8pt;
+    margin-bottom: -5.6px;
+    margin-right: 1145px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+.remark-code {
+    font-size: 16px;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 65% !important;
+}
+</style>
+
+```{css,echo=FALSE}
+table {
+  font-size: 12px;
+}
+```
+
+
+## Experiments and Causation
+
+- So far, one of the main goals we've pursued throughout the course has been attempting to uncover the association between a set of predictor variables $\mathbf{x}$ and a response variable $Y$, if it exists
+
+- However, even if a statistically significant association does exist,
+
+  + **association does not imply causation!**
+
+--
+
+.center[
+  ![:scale 40%](./pchart1.png)
+]
+
+([Original image credit; long defunct](https://images.app.goo.gl/wVrU9gsV8S3NyUPDA))
+
+
+---
+
+## Case Study 1: Industrial Experiments
+
+*(The following case studies and the material on experimental design were provided by Professor Zach Branson)*
+
+- Apple wants to test the water durability of their laptops
+
+  + they randomly sample 100 identical laptops to be studied, and pour water on half of them
+  
+  + 20 of 50 "treatment" (water-doused) laptops continued to work, as opposed to 50 of 50 "control" laptops
+  
+- Did the water *cause* the laptops to break?
+
+--
+
+<hr>
+
+- **Yes**: the laptops were otherwise identical $-$ the only difference was the treatment
+
+
+---
+
+## Case Study 2: Clinical Trials
+
+- The Food and Drug Administration wanted to determine whether a new drug alleviated hypertension
+
+  + they randomly picked 100 people with hypertension
+  
+  + they placed 50 people each into the treatment and control groups
+  
+  + 30 of 50 treated people had alleviated hypertension, as opposed to 10 of 50 in the control group
+  
+  + a two-sample population proportions test yielded a $p$-value of 0.0001
+  
+- Did the new drug *cause* alleviated hypertension?
+
+--
+
+<hr>
+
+- **We cannot be sure.**
+
+- Let's say it turns out that, totally by coincidence, the 50 people in the treatment group had health insurance, while the 50 people in the control group did not
+
+- So, then perhaps it was the drug, *or* maybe it was the insurance 
+  
+  + or the fact that, on average, those without insurance were poorer, or that there was also a group-level difference in dietary conditions 
+  
+- Or, perhaps by unrelated coincidence, the people in the treatment group also happened to have the variant of a specific gene that makes them more receptive to the treatment
+  
+- Randomization leads to identical treatment and control groups, but only *on average* $-$ "unlucky" randomization can still happen
+
+
+---
+
+## Case Study 3: Epidemiology
+
+- We wish to study the effect of smoking on lung health
+
+- Ideally, we would run an experiment in which we randomly place people into a smoking treatment group, and into a non-smoking control group
+
+  + however, it is not ethical to force people to smoke*
+  
+- So we randomly select 5000 smokers and 5000 non-smokers to study, and we find that the smokers have worse lung health
+
+- Does smoking *cause* the observed deterioration of lung function?
+
+--
+
+<hr>
+
+- **Again, we cannot be sure.**
+
+- For instance, it's been established that smokers tend to be older, poorer, and less likely to have insurance
+
+- Can we mitigate this issue?
+
+--
+
+<hr>
+
+- *Potentially*: if we can identify subsets of treatment and control groups that have similar age, income, education, insurance, etc., and find similar results as before, we are in a position to argue *more strenuously* for causality
+
+
+---
+
+## Experimental Design
+
+- Let's assume that we want to divide $N$ people into two groups, a treatment group and a control group (let's just assume $N$ is an even number)
+
+- How might we do this?
+
+- Via *Bernoulli trials*: assign people to groups effectively via coin flips
+
+  + issue: the group sizes *could* end up being very different
+  
+- Via *complete randomization*: pick exactly $N/2$ people at random to be in the treatment group
+
+  + issue: while this resolves the group-size issue observed with Bernoulli trials, there is still the issue of covariates
+  
+  + for instance, perhaps we want to run a clinical trial for a new drug, that includes both smokers and non-smokers: it could turn out that one group ends up with many more smokers than the other
+  
+  + the "covariate issue" can be dealt with either when analyzing the data or during the experiment design stage (preferable), e.g.:
+  
+- Via *block randomization*: identify a potentially problematic covariate, divide people into groups on the basis of that covariate (e.g., smokers vs. non-smokers), and then perform complete randomization within each covariate group; this scheme can be extended to arbitrarily many covariates*, e.g., male smokers, female non-smokers, etc.
+
+  + covariate examples: gender, socioeconomic status, geographic location, medical risk factors, education, and so on
+
+
+---
+
+## Digression: Why Is Identifying Covariates Important?
+
+.pull-left[
+```{r echo=FALSE,fig.align='center',fig.width=6,fig.height=6}
+library(palmerpenguins) # because there is a package for pretty much anything
+
+w  <- complete.cases(penguins)
+df <- penguins[w, c(1, 4, 3)]
+
+lm.out <- lm(bill_length_mm ~ bill_depth_mm, data = df)
+lm.int <- lm.out$coefficients[1]
+lm.slp <- lm.out$coefficients[2]
+
+suppressMessages(library(tidyverse))
+ggplot(data = df, mapping = aes(x = bill_depth_mm, y = bill_length_mm)) +
+  geom_point(col = "hotpink") + 
+  geom_abline(slope = lm.slp, intercept = lm.int, col = "sienna") +
+  xlab("Bill Depth (mm)") + ylab("Bill Length (mm)")
+```
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align='center',fig.width=6,fig.height=6}
+w1 <- which(df$species == "Adelie")
+w2 <- which(df$species == "Gentoo")
+w3 <- which(df$species == "Chinstrap")
+lm1.out <- lm(bill_length_mm ~ bill_depth_mm, data = df, subset = w1)
+lm2.out <- lm(bill_length_mm ~ bill_depth_mm, data = df, subset = w2)
+lm3.out <- lm(bill_length_mm ~ bill_depth_mm, data = df, subset = w3)
+lm1.int <- lm1.out$coefficients[1]
+lm1.slp <- lm1.out$coefficients[2]
+lm2.int <- lm2.out$coefficients[1]
+lm2.slp <- lm2.out$coefficients[2]
+lm3.int <- lm3.out$coefficients[1]
+lm3.slp <- lm3.out$coefficients[2]
+ggplot(data = df, mapping = aes(x = bill_depth_mm, y = bill_length_mm)) +
+  geom_point(col = as.numeric(df$species)) + 
+  geom_abline(slope = lm1.slp, intercept = lm1.int, col = "black") +
+  geom_abline(slope = lm2.slp, intercept = lm2.int, col = "green") +
+  geom_abline(slope = lm3.slp, intercept = lm3.int, col = "red") +
+  xlab("Bill Depth (mm)") + ylab("Bill Length (mm)")
+```
+]
+
+
+---
+
+## How to Analyze Designed Experiment Data
+
+- Let's assume that our data consists of one predictor variable with $k$ categories (or treatment groups) and one response variable.
+
+- If $k = 2$ and the response variable is normally distributed within each group, we can do a *two-sample $t$-test*
+
+- If $k = 2$ and the response variable is not normally distributed, but the distributions are known or can be assumed, we can use other, more specific hypothesis tests, e.g., the population proportions test (for when the response happens to be binary)
+
+  + this is realm of so-called A/B testing; the test that is used depends on the distribution of the response values for groups A and B
+
+- If $k > 2$ and the response variable is normally distributed within each group (and can be assumed to have equal variances), we can do a *one-way analysis of variance* (or *ANOVA*)
+
+  + if there are two categorical predictors, this would instead be a *two-way ANOVA*
+
+- If $k > 2$ and the response variable is normally distributed within each group (with equal variances), *and* there is another continuous predictor that can be treated as a covariate (e.g., age), we can do (one-way) *analysis of covariance* (or *ANCOVA*)
+
+- Etc.
+
+- *Note*: if your work potentially involves the design of experiments, consider taking 36-749, *Experimental Design for Behavioral and Social Sciences* (usually offered each fall)
+
+
+---
+
+## The One-Way ANOVA Setting
+
+- Recall: a statistical model is meant to be a description of the data-generating process
+
+- In the simple linear regression setting, our data consists of a continuously valued predictor variable $\mathbf{x}$ which we attempt to relate to the values of response variable $\mathbf{Y}$
+
+  + however, what if instead, the predictor variable is discretely valued?  More specifically, what if its values represent groups (or categories)?
+
+- If there are $k > 2$ groups we would use *one-way analysis of variance* (or one-way *ANOVA*)
+
+  + "one-way" simply indicates that (in our chosen setting) there is only one (categorical) predictor variable
+
+
+---
+
+## Why Not Use Simple Linear Regression?
+
+.pull-left[
+
+<br><br><br><br><br><br>
+
+- Because categories/groups may have no natural numerical order
+
+- If we were to apply linear regression, modeling the response as a function of the categorical variable shown (right), then switched the placement(/labels) of groups 1 and 2 and applied linear regression again, the slope would change!
+
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align='center',fig.width=6,fig.height=6}
+# note: mtcars is "built-in" - you can access it directly without loading packages
+x <- factor(mtcars$gear - 2)   # number of gears
+Y <- mtcars$wt                 # weight of car
+
+boxplot(Y ~ x, col = "steelblue", xlab = "Categorical Predictor", ylab = "Response")
+```
+]
+
+
+---
+
+## Why Not Use Simple Linear Regression?
+
+- Let's define the predictor variable $x$ as a *factor variable*
+
+- This causes `R` to change the definition of the model:
+
+  + a factor variable with $k$ levels is split into $k-1$ so-called *dummy variables* or *indicator variables*; the last level, that with no explicitly related indicator variable, becomes the so-called *reference level*
+
+- The linear regression model becomes:
+
+\begin{align*}
+Y_i = \beta_0 + \mathbb{I}_{x_i=2} \beta_2 + \mathbb{I}_{x_i=3} \beta_3 + \epsilon_i
+\end{align*}
+
+- $\mathbb{I}$ is the *indicator function* $-$ it takes on value 1 if the condition in its subscript is true and 0 otherwise
+
+  + for instance, $\mathbb{I}_{x_i=4}$ is 0 if $x_i = 3$ or $5$ and 1 iff $x_i = 4$
+  
+- We can rewrite the model in a form that might be more intuitive:
+
+\begin{align*}
+Y_i = \left\{ \begin{array}{ll} \beta_0 & x_i = 1 \\ \beta_0 + \beta_2 & x_i = 2 \\ \beta_0 + \beta_3 & x_i = 3 \end{array} \right.
+\end{align*}
+
+- If we change the ordering of the groups, the $\beta_i$'s might change, but only because we might have perhaps defined a new reference level
+
+
+---
+
+## Why Not Use Simple Linear Regression?
+
+.pull-left[
+
+<br><br>
+
+- The dashed line is $\beta_0$ and represents the predicted response for group 1
+
+  + the negative coefficients for `x2` and `x3` in the `lm()` output would indicate that the model is predicting that the means in groups 2 and 3 are smaller than the mean in group 1
+
+- So, to return to the question: why not use simple linear regression?  It turns out, we *do* use it, but the model definition changes since `x` is categorical and not quantitative
+
+- So, what is ANOVA, then?
+
+  + it's just a mechanism for running a particular hypothesis test on linear regression output
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align='center',fig.width=6,fig.height=6}
+boxplot(Y ~ x, col = "steelblue", xlab = "Categorical Predictor", ylab = "Response")
+abline(h = 3.8926, lty = 2, lwd = 2)
+```
+]
+
+
+---
+
+## One-Way Analysis of Variance
+
+- For one-way ANOVA, the statistical model is:
+
+\begin{align*}
+Y_{ij} = \mu + \tau_i + \epsilon_{ij}
+\end{align*}
+
+  - $i$ denotes the treatment group (there are $k$ groups overall)
+
+  - $j$ denotes an observed datum within group $i$
+
+  - $\mu$ is the overall mean response
+
+  - $\tau_i$ is the *deterministic* (i.e., not random) effect of treatment in group $i$
+
+  - $\epsilon_{ij}$ are the error terms, assumed to be independent, normally distributed, and of constant variance $\sigma^2$, thus $Y_{ij} \sim {\rm N}(\mu+\tau_i,\, \sigma^2)$
+
+
+---
+
+## ANOVA: Goal
+
+- The goal of ANOVA is to perform the hypothesis test:
+
+\begin{align*}
+\mathcal{H}_0 : \tau_1 = \cdots = \tau_k = 0 ~~~~~ \mbox{vs.} ~~~~~ \mathcal{H}_A: \text{at least one } \tau_i \text{ differs from zero}
+\end{align*}
+
+  + to reject the null hypothesis, the value of one or more of the $\tau_i$'s has to be large (with respect to $\sigma$)
+
+<br>
+
+.center[
+  ![:scale 75%](./anova.png)
+]
+
+- The left figure represents a situation in which we would fail to reject the null hypothesis, while the right figure represents a situation in which we would likely reject the null
+
+
+---
+
+## ANOVA Example
+
+```{r}
+anova(lm(Y ~ x))
+```
+
+<br>
+
+  + the first column calculates $k-1$ and $n-k\,$ (we can therefore determine that $k = 3$ and $n = 32$)
+  
+  + the second column shows the SST (top) and SSE (bottom) (see appendix)
+  
+  + the third columns shows the MST (= SST /( $k-1$); top) and MSE (= SSE /($n-k$); bottom) (again, see appendix)
+  
+  + the fourth column shows $F = MST/MSE$
+  
+  + the fifth and last column shows the $p$-value
+  
+- We observe that $p \ll \alpha = 0.05$, so we reject the null hypothesis and conclude that at least one of the means is different from the others
+
+
+---
+
+## But Which Mean is Different?
+
+- To try to determine *which* of the means is different from the others, we can use a "post-hoc" test such as the Tukey HSD (honest significant difference) test
+
+```{r eval = FALSE}
+TukeyHSD(aov(Y ~ x))   # one quirk: TukeyHSD() won't work with anova() output, just aov() output
+                       #  anova(lm()) and aov() calculate the same information / perform the same test, however
+```
+
+```{r echo = FALSE}
+TukeyHSD(aov(Y ~ x))
+```
+
+  + the first column of output shows which groups are being compared in the row (2 vs. 1, etc.)
+  
+  + the second column gives the observed mean difference
+  
+  + the third and fourth columns provide confidence intervals on the *true* mean difference $-$ if the interval does not contain zero, we conclude the means are different
+  
+  + the last column reinforces the confidence interval by providing a $p$-value (of a test wherein the null hypothesis is that the true difference is zero)
+  
+---
+
+## But Which Mean is Different?
+
+```{r eval = FALSE}
+TukeyHSD(aov(Y ~ x))   # one quirk: TukeyHSD() won't work with anova() output, just aov() output
+                       #  anova(lm()) and aov() calculate the same information / perform the same test, however
+```
+
+```{r echo = FALSE}
+TukeyHSD(aov(Y ~ x))
+```
+  
+- What do we conclude here? 
+
+  + group 1 has a different mean from group 2, **and** from group 3, **whereas** the means in groups 2 and 3 are not significantly different
+
+
+---
+
+## But Which Mean is Different?
+
+- A final point to make is that the Tukey HSD test attempts to correct for *multiple comparisons*, i.e., for running many separate hypothesis tests
+
+  + If you run many tests, then you are more likely, by chance, to see $p$-values that are less than $\alpha$ even if the null is always true
+
+- The Tukey HSD test attempts to control the "family-wise error rate" such that if all the nulls are correct, the probability of seeing $p < \alpha$ occur *once* is $\alpha$
+
+  + *however*, the algorithm this function uses for controlling the rate of false positives tends to be overly conservative
+  
+  + we will simply point out here that alternative test schemes/corrections are available, e.g., Dunnett's test, that one might want to explore using, particularly when the number of groups is large
+
+
+---
+
+### Appendix: Sum of Squares of Errors and of Treatment Groups
+
+- We can break the total sum of squared differences between each datum $Y_{ij}$ and the overall mean $\overline{Y}$ into two pieces:
+\begin{align*}
+\sum_{i=1}^k \sum_{j=1}^{n_i} (Y_{ij}-\overline{Y})^2 = \sum_{i=1}^k \sum_{j=1}^{n_i} (Y_{ij}-\overline{Y}_i)^2 + \sum_{i=1}^k n_i(\overline{Y}_i-\overline{Y})^2 = SSE + SST
+\end{align*}
+
+  + $\overline{Y}$ is the grand sample mean of the data in all groups
+
+  + $\overline{Y}_i$ is the sample mean of the data of group $i$
+
+  + $n_i$ is the sample size in group $i$
+
+  + $SSE$ is the sum of squares of the errors (where the "error" is how far each datum is from its group mean)
+
+  + $SST$ is the sum of squares for each treatment group (how far each group mean is from the overall mean)
+
+
+---
+
+## Appendix: Hypothesis Testing
+
+- We can form two statistics:
+
+\begin{align*}
+\frac{SSE}{\sigma^2} ~~~ \mbox{and} ~~~ \frac{SST}{\sigma^2}
+\end{align*}
+
+- Under the null hypothesis that $\tau_1 = \cdots = \tau_k = 0$, we can write down the known, theoretical behavior of these statistics:
+\begin{align*}
+\frac{SSE}{\sigma^2} \sim \chi_{n-k}^2~~~ \mbox{and} ~~~ \frac{SST}{\sigma^2} \sim \chi_{k-1}^2
+\end{align*}
+
+  + $\chi_{\nu}^2$ is a chi-square distribution with $\nu$ degrees of freedom (its only parameter)
+
+- The following ratio then defines a random variable that is sampled from an $F$ distribution:
+\begin{align*}
+\frac{SST/(k-1)}{SSE/(n-k)} = \frac{MST}{MSE} = F \sim F_{k-1,\,n-k}
+\end{align*}
+
+  + $k-1$ and $n-k$ are the number of *numerator* and *denominator* degrees of freedom, respectively (the two parameters, respectively, of an $\text{F}$-distribution)
+
+- We then reject the null hypothesis if the value of $F$ is (far) larger than its mean value, $(n-k)/(n-k-2)$ (which is $\approx 1$ if $n \gg k$)
+
+

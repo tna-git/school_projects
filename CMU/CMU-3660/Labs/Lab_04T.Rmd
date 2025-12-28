@@ -1,0 +1,229 @@
+---
+title: Overview of Statistical Learning and Modeling -- 36-600
+subtitle: |
+  Lab 4T: Unsupervised Learning I\
+  Due Wednesday, September 17, 11:59pm\
+author: Trishla Nair
+output:
+  pdf_document:
+    toc: false
+  html_document:
+    toc: false
+    code-overflow: wrap
+    code-fold: false
+    theme: spacelab
+urlcolor: blue
+---
+
+
+To answer the questions below, it will help you to refer to Sections 10.3 and 10.5 of the ISLR book (the James et al. book listed on the syllabus); it might also help you to refer to previous labs. 
+
+
+## Question 1
+
+Let's create a fake data frame with three rows and three columns:
+
+```{r}
+df <- data.frame(x = 1:3, y = 1:3, z = 1:3)
+ed_1_2 <- sqrt(1 + 1 +1) #sqrt(((2-1)^2)*3)
+ed_1_3 <- sqrt(4 + 4 + 4)#sqrt(((3-1)^2)*3)
+ed_2_3 <- sqrt(1 + 1 + 1)#sqrt(((3-2)^2)*3)
+print(ed_1_2, ed_1_3, ed_2_3)
+```
+
+*By hand*, compute what is the Euclidean distances between the fake datum of row 1 and the fake data of rows 2 and 3?  And what is the Euclidean distance between the fake data of rows 2 and 3?
+
+```
+The euclidean distance between row 1 and 2 is sqrt(3). the distance between 1 and 3 is 2sqrt(3). The distance between 2 and 3 is sqrt(3).
+```
+
+
+## Question 2
+
+Now compute the Euclidean distances using the `dist()` function.  Show the output from this function.  Does that output match your hand-computed quantities?  If not, go back and think re-do your calculation in Question 1.  If so, then you now have a sense as to what the "distance between two data points" is, in practice.  Note the appearance of the output: the distances are stored in a lower-triangular matrix.
+
+```{r}
+dist(df)
+```
+
+
+---
+
+## Dataset 1
+
+Here we import some data on stars which are either in, or in the same general direction as, the Draco Dwarf Galaxy.
+
+```{r}
+file.path <- "https://github.com/FSKoerner/F25-36600-data/raw/refs/heads/main/draco_photometry.Rdata"
+load(url(file.path))
+df <- data.frame(ra, dec, "v" = velocity.los, log.g, 
+                 "g" = mag.g, "r" = mag.r, "i" = mag.i)
+rm(file.path, ra, dec, velocity.los, log.g, temperature, 
+   mag.u, mag.g, mag.r, mag.i, mag.z, metallicity, signal.noise)
+head(df)
+```
+
+`df` is a data frame with 2778 rows and 7 columns.  See this [README file](https://github.com/FSKoerner/F25-36600-data/blob/main/draco_README.md) for a full description of the data and its variables.
+
+
+---
+
+## Question 3
+
+Use `dplyr` functions to filter the data frame such that it only contains values of `dec` &gt; 56, values of `ra` &lt; 264, and values of `v` between -350 and -250.  (**Important**: the `tidyverse` style guide says to separate comparison operators, like `<`, from the objects they are comparing with a space.  I'll always try to use proper style in assignments and solutions, and you should to, but it won't always be clear what tangible benefit that confers.  In this case, you'll absolutely need a space between the `<` and the `-` when you filter on the latter velocity, otherwise `R` will see the assignment operator and act accordingly.)  Mutate the data frame to have g-r and r-i colors (call them `gr` and `ri`), then delete the magnitudes and `v`.  (*Recall*: you can "negatively select" columns by putting minus signs in front of the column names.)  Save the resulting data frame as `df.new`.
+
+```{r}
+suppressMessages(library(tidyverse))
+df.new<- df%>%filter(dec > 56, ra< 264, -350 < v, v < -250)
+df.new<- df.new%>%mutate(gr = g-r)%>% mutate(ri = r-i)
+df.new<-df.new%>%select(-v, -g, -r, -i)
+head(df.new)
+```
+
+
+## Question 4
+
+Use the `kmeans()` function to cluster the data in your data frame.  Try different values for $k$, and finally display results for what *you* would choose as its optimal value.  The default for `nstart` is 1; you'll probably want to increase that to something larger $-$ play with the values for this argument.
+
+Install the package `GGally` and uncomment the library-loading line below.  Then display your results using the `ggpairs()` function; for example, use
+
+```
+ggpairs(df.new, progress = FALSE, mapping = aes(color = factor(km2.out$cluster)))
+```
+
+where `km2.out` is what I call the output from `kmeans()` for $k = 2$.
+
+Remember to `scale()` your data when you call `kmeans()` (but not when plotting)!  Also, note that `kmeans()` uses random sampling, so you should absolutely set a random number seed immediately before calling `kmeans()` to ensure reproducibility.
+
+```{r}
+suppressMessages(library(GGally))
+set.seed(101)
+km3.out <- kmeans(scale(df.new), 3, nstart = 20)
+ggpairs(df.new, progress = FALSE, mapping = aes(color = factor(km3.out$cluster)))
+```
+
+```{r cache=TRUE}
+# FILL ME IN
+```
+
+
+## Question 5
+
+For your chosen $k$ value, what are the number of groups and the number of data in each group?  Also, what is ratio of the between-cluster sum-of-squares to the total sum-of-squares?  (This is a measure of the total variance in the data that is "explained" by clustering.  Higher values [closer to 100%] are better, but beware: the larger the value of $k$, the higher the ratio is going to be: you will be getting into the realm of *overfitting*.)  (*Hint*: `print()` your saved output from `kmeans()`.)
+
+```{r}
+print(km3.out)
+```
+
+```
+I have 3 clusters of sizes 348, 860, 10. Within cluster sum of squares by cluster values are 2347.98887, 1650.99053, and 24.50953. The Total SS is 33.9%
+```
+
+
+## Question 6
+
+Now use one of the methods presented in class for determining the optimal value of $k$, while noting that some methods provide more concrete results than others.
+
+```{r}
+library(cluster)
+suppressMessages(library(factoextra))
+gs <- clusGap(scale(df.new), FUN = kmeans, nstart = 20, K.max = 10, B = 50)
+fviz_gap_stat(gs)
+```
+
+
+## Dataset 2
+
+## Question 7
+
+Now read in the diamonds dataset (`diamonds.csv`); download it from Canvas.  Once the data frame is input (be sure to use the argument `stringsAsFactors = TRUE`, by the way), remove the columns `X`, `cut`, `color`, and `clarity` from it, and call the resulting data frame `df.new`.
+
+```{r}
+df<-read.csv("diamonds.csv", stringsAsFactors = TRUE)
+df.new<-df%>%select(-X, -cut, -color, -clarity)
+head(df.new)
+```
+
+
+## Question 8
+
+The diamonds dataset is too large to input into $k$-means as is.  So we will randomly select 1000 rows from the data frame and work with those.  First, run this code (while noting that you can change the seed to whatever you like):
+
+```
+set.seed(303)
+s <- sort(sample(nrow(df.new), 1000))
+```
+
+Then use the `slice()` function from `dplyr` to select the rows recorded in the vector `s`, and save the output to `df.small`.
+
+```{r}
+set.seed(303)
+s <- sort(sample(nrow(df.new), 1000))
+df.small<-df.new%>%slice(s)
+head(df.small)
+```
+
+
+## Question 9
+
+Now we can do $k$-means.  But we'll do things a little differently this time: here, just run `clusGap()` directly with `K.max = 8` and plot the output with `fviz_gap_stat()`.  Keep that value in mind for the next question below.
+
+```{r cache=TRUE}
+cg<-clusGap(scale(df.small),FUN = kmeans, nstart = 20, K.max = 8, B = 50)
+fviz_gap_stat(cg)
+```
+
+
+## Question 10
+
+In Question 4, we explored using different values of $k$, and through the use of `ggpairs()` we determined that for the stellar data, $k$ might reasonably be 2 or 3.  In Question 9, on the other hand, we let the gap statistic function determine the optimal value for $k$ $-$ and now here we will use `ggpairs()` to visualize the results of assuming this optimal value only.  Do this below.
+
+You need not state an answer to this question, but: does it appear that there are natural clusters in the data that were uncovered using $k$-means, or does it appear that the data were simply split into pieces?  (Look at, e.g., `price` versus `carat`; that scatterplot *might* influence your thinking.  Note that there not necessarily a right answer here.  Interpretation, meet ambiguity.)
+
+```{r cache=TRUE}
+km3.out <- kmeans(scale(df.small), centers= 3, nstart = 20)
+ggpairs(df.small, progress = FALSE, mapping = aes(color = factor(km3.out$cluster)))
+```
+
+
+## Question 11
+
+Read in the file `diamonds.csv` again, using `read.csv()` with the argument `stringsAsFactors = TRUE`, but do *not* remove any columns.  However, do select a subset of 1000 rows again.  Here we will examine these data with the $k$-prototypes algorithm.
+
+Install the package `clustMixType`, then load it into `R` via a call to the `library()` function (uncomment the line below).  Then run the function `validation_kproto()`.  (To figure out how to run it, go to the help page for the function and scroll down to the examples.  Use the silhouette method, set the data to `df.small` [your 1000-row subset of `df`], set `k` to 2:5, and set `nstart` to 5.  Add one more argument: `verbose = FALSE`.  Do not save your output to a variable $-$ just let `validation_kproto()` output directly to your screen.)  Examine the output.  `indices` is the silhouette score for each value of $k$.  What is the optimal number of clusters?
+
+```{r}
+library(clustMixType)
+df<-read.csv("diamonds.csv", stringsAsFactors = TRUE)
+set.seed(202)
+s <- sort(sample(nrow(df), 1000))
+df.small<-df%>%slice(s)
+
+print(validation_kproto(method = "silhouette", data = df.small, k = 2:5, nstart = 5, verbose = FALSE))
+```
+
+```{r cache=TRUE}
+# FILL ME IN
+```
+
+```
+The optimal number of clusters appear to be 2.
+```
+
+
+## Question 12
+
+As one last exercise, run
+
+```
+kp.out <- kproto(df.small, <# OF CLUSTERS>, nstart = 5, verbose = FALSE)
+```
+
+and then plot the output: `plot(kp.out)`.  You may want to knit the file and then look at the plots at the end of the output, rather than running this code chunk separately.  You need not comment on these plots, but you should realize that they show the values of each variable for each cluster, and thus they would help you construct a story about how the clusters differ.  For instance, I see that the `X` variable values differ greatly between clusters, although similar effects are apparent for a few variables.
+
+```{r}
+kp.out <- kproto(df.small, 3, nstart = 5, verbose = FALSE)
+plot(kp.out)
+```
+
+

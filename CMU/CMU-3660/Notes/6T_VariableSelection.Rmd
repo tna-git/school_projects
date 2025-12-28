@@ -1,0 +1,243 @@
+---
+title: "Linear Regression: Variable Selection"
+author: "36-600"
+date: '9/30/2025'
+output:
+  xaringan::moon_reader:
+    nature:
+      ratio: '16:9'
+      beforeInit: "macros.js"
+---
+layout: true
+background-image: url(background.png)
+background-size: cover
+---
+
+<style type="text/css">
+.remark-slide-content {
+    font-size: 16px;
+    padding: 1em 4em 1em 4em;
+}
+a { 
+    color: blue; 
+}
+.remark-slide-content h1 {
+    font-family: cabin;
+}
+.remark-slide-content h2 {
+    font-family: cabin;
+}
+.remark-slide-content h3 {
+    font-family: cabin;
+}
+.remark-slide-number {
+    font-size: 8pt;
+    margin-bottom: -5.6px;
+    margin-right: 1145px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+.remark-code {
+    font-size: 16px;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 65% !important;
+}
+</style>
+
+```{css,echo=FALSE}
+table {
+  font-size: 12px;
+}
+```
+
+
+## The Setting
+
+- Linear regression is an inferential (and therefore, relatively inflexible) model in which we assume that $Y$ is related to the predictor variables $\mathbf{x}$ via the model 
+$$Y \mid \mathbf{x} = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p + \epsilon$$
+
+  + $\epsilon$ represents the scatter of data around the regression line
+
+- Today, let's start by pointing out a likely pretty obvious fact:
+
+  + just because a predictor variable exists in your data table doesn't mean that it has predictive power!
+
+- In variable selection, we attempt to select a subset $s$ out of the $p$ overall predictors in a linear model
+
+  + this **will** *improve model interpretability*; eliminating uninformative predictors is obviously a good thing when your goal is to tell the story of how your predictors are associated with your response
+
+  + this **can** *improve prediction accuracy*; eliminating uninformative predictors can lead to lower model *variance*, at the expense of a slight increase in *bias*, but ultimately leading to lower test-set mean-squared error values
+
+- Note that variable selection (or some other adjustment, which we'll also discuss) is not just useful, but **necessary** if, $n < p$ (i.e., the sample size is less than the number of predictor variables), but can still be helpful if $n \gtrsim p$, particularly when $n \approx p$ 
+
+
+---
+
+## Best Subset Selection
+
+.center[
+  ![:scale 50%](./Algorithm_6.1.png)
+]
+
+(Algorithm 6.1, *Introduction to Statistical Learning* by James et al.)
+
+<br>
+
+- Note that:
+
+$${p \choose k} = \frac{p!}{k!(p-k)!}$$
+
+- For multiple linear regression, BSS works for $p \lesssim 25$, but for larger $p$, computer memory quickly becomes an issue
+
+
+---
+
+## Best Subset Selection: Metrics
+
+- The functional forms of the metrics given in Step 3 are
+
+\begin{eqnarray*}
+C_p &=& \frac{{\rm RSS} + 2k\widehat{\sigma}^2}{n} \\[0.2em]
+{\rm AIC} &=& \frac{{\rm RSS} + 2k \widehat{\sigma}^2}{n \widehat{\sigma}^2} = \frac{C_p}{\widehat{\sigma}^2} \\[0.2em]
+{\rm BIC} &=& \frac{{\rm RSS} + \log(n)k\widehat{\sigma}^2}{n}
+\end{eqnarray*}
+
+- ${\rm RSS}$ denotes the "residual sum-of-squares"
+
+- **KEY:** all the additive terms are penalty terms that increase with $k$ and thus act to prevent overfitting 
+
+- $\widehat{\sigma}$ is an estimate of the standard deviation of the error term $\epsilon$, i.e., the magnitude of the scatter of data around the regression line
+
+
+---
+
+## Best Subset Selection: Metrics
+
+- Typically, $\log(n) > 2$, so the BIC (or "Bayesian Information Criterion") imposes a larger penalty relative to the $C_p$ (or "Mallow's $C_p$") or the AIC (or "Akaike Information Criterion")
+
+- Relative to each other:
+
+  + BIC tends to underfit (i.e., it will select as optimal those models that have *fewer* variables)
+
+  + AIC (and $C_p$) tend to overfit (i.e., they will select models with *more* variables)
+
+- Which metric you choose is up to you - there's no *right* answer; the choice should be motivated by your inferential goals:
+
+  + if you use BIC, then you can be confident that every selected variable is informative, but other informative variables might have been left out of the final list
+
+  + if you use AIC, then you can be confident that your selected variables include all the informative ones, but the final list may also include some uninformative ones as well
+
+
+---
+
+## Forward and Backward Stepwise Selection
+
+- What if BSS is computationally infeasible?
+
+- In that case, we might use either *forward* or *backward stepwise selection*; e.g., the former:
+
+.center[
+  ![:scale 50%](./Algorithm_6.2.png)
+]
+
+(Algorithm 6.2, *Introduction to Statistical Learning* by James et al.)
+
+
+---
+
+## Forward and Backward Stepwise Selection
+
+- In words:
+
+  + forward stepwise selection starts with no predictor variables and adds one at a time
+  
+  + backward stepwise selection starts with the full set of predictors and takes one away at a time
+
+- Forward and backward stepwise selection are examples of *greedy algorithms*: they make locally optimally choices which, collectively, **may not yield** a globally optimal solution
+
+  + BSS is always preferred, if applying it is computationally feasible
+
+- Note that even when applied to the same dataset, forward and backward stepwise selection *can* yield very different results, although for datasets with relatively small $p$, results *tend* to be more similar
+
+
+---
+
+## Regression Example
+
+```{r echo=FALSE}
+load(url("https://github.com/FSKoerner/F25-36600-data/raw/refs/heads/main/photo_morph.Rdata"))
+df <- data.frame(predictors, "y" = response)
+```
+
+- Below, `df` is a data frame with 3,419 rows and 17 columns
+
+```{r warning=FALSE}
+suppressMessages(library(bestglm))
+set.seed(404)
+train    <- sample(nrow(df), 0.7 * nrow(df))   # Perform 70-30 data splitting
+df.train <- df[train, ]
+df.test  <- df[-train, ]
+lm.out   <- lm(y ~ ., data = df.train)         # Response variable must be called "y" for the bestglm function
+mse.full <- mean((predict(lm.out, newdata = df.test) - df.test$y)^2)
+bg.out   <- bestglm(df.train, family = gaussian, IC = "BIC")
+bg.out$BestModel
+```
+
+- We observe that 9 (or 11) of 16 predictor variables are retained when using BIC (or if we used the AIC) as the penalizing criterion
+
+
+---
+
+## Regression Example
+
+```{r fig.height=4,fig.width=5,fig.align="center"}
+library(ggplot2)
+df.bg        <- data.frame(1:16, bg.out$Subsets$BIC[-1])   # The -1 gets rid of the BIC for the s = 0 model
+names(df.bg) <- c("p", "BIC")
+g            <- ggplot(data = df.bg, mapping = aes(x = p, y = BIC)) + 
+                  geom_point() + geom_line() + 
+                  ylim(min(df.bg$BIC), min(df.bg$BIC) + 200)
+suppressWarnings(print(g))
+```
+
+
+---
+
+## Regression Example
+
+- The output of `bestglm()` contains the element `BestModel` 
+
+  + `BestModel` is an "lm-object representing the best fitted algorithm" 
+  
+  + we can pass it to the `predict()` function in order to generate predicted response values
+  
+```{r}
+resp.pred <- predict(bg.out$BestModel, newdata = df.test)
+mean((df.test$y - resp.pred)^2)
+# The saved value for the full predictor set that we calculated earlier:
+mse.full
+```
+
+- In this case, removing the seven least important variables **improved** our predictive accuracy, albeit slightly
+
+
+---
+
+## Regression Example
+
+- Now let's repeat the analysis, but with forward-stepwise selection:
+
+```{r}
+bg.out    <- bestglm(df.train, family = gaussian, IC = "BIC", method = "forward")
+bg.out$BestModel
+```
+
+- This is a separate set of nine variables relative to the set produced by BSS, though there is a *fair bit* of overlap
+
+```{r}
+resp.pred <- predict(bg.out$BestModel, newdata = df.test)
+mean((df.test$y - resp.pred)^2)   # Worse than for BSS or even the full set!
+```
+
+

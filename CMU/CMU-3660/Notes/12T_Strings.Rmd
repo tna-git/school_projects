@@ -1,0 +1,343 @@
+---
+title: "Basic String Manipulation"
+author: "36-600"
+date: '11/18/2025'
+output:
+  xaringan::moon_reader:
+    nature:
+      ratio: '16:9'
+      beforeInit: "macros.js"
+---
+layout: true
+background-image: url(background.png)
+background-size: cover
+---
+
+<style type="text/css">
+.remark-slide-content {
+    font-size: 16px;
+    padding: 1em 4em 1em 4em;
+}
+a { 
+    color: blue; 
+}
+.remark-slide-content h1 {
+    font-family: cabin;
+}
+.remark-slide-content h2 {
+    font-family: cabin;
+}
+.remark-slide-content h3 {
+    font-family: cabin;
+}
+.remark-slide-number {
+    font-size: 8pt;
+    margin-bottom: -5.6px;
+    margin-right: 1145px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+.remark-code {
+    font-size: 16px;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 65% !important;
+}
+</style>
+
+```{css,echo=FALSE}
+table {
+  font-size: 12px;
+}
+```
+
+
+## What is a String?
+
+- A *string* is a sequence of characters that are bound together, where a character is a single symbol in a written language (usually)
+
+  + in `R`, a string is of type `character` and is bounded by quotes (either single or double).  Double quotes are preferable, because then one can use single quotes as apostrophes in strings
+
+- In this set of notes, we'll focus on common functions one might use to analyze string-type data
+
+
+---
+
+## Data
+
+- Okay, first we need some data.  Below, we load in the text of Vladimir Lenin's address to a 1916 international rally in Berne, Switzerland
+
+  + we use the `readLines()` function, which reads in data from an ASCII (human-readable format with only basic symbols useful in English) text file line-by-line
+  
+```{r}
+url   <- "https://raw.githubusercontent.com/FSKoerner/F25-36600-data/refs/heads/main/Lenin.txt"
+lines <- readLines(url)
+lines[1]
+```
+
+
+---
+
+## Basic String Functions
+
+- To concatenate strings, use the `paste()` function
+
+```{r}
+paste(lines[1], lines[3])
+```
+
+- Note that by default, the strings are concatenated with a space separating them; this is controlled by the `sep` argument
+
+```{r}
+paste(lines[1], lines[3], sep = " 1 2 3 ")
+```
+
+
+---
+
+## Basic String Functions
+
+- Note that above, we pasted two separate arguments together; we can also pass in a vector of strings, in which case the separation is controlled by the `collapse` argument
+
+```{r}
+paste(lines[1:3], collapse = " ")
+```
+
+- `sep` and `collapse` can be combined
+
+```{r}
+paste(c("a", "b"), c("1", "2"), sep = "+")
+paste(c("a", "b"), c("1", "2"), sep = "+", collapse = ",")
+```
+
+
+---
+
+## Basic String Functions
+
+- To count the number of characters in a string, use the function `nchar()` (as opposed to `length()`, which counts the number of elements in a vector)
+
+```{r}
+length(lines)       # number of lines input via readLines()
+nchar(lines)[1:3]   # number of characters in each of the first three lines
+```
+
+- If you want to extract some set of characters, with known indices, from one of the lines, you would use `substr()`
+
+```{r}
+substr(lines[53], 1, 10)                                    # characters 1 through 10 of line 53
+substr(lines[53], nchar(lines[53]) - 4, nchar(lines[53]))   # and the last five characters
+```
+
+
+---
+
+## String Splitting
+
+- Suppose you want to split a string *at each occurrence of* a particular character
+
+  + the most common example is splitting on spaces, to get all the separate words in a string 
+
+```{r}
+strsplit(lines[c(1, 3)], split = " ")   # split the first and third lines on spaces
+```
+
+- Note the following:
+
+  + `strsplit()` returns a list, with each element of the list mapping back to each element of the string vector that was input (here, we input two lines, and got back a list with two elements); this would still be true even if we only input a vector with one element (one line)! 
+
+  + each list element contains a vector of split-up characters
+
+  + not every output string will necessarily be a proper word *yet*
+
+
+---
+
+## String Splitting and Regular Expressions
+
+- *Regular expressions*, or *regexes*, are specially constructed strings that allow for flexible pattern matching
+
+  + the rules for constructing regexes are independent of `R`; you may have already encountered them
+
+- We will focus on the use of square brackets and metacharacters to define a regex
+
+- Square brackets: these say "we want to match any one character that appears inside"
+
+  + "[abcde]" means "look for any string that contains a, b, c, d, or e" (case-sensitive!)
+
+  + "[a-e]" means the same thing; the dash denotes a range
+
+  + "[^a-e]" means "look for any string that contains characters other than a, b, c, d, or e"
+
+  + "[1-4][2-6]" would match strings that contain the numbers 12-16, 22-26, 32-36, or 42-46
+
+
+---
+
+## String Splitting and Regular Expressions
+
+- Let's split the first two lines from the speech on spaces *and* exclamation points
+
+```{r}
+# not space, then exclamation point, but space **or** exclamation point
+strsplit(lines[c(1, 3)], split = "[ !]")   
+```
+
+
+---
+
+## String Splitting and Regular Expressions
+
+- Commonly used metacharacters include
+
+  + "[[:alnum:]]" is the same as "[a-zA-Z0-9]"
+
+  + "[[:punct:]]" means "match any string that contains a punctuation mark"
+
+  + "[[:space:]]" means "match any string that contains a space, a tab, or a new line"
+
+```{r}
+strsplit(lines[5], split = "( |[[:punct:]])")   # split on space or a punctuation mark
+```
+
+- But now we've split on the quotation marks (and we have empty strings)
+
+  + we'll stop here because we've (basically) turned text into something *at least* as granular as words (an important step)
+
+
+---
+
+## String Splitting and Regular Expressions
+
+- Well...except for one last thing
+
+- In `R`, the following are special characters:
+
+```
+      . $ ^ * + ? \ | { } [ ] ( )
+```
+
+- To find occurrences of these symbols in strings, we need to use an *escape sequence*: we place a backslash, `\`, in front of the symbol
+
+  + but given that the backslash is a special character, it itself needs to be escaped
+
+```{r}
+strsplit(lines[c(1, 3)], split = "[ !\\.]")   # split on spaces, exclamation points, and periods (escaped)
+```
+
+
+---
+
+## Word Tables
+
+- What are the 20 most common words in Lenin's speech?
+
+```{r}
+sort(table(unlist(strsplit(lines, split = "[ !\\.]"))), decreasing = TRUE)[1:20]
+```
+
+- We'll note a few more things here:
+
+  + `unlist()` is a way to concatenate all the elements of a list together into a single vector
+
+  + we would need to do some additional processing to remove the empty strings
+
+  + case sensitivity impacts counts (e.g., "the" and "The" were treated separately) - this can be mitigated by applying the `tolower()` function, which converts all letters to lower case, after `unlist()`
+
+
+---
+
+## String Searching
+
+- If you want to see if a particular word appears in a line, you can use the `grep` family of functions
+
+  + e.g., if you want to determine if the word "The" occurs on a line, use `grepl()`, which returns either `TRUE` or `FALSE`
+  
+```{r}
+grepl("The", lines[1:5])
+```
+
+- String searches also allow for regexes
+
+```{r}
+grepl("(the|The)", lines[1:5])
+```
+
+- *Note*: here, `(` and `)` are employed for conventional logical bracketing, unlike `[` and `]`, which indicate we want to match **exactly one character within**
+
+
+---
+
+## String Searching
+
+- `grep()` itself either returns the number of the line in which the string is observed (here, line 5)
+
+```{r}
+grep("the", lines[1:5])
+```
+
+- Or, if you pass in the argument `value = TRUE`, you get the relevant lines themselves
+
+```{r}
+grep("the", lines[1:5], value = TRUE)
+```
+
+
+---
+
+## Dynamic String Extraction
+
+- We saw above that we can use `substr()` to extract a substring
+
+  + however, we need to specify where the substring starts and where it ends
+  
+- A more dynamic extractor involves combining `gregexpr()` and `regmatches()`
+
+  + let's extract every occurrence of "the" and "The" in the first five lines
+  
+```{r}
+out     <- gregexpr("(t|T)he", lines[1:5])
+matches <- regmatches(lines[1:5], out)      # outputs a list, one for each line
+unlist(matches)
+```
+
+
+---
+
+## Removing/Replacing Characters
+
+- Let's say that instead of splitting on punctuation, as we (eventually) did above, we want to remove or replace punctuation
+
+  + one way to do that is using `gsub()`
+  
+```{r}
+gsub("[[:punct:]]", "-", lines[1])
+```
+
+
+---
+
+## Stopwords
+
+- One more thing to look at in the process of extracting the *informative content* of a document is the removal of uninformative *stopwords*
+
+- It's often the case that we'd want to remove words like "a", "and", "the", etc., before doing any real statistical analysis
+
+```{r warning=FALSE}
+library(stopwords)
+head(stopwords("en"), 10)
+```
+
+- Here's what Lenin's speech looks like after simplistic processing and stopword removal
+
+```{r}
+speech           <- tolower(unlist(strsplit(lines, split = "[ ,!\\.]")))
+w                <- which(nchar(speech) == 0)
+speech           <- speech[-w]   
+# could instead do speech <- speech[speech != ""], or use dplyr
+stopword.logical <- speech %in% stopwords("en")   
+# the %in% operator asks: "is each element of the left "in" the vector on the right?" [T/F]
+paste(speech[stopword.logical == FALSE], collapse = " ")
+```
+
+

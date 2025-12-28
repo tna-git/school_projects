@@ -1,0 +1,203 @@
+---
+title: Overview of Statistical Learning and Modeling -- 36-600
+subtitle: |
+  Lab 10R: Pure Prediction: $k$-NN and SVM\
+  Due Friday, November 7, 11:59pm
+author: Trishla Nair
+output:
+  pdf_document:
+    toc: false
+  html_document:
+    toc: false
+    code-overflow: wrap
+    code-fold: false
+    theme: spacelab
+urlcolor: blue
+---
+
+
+# Data
+
+Below we read in the breast-cancer dataset last seen in the PCA lab:
+
+```{r}
+df         <- read.csv("https://raw.githubusercontent.com/FSKoerner/F25-36600-data/refs/heads/main/breastcancer.csv", stringsAsFactors = TRUE)
+response   <- df[, 1]   # B for benign, M for malignant
+predictors <- data.frame(scale(df[, -1]))
+df         <- cbind(predictors, "Label" = response)
+cat("Sample size: ", length(response), "\n")
+```
+
+These data reside on [Kaggle](https://www.kaggle.com/mciml/breast-cancer-wisconsin-data).  They provide information on breast cancer tumors (specifically, features extracted from the images of cells themselves!) for 569 people in which malignancy was suspected.  The data are marked by *extreme* multicollinearity and redundancy: bad for inference, but fine for prediction!  You'll code $k$-NN and SVM models for these data below.
+
+**Note that I scaled (i.e., standardized) the predictor data frame.**  As with many statistical learning methods, this is advised for both $k$-NN and SVM.
+
+Also note: differentiating between the benign and malignant tumors turns out to be pretty easy using this data, so you will not see results that are substantially better, if at all better, than what you get when you learn a logistic regression model.  The point today is the successful implementation, not to elicit the reaction "oh, wow, look how much better $k$-NN and SVM do!"
+
+
+## Question 1
+
+Split the data and carry out a logistic regression analysis.  (The response variable is dubbed `Label`.)  Assume a class-separation threshold of 0.5, which is not optimal, but good enough, particularly since changing that threshold in the context of $k$-NN is difficult.  (The optimal threshold would be nearer to 0.373.  Why 0.373?  The classes are imbalanced, and since `B` has more data - 62.7% of the data - and is labelled Class 0, the Class 1 probabilities will be systematically pulled downwards towards zero; a reasonable guess of threshold is 1 - 0.627 = 0.373.)
+
+```{r}
+set.seed(42)
+s        <- sample(nrow(df), round(0.7 * nrow(df)))
+df.train <- df[s, ]
+df.test  <- df[-s, ]
+
+logit.out <- glm(Label ~ ., data = df.train, family = binomial)
+summary(logit.out)
+```
+
+
+## Question 2
+
+Use the sample code in today's notes (specifically, that which was altered for classification - see slide 10) to implement a $k$-NN model.  You'll want to plot the validation-set MCR versus $k$.  A value of `k.max` of 30 should be sufficient.  
+*Note 1*: wherever it says `mse.k` in the notes, you'll instead want to use `mcr.k`, here in the classification setting (standing for "misclassification rate").  
+
+*Note 2*: the predictors are in columns 1-20 of `df.train` and `df.test`, and the response is in column 21.
+
+```{r fig.align='center',fig.width=4,fig.height=4}
+library(FNN)
+
+k.max <- 30
+mcr.k <- rep(NA, k.max)
+for (kk in 1:k.max) {
+  knn.out <- knn(train = df.train[, 1:20],test  = df.test[, 1:20],cl= df.train[, 21],k= kk)
+mcr.k[kk] <- mean(knn.out != df.test[, 21])
+}
+
+k.min <- which.min(mcr.k)
+cat("The optimal number of nearest neighbors is", k.min)
+plot(1:k.max, mcr.k, type = "b", pch = 19, col = "blue",
+     xlab = "Number of Nearest Neighbors (k)",
+     ylab = "Misclassification Rate (MCR)",
+     main = "Validation MCR vs k for k-NN Classification")
+abline(v = k.min, col = "red", lty = 2)
+
+```
+
+
+## Question 3
+
+Re-run the `knn()` function so as to be able to extract Class 1 probabilities.  As with Question 2, here you can reference slide 10, but this time concentrate on adapting the code at the bottom.  To demonstrate that you extracted the probabilities, simply make a histogram of them.  You should observe two clear peaks: one at 0, and one at 1.
+
+```{r fig.align='center',fig.height=4,fig.width=4}
+library(FNN)
+k.opt <- k.min
+knn.prob.out <- knn(train = df.train[, 1:20],
+                    test  = df.test[, 1:20],
+                    cl    = df.train[, 21],
+                    k     = k.opt,
+                    prob  = TRUE)
+prob.knn <- ifelse(knn.prob.out == 1,
+                   attr(knn.prob.out, "prob"),
+                   1 - attr(knn.prob.out, "prob"))
+summary(prob.knn)
+hist(prob.knn,
+     breaks = 20,
+     col = "skyblue",
+     border = "white",
+     main = "Histogram of Class 1 Probabilities (k-NN)",
+     xlab = "Predicted Probability of Class 1")
+```
+
+
+## Question 4
+
+For access to SVM methods, we will work with the `e1071` package.  (Its name comes from the course coding used by the Institute of Statistics and Probability Theory at the Technische Universitat Wien, in Vienna.  It's like us calling a package `36-600`.  Which perhaps we should.)  Here, code a support vector classifier (meaning, do SVM with `kernel = "linear"`): use the `tune()` function with a representative sequence of potential costs $C$, then extract the best model.  If the optimum value of $C$ occurs at or very near the end of your sequence of potential costs, alter the sequence to extend further.  The variable `best.parameters`, embedded in the output, provides the optimal value for $C$.  Report that value.  Use the best model to generate predictions, a test-set MCR, and a confusion matrix.
+
+Note that `tune()` does cross-validation on the training set to estimate the optimum value of $C$.  Which means that the training data are randomly assigned to folds (by default, 10 folds - to change this, you'd provide tuning parameters to the function that sets them `tune.control()`, e.g., via `tune.control(cross = 5)`).  This random sampling inherent to the algorithm means you should set a random number seed before calling `tune()` for reproducibility.
+
+See the last code block of page 390 of `ISLR` (2nd edition) for an example of how to specify ranges of tuning parameters.  Note that here, there is only one: `cost`.  As for prediction: `tune()` will return an object that includes `best.model`.  Pass this model to `predict()` along with the argument `newdata =` <whatever you called the data frame of predictors for the testing set>.  By default, `predict()` will output a vector of class predictions, so there is no need for rounding in determining classes.
+
+```{r}
+library(e1071)
+
+set.seed(42)
+cost.values <- 10^seq(-3, 3, by = 1)
+tune.out.lin <- tune(svm,Label ~ .,data = df.train,kernel = "linear",ranges = list(cost = cost.values))
+summary(tune.out.lin)
+best.lin.model <- tune.out.lin$best.model
+best.lin.C <- tune.out.lin$best.parameters$cost
+cat("Optimal cost (C):", best.lin.C, "\n")
+pred.lin <- predict(best.lin.model, newdata = df.test)
+mcr.lin <- mean(pred.lin != df.test$Label)
+cat("Test-set MCR:", round(mcr.lin, 4), "\n")
+table(Predicted = pred.lin, Actual = df.test$Label)
+
+```
+
+
+## Question 5
+
+Now code a support vector machine with a polynomial kernel.  In addition to tuning `cost`, you also have to tune the polynomial `degree`.  Try integers from 2 up to some maximum number (not too large, like 4).  *Note*: if you get the warning `WARNING: reaching max number of iterations`, don't worry about it - the function will still return the best estimates it can.
+
+```{r}
+set.seed(42)
+tune.out.poly <- tune(svm,Label ~ .,data = df.train,kernel ="polynomial",ranges = list(cost = 10^seq(-2, 3, by = 1),degree = 2:4))
+
+summary(tune.out.poly)
+best.poly.model <- tune.out.poly$best.model
+best.poly.params <- tune.out.poly$best.parameters
+cat("Optimal cost (C):", best.poly.params$cost, 
+    " | Optimal degree:", best.poly.params$degree)
+pred.poly <- predict(best.poly.model, newdata = df.test)
+mcr.poly <- mean(pred.poly != df.test$Label)
+cat("Test-set MCR:", round(mcr.poly, 4), "\n")
+table(Predicted = pred.poly, Actual = df.test$Label)
+
+```
+
+
+## Question 6
+
+Now code a support vector machine with a radial kernel.  In addition to tuning `cost`, you also have to tune the parameter `gamma`.  Try a base-10 logarithmic sequence of values that encompasses -8 (for $10^{-8}$).
+
+```{r cache=TRUE}
+set.seed(42)
+tune.out.rad <- tune(svm,
+                     Label ~ .,
+                     data = df.train,
+                     kernel = "radial",
+                     ranges = list(cost = 10^seq(-2, 3, by = 1),
+                                   gamma = 10^seq(-8, 0, by = 2)))
+
+summary(tune.out.rad)
+best.rad.model <- tune.out.rad$best.model
+best.rad.params <- tune.out.rad$best.parameters
+cat("Optimal cost (C):", best.rad.params$cost,
+    " | Optimal gamma:", best.rad.params$gamma)
+pred.rad <- predict(best.rad.model, newdata = df.test)
+mcr.rad <- mean(pred.rad != df.test$Label)
+cat("Test-set MCR:", round(mcr.rad, 4))
+table(Predicted = pred.rad, Actual = df.test$Label)
+
+```
+
+
+## Question 7
+
+Re-run the `tune()` and `predict()` functions so as to be able to extract Class 1 probabilities.  You may want to refer back to the final bullet point on Slide 17.  To demonstrate that you extracted the probabilities, simply make a histogram of them.  You should observe two clear peaks...one at 0, and one at 1.
+
+```{r fig.align='center',fig.height=4,fig.width=4,cache=TRUE}
+set.seed(42)
+svm.prob.model <- svm(Label ~ .,
+                      data = df.train,
+                      kernel = "radial",
+                      cost = best.rad.params$cost,
+                      gamma = best.rad.params$gamma,
+                      probability = TRUE)
+pred.prob <- predict(svm.prob.model, newdata = df.test, probability = TRUE)
+prob.mat <- attr(pred.prob, "probabilities")
+
+prob.class1 <- prob.mat[, "M"]
+hist(prob.class1,
+     breaks = 20,
+     col = "skyblue",
+     border = "white",
+     main = "Histogram of Class 1 Probabilities (SVM)",
+     xlab = "Predicted Probability of Class 1")
+
+
+```

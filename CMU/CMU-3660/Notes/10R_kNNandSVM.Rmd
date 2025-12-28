@@ -1,0 +1,448 @@
+---
+title: "Pure Prediction: $k$-NN and SVM"
+author: "36-600"
+date: '11/6/2025'
+output:
+  xaringan::moon_reader:
+    nature:
+      ratio: '16:9'
+      beforeInit: "macros.js"
+---
+layout: true
+background-image: url(background.png)
+background-size: cover
+---
+
+<style type="text/css">
+.remark-slide-content {
+    font-size: 16px;
+    padding: 1em 4em 1em 4em;
+}
+a { 
+    color: blue; 
+}
+.remark-slide-content h1 {
+    font-family: cabin;
+}
+.remark-slide-content h2 {
+    font-family: cabin;
+}
+.remark-slide-content h3 {
+    font-family: cabin;
+}
+.remark-slide-number {
+    font-size: 8pt;
+    margin-bottom: -5.6px;
+    margin-right: 1145px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+.remark-code {
+    font-size: 16px;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 65% !important;
+}
+</style>
+
+```{css,echo=FALSE}
+table {
+  font-size: 12px;
+}
+```
+
+
+## $k$-NN: $k$-Nearest Neighbors
+
+- In words: $k$-NN examines the $k$ data points closest to a location $x$ and uses just those data to generate predictions
+
+- $k$-NN straddles the boundary between fully parameterized models like linear regression and fully data-driven models like random forest: a $k$-NN model is data-driven, but one *can* actually write down a compact parametric form for it *a priori*
+
+  + for regression: 
+  $$ {\widehat Y} \mid \mathbf{x} = \frac{1}{k} \sum_{i=1}^k Y_i$$
+
+  + for classification: 
+  $$ \mathbb{P}(Y = j \mid \mathbf{x}) = \frac{1}{k} \sum_{i=1}^k \mathbb{I}(Y_i = j)$$
+
+  + where the summations are only over the points $\mathbf{x}_1,\,\ldots,\,\mathbf{x}_k$ that are "closest" to $\mathbf{x}$ (usually in the standard Euclidean sense)
+  
+  + $\mathbb{I}(\cdot)$ is the indicator function: it returns 0 if the argument is false, and 1 otherwise
+  
+  
+---
+
+## Finding the Optimal Number of Neighbors
+
+- For $k$-NN, the number of neighbors $k$ is a *tuning parameter*
+
+  + this means that, in theory, in addition to splitting data into training and test datasets, *the training data themselves have to be split into a smaller training set and a validation set*, and on which for each value of $k$, we train on the smaller training set, and compute MSE or MCR on the validation set
+  
+- Once the optimum value of $k$ is determined, you re-run the model using the *full* (unsplit) training set, and finally assess the model using the test data
+
+- The `FNN` package in `R` does cross-validation on the training set automatically, behind the scenes; we don't need to code the cross-validation algorithm ourselves
+
+
+---
+
+## Finding the Optimal Number of Neighbors
+
+- Note that if: 
+
+  + $k$ is too small, the resulting model is *too flexible*, meaning it has low bias (it is right on average) but high variance (the predictions are more uncertain)
+
+  + $k$ is too large, the resulting model is *not flexible enough*, meaning it has high bias (wrong on average) and low variance (i.e., it's more consistent, producing nearly the same predictions, every time)
+
+.center[
+
+  ![:scale 45%](./Fig_3.16.png)
+  ![:scale 45%](./Fig_2.16.png)
+  
+]
+
+<br>
+
+(Figures 3.16 and 2.16, *ISLR* 1st ed.)
+
+
+---
+
+## $k$-NN in Context
+
+- *As a general rule, parametric methods (like linear regression) will tend to outperform non-parametric approaches (like $k$-NN) when there is a small number of observations per predictor.* 
+
+  + this is the *curse of dimensionality*: for data-driven models, the amount of data you need to get similar model performance goes up exponentially with $p$, the number of predictor variables
+
+  + $k$-NN *might not* be a good model to learn when the number of predictor variables is large
+
+- *Even in problems in which the dimension is small, we might also prefer linear regression to $k$-NN from an interpretability standpoint.  If the test MSE of $k$-NN is only slightly lower than that of linear regression, we might often be willing to forego a little bit of predictive accuracy for the sake of a simple-to-understand model*
+
+  + $k$-NN **is not** a good model to learn if inference is the goal of your analysis
+
+
+---
+
+## $k$-NN: Three Critical Points to Remember
+
+- To determine which neighbors are the nearest neighbors, pairwise (Euclidean) distances are computed; so we'll want to scale (or standardize) the individual predictor variables
+
+- Since the method uses distances between data, $k$-NN *only works with quantitative predictor variables*
+
+- Don't go blindly computing a pairwise distance matrix 
+
+  + for instance, if $n$ = 100,000, then your pairwise distance matrix will have $10^{10}$ elements, each of which encoded with 8 bytes in memory - resulting in a memory demand of 80 GB!
+
+- Instead (in roughly decreasing order of preference):
+
+  + subsample your data, limiting $n$ to be $\lesssim$ 15,000-20,000
+
+  + make use of a " $k$-d tree " to more effectively (but only approximately) identify nearest neighbors:
+
+  + the `FNN` package in `R` has an option to search for neighbors via the use of a $k$-d tree; apply this option if you have more than, e.g., 10,000 rows in your data frame
+
+  + use a variant of $k$-NN that works with sparse matrices (matrices that can be compressed, if most of the values of your data matrix are zero)
+    
+  + find a computer system with more memory (e.g., my laptop has 16 GB, but 32 GB or 64 GB is not uncommon on a physical personal machines; on the cloud, all things are possible - cf. Murphy's Law)
+  
+
+
+---
+
+## $k$-NN: Regression Example
+
+- I've read-in and split a 10,000-galaxy dataset which we'll use to predict distances of galaxies from the Earth
+
+  + note that we've already scaled the predictor variables (but **not** the response), using the `scale()` function
+  
+```{r echo=FALSE}
+set.seed(808)
+df        <- read.csv("https://raw.githubusercontent.com/FSKoerner/F25-36600-data/refs/heads/main/PhotoZ.csv")
+df        <- df[, -8]
+df[, 1:6] <- scale(df[, 1:6])
+s         <- sample(nrow(df), 0.7 * nrow(df))
+df.train  <- df[s, ]
+df.test   <- df[-s, ]
+```
+
+```{r warning=FALSE}
+library(FNN)
+k.max <- 20
+mse.k <- rep(NA, k.max)
+for (kk in 1:k.max) {
+  knn.out   <- knn.reg(train = df.train[, 1:6], y = df.train[, 7], 
+                       k = kk, algorithm = "brute")
+  mse.k[kk] <- mean((knn.out$pred - df.train[,7])^2)
+}
+k.min <- which.min(mse.k)
+cat("The optimal number of nearest neighbors is", k.min, "\n")
+```
+
+- If the optimal number of nearest neighbors is $k_{\rm max}$, then your value of $k_{\rm max}$ is too small - increase it and start over!
+
+
+---
+
+## $k$-NN: Regression Example
+
+.pull-left[
+
+<br><br><br><br>
+
+```{r eval=FALSE,fig.height=6,fig.width=6.5,fig.align="center"}
+suppressMessages(library(tidyverse))
+
+ggplot(data = data.frame("k" = 1:k.max, 
+                         "mse" = mse.k),
+       mapping = aes(x = k, y = mse)) + 
+  geom_point() + geom_line() +
+  xlab("Number of Nearest Neighbors k") + 
+  ylab("Validation MSE") + 
+  geom_vline(xintercept = k.min, color = "red")
+```
+
+]
+
+.pull-right[
+
+```{r echo=FALSE,fig.height=6,fig.width=6,fig.align="center"}
+suppressMessages(library(tidyverse))
+
+ggplot(data = data.frame("k" = 1:k.max, "mse" = mse.k), 
+       mapping = aes(x = k, y = mse)) + 
+  geom_point() + geom_line() +
+  xlab("Number of Nearest Neighbors k") + ylab("Validation MSE") + 
+  geom_vline(xintercept = k.min, color = "red")
+```
+
+]
+
+
+---
+
+## $k$-NN: Regression Example
+
+.pull-left[
+
+- Given our best performing `k.min`, we can generate test-set predictions and the test-set MSE
+
+```{r}
+knn.out <- knn.reg(train = df.train[, 1:6], 
+                   test = df.test[,1:6], 
+                   y = df.train[,7], 
+                   k = k.min, algorithm = "brute")
+(knn.mse <- mean((knn.out$pred - df.test[, 7])^2))
+```
+
+```{r eval=FALSE,fig.height=6,fig.width=6,fig.align="center"}
+ggplot(data = data.frame("x" = df.test[, 7], 
+                         "y" = knn.out$pred),
+       mapping = aes(x = x, y = y)) +
+  geom_point(size = 0.1, color = "saddlebrown") + 
+  xlim(0, 2) + ylim(0, 2) + 
+  xlab("Observed Test-Set Response") + 
+  ylab("Predicted Test-Set Response") +
+  geom_abline(intercept = 0, slope = 1, 
+              color = "red")
+```
+
+]
+
+.pull-right[
+
+```{r echo=FALSE,fig.height=6,fig.width=6,fig.align="center"}
+ggplot(data = data.frame("x" = df.test[, 7], "y" = knn.out$pred),
+       mapping = aes(x = x, y = y)) +
+  geom_point(size = 0.1, color = "saddlebrown") + 
+  xlim(0, 2) + ylim(0, 2) + 
+  xlab("Observed Test-Set Response") + 
+  ylab("Predicted Test-Set Response") +
+  geom_abline(intercept = 0, slope = 1, color = "red")
+```
+
+]
+
+
+---
+
+## $k$-NN: Prediction in Classification Models
+
+- Note that for classification:
+
+  + instead of using `knn.reg()`, you would use `knn.cv()` to determine the optimum value of $k$; and 
+
+  + you would use `knn()` to generate predictions on the test set
+
+- Observe the `cl` argument they both take (you'll need to follow this package's functions' dependencies; the original functions live in the `class` package, e.g., `?class::knn`): this is where `resp.train` goes (since `cl` means "class"); change `y` to `cl`
+
+- `knn()` will output class predictions (based on majority vote!), unless you add the argument `prob = TRUE` to the call
+
+  + if you want to compute, e.g., an ROC curve for a $k$-NN classifier, use the (pseudo-)code below to extract the relevant class 1 probabilities
+
+```
+     knn.out     <- knn(..., prob = TRUE)
+     knn.prob    <- attributes(knn.out)$prob        # probabilities of the predicted class!
+     w           <- which(knn.out == "<class 0>")   # insert name of class 0 here
+     knn.prob[w] <- 1 - knn.prob[w]                 # knn.prob is now the class 1 probability!
+```
+
+
+---
+
+## SVM: the Support Vector Machine
+
+- A *support vector machine* is an enigmatically-named machine learning algorithm, most often used for classification
+
+- In theory (but not in practice, because of some very important algorithmic cleverness), SVM transforms predictor data into a *higher-dimensional space* and constructs a linear boundary **in that space** that optimally separates instances of two classes
+
+  + SVMs are not well-designed to tackle analyses in which the response has more than two classes!
+
+- Like a $k$-NN model, an SVM model is a purely predictive model, useless for inference
+
+- And like a $k$-NN model, an SVM model uses distances between data points, so scaling the predictor data is required
+
+- And furthermore, like a $k$-NN model, an SVM model works only with quantitative predictor variables
+
+- The *ISLR* textbook gives a somewhat mathematical description of SVMs; read the SVM chapter (chapter 9 of the first edition) if you are interested in such details
+
+
+---
+
+## But First: What *is* a Support Vector, Anyway?
+
+.pull-left[
+
+  ![:scale 85%](./Figure_9.3.png)
+
+(Figure 9.3, *ISLR* 1st ed.)
+
+]
+
+.pull-right[
+
+<br><br><br><br>
+
+- This figure shows an example of a *maximum margin classifier* that determines the linear boundary, here in the native space of the predictor data, that has the largest *minimum* distance to any training datum
+
+  + MMCs require a complete separation between instances of the two classes, so they are really never usable, let alone, useful in practice
+
+  + however: look at the three short line segments that are perpendicular to the boundary - these are *support vectors*: they "hold up," or support, the linear boundary
+  
+]
+
+
+---
+
+## Support Vector Machine
+
+.pull-left[
+
+  <br><br><br>
+
+  ![:scale 110%](./Figure_9.9.png)
+
+<br><br><br><br>
+
+(Figure 9.9, *ISLR* 1e)
+
+]
+
+.pull-right[
+
+<br>
+
+- An SVM, as stated above, defines a linear boundary in a higher-dimensional space than the *native space* of the predictor variables
+
+  + an SVM with, for example, a *polynomial kernel of degree 2* would transform a native space of, say, $p = 2$ to one where $p = 5$ via: 
+  $$\{X_1,\,X_2\} \rightarrow \{X_1,\,X_2,\,X_1^2,\,X_2^2,\,X_1X_2\}$$
+
+  + *but it doesn't, really*: it implements a bit of mathematical cleverness dubbed the "kernel trick" to keep the calculations in the native space of the data
+  
+- SVMs are still **really slow**: they are order $n$-cubed algorithms, meaning that running an SVM on a 10,000-row dataset can take up to 1000 times longer than running it on a 1000-row dataset
+
+]
+
+
+---
+
+## SVM: Example
+
+- We'll begin by importing data on 500 stars and 500 quasars - a classification problem
+
+```{r echo=FALSE}
+file.path = "https://github.com/FSKoerner/F25-36600-data/raw/refs/heads/main/Star_Quasar.Rdata"
+load(url(file.path))
+rm(file.path)
+col.ug <- df$u.mag - df$g.mag
+col.gr <- df$g.mag - df$r.mag
+col.ri <- df$r.mag - df$i.mag
+col.iz <- df$i.mag - df$z.mag
+mag.r  <- df$r.mag
+df     <- data.frame(col.ug, col.gr, col.ri, col.iz, mag.r, "class" = df$class)
+summary(df)
+```
+
+- We'll use the functions of the `e1071` package below, after scaling the predictors and performing a 70-30 data split
+
+
+---
+
+## SVM: Example with Linear Kernel
+
+```{r echo=FALSE}
+set.seed(201)
+df[, 1:5] <- scale(df[, 1:5])
+s         <- sample(nrow(df), round(0.7 * nrow(df)))
+df.train  <- df[s, ]
+df.test   <- df[-s, ]
+```
+
+```{r warning=FALSE}
+suppressMessages(library(e1071))
+set.seed(202)   # reproducible cross-validation
+tune.out <- tune(svm, class ~ ., data = df.train, kernel = "linear", 
+                 ranges = list(cost = 10^seq(-2, 2, by = 0.2)))
+cat("The estimated optimal value for C is", as.numeric(tune.out$best.parameters), "\n")
+resp.pred <- predict(tune.out$best.model, newdata = df.test)
+mean(resp.pred != df.test$class) ; table(resp.pred, df.test$class)
+```
+
+- Compare this figure with 0.177 for logistic regression
+
+
+---
+
+## SVM: Example with Polynomial Kernel
+
+```{r cache=TRUE}
+set.seed(202)
+tune.out <- tune(svm, class ~ ., data = df.train, kernel = "polynomial", 
+                 ranges = list(cost = 10^seq(2, 4, by = 0.5), degree = 2:4))
+cat("The estimated optimal values for C and degree are:", as.numeric(tune.out$best.parameters), "\n")
+resp.pred     <- predict(tune.out$best.model, newdata = df.test)
+(svm.poly.mcr <- mean(resp.pred != df.test$class))   # recall: 0.177 for logistic regression
+table(resp.pred, df.test$class)
+```
+
+- *Note 1*: if the optimal value was a boundary value (for instance, the optimal value of `cost` was 1 when the minimum value considered was 1), expand the `ranges` argument further in that direction (potentially contracting on the other end) and rerun the code
+
+- *Note 2*: I've used a very sparse grid for the `ranges` argument: this was done to ensure speedy computation, but, of course, we'll pay in eventual precision
+
+
+---
+
+## SVM: Example with Radial Kernel
+
+```{r cache=TRUE}
+set.seed(202)
+tune.out <- tune(svm, class ~ ., data = df.train, kernel = "radial", 
+                 ranges = list(cost = 10^seq(-1, 1, by = 0.5), gamma = 10^seq(-1, 1, by = 0.4)))
+cat("The estimated optimal values for C and gamma are:", as.numeric(tune.out$best.parameters), "\n")
+resp.pred     <- predict(tune.out$best.model, newdata = df.test)
+(svm.poly.mcr <- mean(resp.pred != df.test$class))   # recall: 0.177 for logistic regression
+table(resp.pred, df.test$class)
+```
+
+- Here, we assume a class-separation threshold of 0.5; if you wanted to create an ROC curve (which is never a *bad* idea), you'd pass the argument `probability = TRUE` to *both* `tune()` and `predict()`
+
+  + then, say the output of `predict()` was called `resp.pred`; the class 1 probabilities would then be given by: $\hspace{3cm}$ `resp.prob <- attr(resp.pred, "probabilities")[, 2]`
+
+

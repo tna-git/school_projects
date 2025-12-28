@@ -1,0 +1,429 @@
+---
+title: "Non-Linear Regression"
+author: "36-600"
+date: '11/11/2025'
+output:
+  xaringan::moon_reader:
+    nature:
+      ratio: '16:9'
+      beforeInit: "macros.js"
+---
+layout: true
+background-image: url(background.png)
+background-size: cover
+---
+
+<style type="text/css">
+.remark-slide-content {
+    font-size: 16px;
+    padding: 1em 4em 1em 4em;
+}
+a { 
+    color: blue; 
+}
+.remark-slide-content h1 {
+    font-family: cabin;
+}
+.remark-slide-content h2 {
+    font-family: cabin;
+}
+.remark-slide-content h3 {
+    font-family: cabin;
+}
+.remark-slide-number {
+    font-size: 8pt;
+    margin-bottom: -5.6px;
+    margin-right: 1145px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+.remark-code {
+    font-size: 16px;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 65% !important;
+}
+</style>
+
+```{css,echo=FALSE}
+table {
+  font-size: 12px;
+}
+```
+
+
+## The Setting
+
+- Assume that we have $n$ data tuples, $$(x_i,\,y_i,\,e_i)\,,$$
+  
+  + $x_i$ is the $x$-coordinate for datum $i$
+
+  + $y_i$ is the $y$-coordinate for datum $i$
+
+  + $e_i$ is the estimated uncertainty for datum $i$
+
+- Our goal: to draw a "curve" through the points
+
+  + *but wait, isn't that just regression?*
+
+  + sort of!  It's not necessarily *linear* regression, but it is a *weighted* regression
+
+- Unlike a typical linear regression setting, you'll note we have estimated uncertainties here (the $e_i$'s)
+
+  + a data point with a smaller uncertainty should have more weight in the fitting process than one with a larger uncertainty
+
+  + *inverse-variance* weighting is often used: $$w_i = \frac{1}{e_i^2}$$
+
+
+---
+
+## Example
+
+- Here's a dataset that you've been given:
+
+```{r echo=FALSE,fig.width=3.5,fig.height=3.5,fig.align="center",warning=FALSE}
+library(knitr)
+set.seed(202)
+n <- 18
+x <- 1:n
+y <- round(sin(pi*x/n)*sqrt(x) + rnorm(n, sd = 0.5), 2)
+e <- round(rnorm(n, mean = 0.5, sd = 0.1), 2)
+df <- data.frame("x" = x, "y" = y, "e" = e)
+kable(t(df))
+
+suppressMessages(library(tidyverse))
+ggplot(data = df, mapping = aes(x = x, y = y)) +
+  geom_errorbar(aes(ymin = y-e, ymax = y+e), width = 0.1, color = "blue") +
+  geom_point(color = "firebrick")
+```
+
+- Your advisor tells you to "fit a model" to these data, and you dutifully agree
+
+  + (note that for simplicity, today we are not splitting the data into training and tests sets)
+
+
+---
+
+## Global Polynomial Regression
+
+- It *should be* readily apparent that a simple linear regression model is **not** a good representation of the data-generating process, in this particular instance
+
+- A first variant on simple linear regression that we can examine is (global) polynomial regression:
+
+$$
+Y \mid x = \beta_0 + \beta_1 x + \cdots + \beta_d x^d + \epsilon
+$$
+
+
+---
+
+## Global Polynomial Regression
+
+.pull-left[
+
+- Let's try $d = 3$ (and also incorporate the provided uncertainties in a reasonable way)
+
+```{r}
+pr.out  <- lm(y ~ poly(x, 3, raw = TRUE), data = df,
+              weights = 1/(e^2))
+pr.pred <- predict(pr.out)
+mean((y - pr.pred)^2)
+data.frame("Estimate" = 
+             summary(pr.out)$coefficients[, 1])
+```
+
+]
+
+.pull-right[
+
+```{r echo=FALSE,fig.width=6,fig.height=6,fig.align="center"}
+ggplot(data = df, mapping = aes(x = x, y = y)) +
+  geom_errorbar(aes(ymin = y-e, ymax = y+e), width = 0.1, color = "blue") +
+  geom_point(color = "firebrick") +
+  geom_line(data = data.frame(x, "y" = pr.pred), 
+            mapping = aes(x = x, y = y), col = "sienna")
+```
+
+]
+
+
+---
+
+## Regression Splines
+
+- "Global" models have what could be viewed as an inherent disadvantage: because they are defined for all $x$, then *can* be insufficiently flexible
+
+- An example of a "local" model is a *spline model*
+
+  + the range of values of $x$ is divided into $K$ non-overlapping segments
+  
+  + the boundaries between these segments are called *knots*
+  
+  + as an example, we can express a quadratic polynomial model with one knot as
+\begin{align*}
+Y_i \mid x_i = \left\{ \begin{array}{ll} \beta_{0,1} + \beta_{1,1}x_i + \beta_{2,1}x_i^2 + \epsilon_i & x_i < c \\ \beta_{0,2} + \beta_{1,2}x_i + \beta_{2,2}x_i^2 + \epsilon_i & x_i \geq c \end{array} \right.
+\end{align*}
+
+  + the $\beta_i$'s are typically chosen such that the model pieces "match up" at the knots, i.e., are constrained by some equation(s), but that doesn't explicitly need to be the case (e.g., step functions)
+  
+  + if $d$ is the degree of the polynomial and $K - 1$ is the number of knots, the overall number of estimated quantities is $(d + 1) + (K - 1) = d + K$
+
+  + there are many varieties of spline, with different conditions enforced by each type: basis (or B) splines, natural splines, etc.  And there are splines that do jobs other than regression/smoothing, e.g., interpolating splines (more later)
+
+
+---
+
+## Regression Splines
+
+.pull-left[
+```{r}
+library(splines)
+# Default: cubic spline -> K+2 basis functions
+#  remember: K is the # of non-overlapping segments
+s.out  <- lm(y ~ bs(x, knots = c(11)), data = df,
+            weights = 1/(e^2))
+s.pred <- predict(s.out)
+mean((y - s.pred)^2)
+data.frame("Estimate" = 
+             summary(s.out)$coefficients[, 1])
+```
+]
+
+.pull-right[
+```{r echo=FALSE,fig.width=6,fig.height=6,fig.align="center"}
+ggplot(data = df, mapping = aes(x = x, y = y)) +
+  geom_errorbar(aes(ymin = y-e, ymax = y+e), width = 0.1, color = "blue") +
+  geom_point(color = "firebrick") +
+  geom_line(data = data.frame(x, "y" = s.pred), 
+            mapping = aes(x = x, y = y), col = "sienna")
+```
+]
+
+
+---
+
+## Regression Splines: What Do the Coefficients Mean?
+
+.pull-left[
+
+- A cubic B-spline model with one knot is built up using $K + d = 4\,$ separate basis functions
+
+- Take each function, multiply by the coefficient, add in the intercept, and $voila$: you have the overall model shape that ought to describe your $\mu(Y\mid X)$
+
+```{r eval=FALSE,fig.align='center',fig.width=6,fig.height=6}
+bs.x <- seq(0, 18, by = 0.01)
+spl  <- bs(bs.x, knots = c(11))
+plot(spl[, 1] ~ bs.x, ylim = c(0, max(spl)), 
+     type = 'l', lwd = 2, col = "seagreen", 
+     xlab = "Cubic B-spline basis", ylab = "")
+for (ii in 2:ncol(spl)) {
+  lines(spl[, ii] ~ bs.x, lwd = 2, col = ii)
+}
+```
+
+]
+
+.pull-right[
+
+```{r echo=FALSE,fig.align='center',fig.width=6,fig.height=6}
+bs.x <- seq(0, 18, by = 0.01)
+spl  <- bs(bs.x, knots = c(11))
+plot(spl[, 1] ~ bs.x, ylim = c(0, max(spl)), type = 'l', lwd = 2,
+     col = "seagreen", xlab = "Cubic B-spline basis", ylab = "")
+for (ii in 2:ncol(spl)) lines(spl[, ii] ~ bs.x, lwd = 2, col = ii)
+```
+
+]
+
+
+---
+
+## Regression Splines
+
+.pull-left[
+```{r}
+# Don't know where to put knot(s)?
+# Specify a number of d.o.f. instead!
+# Though do go find the newly-placed knots 
+#  and note the corresponding wiggliness (right)
+s.out  <- lm(y ~ bs(x, df = 6), data = df,
+            weights = 1/(e^2))
+s.pred <- predict(s.out)
+mean((y - s.pred)^2)
+data.frame("Estimate" = 
+             summary(s.out)$coefficients[, 1])
+```
+]
+
+.pull-right[
+```{r echo=FALSE,fig.width=6,fig.height=6,fig.align="center"}
+ggplot(data = df, mapping = aes(x = x, y = y)) +
+  geom_errorbar(aes(ymin = y-e, ymax = y+e), width = 0.1, color = "blue") +
+  geom_point(color = "firebrick") +
+  geom_line(data = data.frame(x, "y" = s.pred), 
+            mapping = aes(x = x, y = y), col = "sienna")
+```
+]
+
+
+---
+
+## Smoothing Splines
+
+- A variation on the regression spline model is the *smoothing spline* model
+
+- A smoothing spline model penalizes excessive model wiggliness, which is measured via the second derivative of the model function
+
+- The objective function that we wish to minimize is
+\begin{align*}
+\sum_{i=1}^n (Y_i - \widehat{Y}_i)^2 + \lambda \int f''(x)^2 dx
+\end{align*}
+
+  + $\lambda$ is a tuning parameter: smaller values lead to "wigglier" models
+  
+- *Note*: there is no need to manually place knots with smoothing splines: in theory, they are placed at the coordinates of every datum (although, in practice, a reduced set is used)
+
+- When learning a smoothing spline model, we can
+
+  + choose the effective number of degrees of freedom by setting $\lambda$; or
+  
+  + use cross-validation to determine an "optimal" value of $\lambda$
+
+
+---
+
+## Smoothing Splines
+
+.pull-left[
+
+```{r}
+ss.out  <- suppressWarnings(
+  smooth.spline(df$x, y = df$y, 
+                w = 1/(df$e^2), cv = TRUE)
+)
+ss.out$lambda
+ss.pred <- predict(ss.out)
+mean((y - ss.pred$y)^2)
+```
+
+- *Note*: the number of coefficients is large and the values are not easily interpreted
+
+]
+
+.pull-right[
+
+```{r echo=FALSE,fig.width=6,fig.height=6,fig.align="center"}
+ggplot(data = df, mapping = aes(x = x, y = y)) +
+  geom_errorbar(aes(ymin = y-e, ymax = y+e), width = 0.1, color = "blue") +
+  geom_point(color = "firebrick") +
+  geom_line(data = data.frame(x, "y" = ss.pred$y), 
+            mapping = aes(x = x, y = y), col = "sienna")
+```
+
+]
+
+
+---
+
+## Local Polynomial Regression
+
+- This is the "localized" version of global polynomial regression
+
+  + at each evaluation point, a polynomial is fit, with more weight being given to nearby data points and less to those farther away
+
+
+---
+  
+## Local Polynomial Regression
+
+.pull-left[
+
+```{r}
+lpr.out  <- loess(y ~ x, data = df, 
+                  weights = 1/(df$e)^2, span = 1)
+lpr.pred <- predict(lpr.out)
+mean((y - lpr.pred)^2)
+```
+
+- An important argument is `span` (default value: 0.75)
+
+  + a larger value `span` means more neighboring data influence the estimate made at $x_0$ 
+  
+  + therefore, large `span` values produce smoother functions
+  
+]
+
+.pull-right[
+
+```{r echo=FALSE,fig.width=6,fig.height=6,fig.align="center"}
+ggplot(data = df, mapping = aes(x = x, y = y)) +
+  geom_errorbar(aes(ymin = y-e, ymax = y+e), width = 0.1, color = "blue") +
+  geom_point(color = "firebrick") +
+  geom_line(data = data.frame(x, "y" = lpr.pred), 
+            mapping = aes(x = x, y = y), col = "sienna")
+```
+
+]
+
+
+---
+
+## Digression: What About (Cubic) Splines?
+
+.pull-left[
+
+- A confusing aspect to using splines is that:
+
+  + sometimes they are used in the context of regression (i.e., they incorporate the idea of data randomness around the *mean function* they are estimating) and; 
+  
+  + sometimes they are used more *deterministically* (i.e., as *interpolators*, which exactly connect every point, and therefore only "estimate" anything *between* the observed data)
+
+```{r}
+# Note: uncertainties are NOT taken into account
+#  ...how could they be?
+spl.out <- spline(df$x, df$y)
+```
+
+- If your output looks like this, you have **not** implemented a regression model!
+
+]
+
+.pull-right[
+
+```{r echo=FALSE,fig.width=6,fig.height=6,fig.align="center"}
+ggplot(data = df, mapping = aes(x = x, y = y)) +
+  geom_errorbar(aes(ymin = y-e, ymax = y+e), width = 0.1, color = "blue") +
+  geom_point(color = "firebrick") +
+  geom_line(data = data.frame("x" = spl.out$x, "y" = spl.out$y),
+            mapping = aes(x = spl.out$x, y = spl.out$y), color = "sienna")
+```
+
+]
+
+
+---
+
+## Generalized Additive Models
+
+- We can extend the models we've discussed above to the multiple regression setting
+
+- The *generalized additive model* or *GAM* is
+\begin{align*}
+Y_i \mid x_i = \beta_0 + f_1(x_{1,i}) + \cdots + f_p(x_{p,i})
+\end{align*}
+
+  + $x_{j,i}$ is the value of the $j^{\rm th}$ predictor for the $i^{\rm th}$ observation
+  
+  + $f_j(\cdot)$ is a function applied to the data in the $j^{\rm th}$ predictor column only $-$ this could be B-splines, global polynomials, etc.
+  
+- Why would we use GAMs?
+
+  + they provide flexible nonlinear modeling with output that we can (possibly) use to make inferential statements, i.e., GAMs are **not** black-box models
+  
+- Why would we not use GAMs?
+
+  + the complete set of model possibilities is **huge**: where do we use B-splines (and where are the knots)?  Where do we use polynomial regression (and what is the degree)?
+  
+- In the end, if model flexibility is necessary and inference is not of the utmost importance, working with simpler-to-implement nonlinear models like the random forest is generally preferable to working with GAMs
+
+

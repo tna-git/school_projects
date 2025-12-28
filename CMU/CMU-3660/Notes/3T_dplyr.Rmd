@@ -1,0 +1,300 @@
+---
+title: "Data Manipulation with dplyr"
+author: "36-600"
+date: '9/9/2025'
+output:
+  xaringan::moon_reader:
+    nature:
+      ratio: '16:9'
+      beforeInit: "macros.js"
+---
+layout: true
+background-image: url(background.png)
+background-size: cover
+---
+
+<style type="text/css">
+.remark-slide-content {
+    font-size: 16px;
+    padding: 1em 4em 1em 4em;
+}
+a { 
+    color: blue; 
+}
+.remark-slide-content h1 {
+    font-family: cabin;
+}
+.remark-slide-content h2 {
+    font-family: cabin;
+}
+.remark-slide-content h3 {
+    font-family: cabin;
+}
+.remark-slide-number {
+    font-size: 8pt;
+    margin-bottom: -5.6px;
+    margin-right: 1145px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+.remark-code {
+    font-size: 16px;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 65% !important;
+}
+</style>
+
+```{css,echo=FALSE}
+table {
+  font-size: 12px;
+}
+```
+
+
+## Lists
+
+.center[
+
+  ![:scale 30%](./vectors.png)
+  
+]
+
+- As can be seen above, a list is *not* an atomic entity; it may be thought of as a (perhaps heterogeneous) collection of atomic vectors:
+
+```{r}
+(x <- list(1:5, c("a", "b")))
+```
+
+
+---
+
+## Naming List "Elements"
+
+- When you initialize a list, you can name each of the vectors and then use the names to access list elements
+
+```{r}
+x <- list(u = 1:5, v = c("a", "b"))
+x
+x$v
+x$u[3]
+```
+
+- Note the use of the dollar sign $-$ the name of the list goes to the left of the dollar sign, while the name of the list's element goes to the right
+
+
+---
+
+## Data Frames
+
+- **A data frame is simply a list whose entries all have the same number of elements!**
+
+```{r}
+(x <- data.frame(u = 1:2, v = c("a", "b"), w = c(TRUE, FALSE)))
+```
+
+- Note that when we output a data frame to the Console, row numbers are added
+
+- Are we sure this is a list?  Well, we can check the variable type:
+
+```{r}
+typeof(x)
+class(x)
+```
+
+
+---
+
+## Dataset: Galaxy Properties
+
+- Let's read in data that are stored in an ASCII (i.e., human-readable) file in csv format:
+
+```{r}
+df <- read.csv("https://raw.githubusercontent.com/FSKoerner/F25-36600-data/refs/heads/main/GalaxyMass.csv", 
+               stringsAsFactors = TRUE)
+```
+
+- `df` stands for "data frame," but you can use whatever variable name you wish
+
+- The data contain 3456 galaxies (in rows), with 10 measurements of each (in columns):
+
+```{r}
+dim(df)
+```
+
+- We can use the `head()` function to display the first (in this case, 2) rows of the data frame:
+
+```{r}
+head(df, 2)
+```
+
+
+---
+
+## Dataset: Galaxy Properties
+
+- To see the names associated with each variable/column, use the `names()` function:
+
+```{r}
+names(df)
+```
+
+- The first column represents a sector of the sky in which the galaxy lies
+
+  + this is a *factor* variable, because it takes on a few discrete values that don't have an *inherent* ordering
+  
+```{r}
+unique(df$field)
+```
+
+
+---
+
+## `dplyr`
+
+- `dplyr` is a package within the larger `tidyverse` that makes it easy to manipulate data frames
+
+```{r}
+suppressMessages(library(tidyverse))   # suppressMessages() makes for cleaner output
+```
+
+- It may be helpful to think of data frames as *nouns* and `dplyr` functions as *verbs* $-$ actions that you apply to the data frames
+
+- The following are the most basic `dplyr` verbs:
+
+  + `slice()`: choose particular rows based on integer indexing 
+
+  + `filter()`: choose particular rows based on logical criteria
+
+  + `group_by()`: split the data frame into groups of rows based on, e.g., factor variable values
+
+  + `select()`: choose particular columns
+
+  + `arrange()`: order rows by, e.g., the values of a column
+
+  + `mutate()`: create new columns
+
+- **NOTE**: calling `dplyr` verbs always outputs a new data frame.  It **does not alter** the existing data frame
+
+
+---
+
+## The `slice()` Function
+
+- Use the `slice()` function when you want to retain certain rows:
+
+```{r}
+df %>% slice(., c(7, 14))   # output rows 7 and 14 of the data frame
+```
+
+- The `%>%` operator is called a *pipe*
+
+  + a pipe takes the output of one `R` command and uses it as input to a following command
+  
+  + here, we pipe the output of `df` (which is simply the whole data frame) to the `slice()` function
+  
+  + the period in the `slice()` function call shows where the data frame goes amongst the function's potential arguments
+
+- Slicing can be done "negatively":
+
+```{r}
+df %>% slice(., -c(1:2, 19:23)) %>% nrow(.)   # how many rows are left after removing rows 1-2 and 19-23?
+```
+
+
+---
+
+## The `filter()` Function
+
+- Use the `filter()` function when you want to choose rows based on logical conditions:
+
+```{r}
+df %>% filter(., field == "COSMOS") %>% head(., 2)
+df %>% filter(., mass > 10) %>% nrow(.)
+df %>% filter(., (field == "GOODSS" & mass < 10)) %>% nrow(.)
+```
+
+- Note the use of `&` in the third example: this combines conditions via the *logical and* (where `|` would be the analogous symbol for the *logical or*)
+
+- Note also that `R` evaluated the two *comparison operators* before their conjunction; for more on operator precedence, see `?Syntax`
+
+
+---
+
+## The `group_by()` Function
+
+- Use the `group_by()` function to split a data frame into groups of rows based on, e.g., the values of a factor variable
+
+  + note that `group_by()`, in and of itself, is only useful when its output is piped into another function, e.g., `summarize()`:
+
+```{r}
+df %>% group_by(., field) %>% summarize(., Mean = mean(mass), Number = n())
+```
+
+- `Mean` and `Number` are now column names in the *output* data frame
+
+  + what is shown are the average value of the galaxy masses in each field, along with the number of galaxies in each field
+  
+- Note that the output of `summarize()` is a "tibble", which is a `tidyverse`-specific alternative to a base-`R` data frame
+
+
+---
+
+## The `select()` Function
+
+- Use the `select()` function when you want to choose certain columns:
+
+```{r}
+df %>% select(., Gini, q, z.mode) %>% slice(., c(1:4))   # here we choose a subset of columns *and* rows
+```
+
+- `select()` can also be used negatively:
+
+```{r}
+df %>% select(., -Gini, -q, -z.mode) %>% ncol(.)   # how many variables/columns are left?
+```
+
+
+---
+
+## The `arrange()` Function
+
+- Use the `arrange()` function to order rows by, e.g., values of a column:
+
+```{r}
+df %>% arrange(., mass) %>% select(., C, A, z.mode) %>% head(., 2)
+```
+
+- If one uses `arrange(., desc(mass))` then the masses will be ordered descendingly; they are in *ascending* order, by default
+
+
+---
+
+## The `mutate()` Function
+
+- Use the `mutate()` function when you want to create one or more new columns:
+
+```{r}
+df %>% mutate(., mass.linear = 10^mass) %>% select(., mass, mass.linear) %>% arrange(., mass) %>% head(., 3)
+```
+
+
+---
+
+## Saving Your New Data Frame
+
+- As stated previously, the original data frame is **not** altered in piping operations
+
+- To save the result of a series of piping operations, use the assignment operators: `<-` or `->`:
+
+```{r}
+df.new <- df %>% filter(., field == "EGS") %>% select(., z.mode, mass) 
+nrow(df.new)
+df %>% 
+  filter(., field == "COSMOS") %>% 
+  select(., Gini, M20, C, A) -> 
+  df.new
+nrow(df.new)
+```
+
+

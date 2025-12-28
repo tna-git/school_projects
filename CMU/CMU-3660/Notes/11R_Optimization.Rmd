@@ -1,0 +1,298 @@
+---
+title: "Numerical Optimization"
+author: "36-600"
+date: '11/13/2025'
+output:
+  xaringan::moon_reader:
+    nature:
+      ratio: '16:9'
+      beforeInit: "macros.js"
+---
+layout: true
+background-image: url(background.png)
+background-size: cover
+---
+
+<style type="text/css">
+.remark-slide-content {
+    font-size: 16px;
+    padding: 1em 4em 1em 4em;
+}
+a { 
+    color: blue; 
+}
+.remark-slide-content h1 {
+    font-family: cabin;
+}
+.remark-slide-content h2 {
+    font-family: cabin;
+}
+.remark-slide-content h3 {
+    font-family: cabin;
+}
+.remark-slide-number {
+    font-size: 8pt;
+    margin-bottom: -5.6px;
+    margin-right: 1145px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+.remark-code {
+    font-size: 16px;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 65% !important;
+}
+</style>
+
+```{css,echo=FALSE}
+table {
+  font-size: 12px;
+}
+```
+
+
+## Example
+
+- Let's start by simulating the same dataset that we analyzed last class:
+
+```{r echo=FALSE,fig.width=7,fig.height=5,fig.align="center",warning=FALSE}
+library(knitr)
+set.seed(202)
+n  <- 18
+x  <- 1:n
+y  <- round(sin(pi*x/n)*sqrt(x) + rnorm(n, sd = 0.5), 2)
+e  <- round(rnorm(n, mean = 0.5, sd = 0.1), 2)
+df <- data.frame("x" = x, "y" = y, "e" = e)
+kable(t(df))
+
+suppressMessages(library(tidyverse))
+ggplot(data = df, mapping = aes(x = x, y = y)) +
+  geom_errorbar(aes(ymin = y-e, ymax = y+e), width = 0.1, color = "blue") +
+  geom_point(color = "firebrick")
+```
+
+
+---
+
+## Optimizing the Coefficients of an Arbitrary Function
+
+.pull-left[
+
+- Suppose you read somewhere that for these data, the underlying model apparently ought to take the form: $$f(x) = \sin\left(\frac{\pi}{\beta}x\right) x^{\alpha}$$
+
+- $\alpha$ and $\beta$ are unknown quantities that has to be determined
+
+- Alright - let's start by picking what we think might be good values for $\alpha$ and $\beta$, say, 0.75 and 20
+
+```{r eval=FALSE,fig.width=4,fig.height=4,fig.align="center"}
+mod.x <- 1:18
+mod.y <- sin(pi*x/20)*x^0.75
+ggplot(data = df, mapping = aes(x = x, y = y)) +
+  geom_errorbar(aes(ymin = y-e, ymax = y+e), 
+                width = 0.1, color = "blue") + 
+  geom_point(color = "firebrick") +
+  geom_line(mapping = aes(x = mod.x, y = mod.y), 
+            color = "olivedrab")
+```
+
+- Not bad, but this was basically a random guess; how can we determine some more optimal $\widehat{\alpha}$ and $\widehat{\beta}$?
+
+]
+
+.pull-right[
+
+```{r echo=FALSE,fig.width=6,fig.height=6,fig.align="center"}
+mod.x <- 1:18
+mod.y <- sin(pi*x/20)*x^0.75
+ggplot(data = df, mapping = aes(x = x, y = y)) +
+  geom_errorbar(aes(ymin = y-e, ymax = y+e), width = 0.1, color = "blue") + 
+  geom_point(color = "firebrick") +
+  geom_line(mapping = aes(x = mod.x, y = mod.y), color = "sienna")
+```
+
+]
+
+
+---
+
+## Digression: Optimization
+
+.pull-left[
+
+<br><br><br>
+
+- We want to code an *optimizer* - some automated process by which a computer determines the optimal values for $\alpha$ and $\beta$
+
+- In the figure, $x$ represents the quantity being optimized (for us, $\alpha$), and $f(x)$ represents some function of $x$ (the *objective function*) that quantifies how good the fit is
+
+- We want to determine the value of $x$ that (hopefully globally) minimizes the objective function, in a computationally efficient manner
+
+- So, what might the objective function $f(x)$ be in practice?
+
+]
+
+.pull-right[
+
+<br>
+
+  ![:scale 100%](./global.png)
+  
+]
+
+---
+
+## Digression: Optimization
+
+- A workhorse objective function is real-life applications is the *chi-square function*: $$X^2 = \sum_{i=1}^n \frac{(y_i - \widehat{y_i})^2}{\widehat{\sigma}_i^2} = \sum_{i=1}^n (y_i - \widehat{y_i})^2 \frac{1}{\widehat{\sigma}_i^2}$$
+  
+  + $\widehat{y_i}$ is the predicted value for $y_i$
+  
+  + $\widehat{\sigma}_i^2$ is the estimated variance (the square of the estimated standard deviation, i.e., square of the estimated uncertainty)
+
+- Look at the way we write $X^2$: it is a sum of squared errors, but weighted, where the weights are per the inverse-variance weighting we discussed last class 
+
+  + so in the context of our original data, we can write $X^2$ as $$X^2 = \sum_{i=1}^n w_i (y_i - g(x_i))^2 = \sum_{i=1}^n \frac{(y_i - g(x_i))^2}{e_i^2} = \sum_{i=1}^n \frac{(y_i - \sin(x_i \pi / \beta) x_i^\alpha)^2}{e_i^2}$$
+
+
+---
+
+## Digression: Optimization
+
+- What are some useful properties of the $X^2$ function?
+
+  + because $\vert y_i - \widehat{y_i} \vert$ should be $\approx e_i$ for a good model, we can take the optimized value of $X^2$ and divide by $n - p$ (where $p$ is the number of free parameters in $g(x)$ - here, $p = 2$) and check to see if the value is approximately 1
+
+  + we can use a $\chi^2$ *goodness-of-fit test* to see if the optimized model provides an acceptable fit to the data
+  
+- Because we know (from theory) that $X^2\sim \chi^2_{n-p}$ (under a certain null hypothesis), the $p$-value for the $\chi^2$ G.o.F. test is
+
+```
+    1 - pchisq(chi2.min, n - p)   # chi2.min is the X^2 value when using the **optimized parameters**
+```
+
+
+---
+
+## Code the Optimizer
+
+- The function `optim()` is a workhorse optimization function within `R`
+
+- Here's how we'd use it:
+
+```{r}
+fit.fun <- function(par, data) {
+  x         <- data$x
+  y         <- data$y
+  e         <- data$e
+  objective <- sum((y - sin(x*pi/par[2])*x^par[1])^2/e^2) 
+  return(objective)
+}
+par    <- c(0.75, 20)   # initial guesses for alpha, beta
+op.out <- suppressWarnings(optim(par, fit.fun, data = df))
+op.out$value            # the minimum chi-square value
+op.out$par              # the estimated parameter values
+```
+
+
+---
+
+## Code the Optimizer
+
+.pull-left[
+
+```{r eval=FALSE}
+fit.fun <- function(par, data){
+  x   <- data$x
+  y   <- data$y
+  e   <- data$e
+  obj <- sum((y - sin(x*pi/par[2])*x^par[1])^2/e^2)
+  return(obj)
+}
+par    <- c(0.75, 20)   
+# ^initial guesses for alpha, beta
+op.out <- suppressWarnings(optim(par, fit.fun, 
+                                 data = df))
+op.out$value   # the minimum chi-square value
+op.out$par     # the estimated parameter values
+```
+
+]
+
+.pull-right[
+
+- In the call to `optim()`, the first two arguments are `par` (a vector of parameter values, which here is of length 2 and represents $\alpha$ and $\beta$) and `fit.fun`
+
+- `fit.fun()` itself expects `par` as its first argument; however, for the function to actually work, we need to pass in a data frame which contains $x$, $y$, and $e$
+
+  + so back in the call to `optim()`, we need to explicitly say what the variable `data` represents
+
+  + here we've tacked on a third argument, `data = df`, where `df` is the data frame defined earlier that has the values of $x$, $y$, and $e$
+
+- Finally, note how we make an initial guesses for $\alpha$ and $\beta$ (`par <- c(0.75, 20)`)
+
+  + the optimizer works fine with these guesses, but beware that in more complicated (usually high-dimensional) problems we run the risk of not finding the global minimum for $X^2$ if our initial guess is "bad"
+  
+]
+
+
+---
+
+## Is This an Acceptable Model?
+
+.pull-left[
+
+- $X^2/(n-p) = X^2/(n-2) = 14.041/16 \approx 0.878 ~\Rightarrow~$ Seems okay?
+
+- We run the $\chi^2$ G.o.F. test:
+
+```{r}
+1 - pchisq(op.out$value, nrow(df) - 2)
+```
+
+- The $p$-value is 0.60
+
+  + we fail to reject the null hypothesis that our model is an acceptable one
+  
+  + That's **not** to say it's *correct*, but moreso that it is *reasonable*
+  
+]
+
+.pull-right[
+
+```{r echo=FALSE,fig.width=6,fig.height=6,fig.align="center"}
+mod.x <- 1:18
+mod.y <- sin(pi*x/op.out$par[2])*x^op.out$par[1]
+ggplot(data = df, mapping = aes(x = x, y = y)) +
+  geom_errorbar(aes(ymin = y-e, ymax = y+e), width = 0.1, color = "blue") + geom_point(color = "firebrick") +
+  geom_line(mapping = aes(x = mod.x, y = mod.y), color = "olivedrab")
+```
+
+]
+
+
+---
+
+## Wait.  Let's Look at That Model Again.
+
+- Perhaps you've looked at the figure and thought:
+
+  + "not all the blue error bars overlap the model...that's an indication the model is bad, right?"
+
+- Well, not *per se*:
+
+  + the uncertainties are taken as being estimates of the standard deviation*: given $x$, the sampling of $y$ has this amount of uncertainty
+  
+  + if the normal distribution governs the uncertainty, then we would expect $\approx$ 68% of the blue lines to overlap the model
+  
+  + if we doubled the length of the blue lines, then we would expect $\approx$ 95% of the blue lines to overlap the model...etc. (you could go on and calculate any coverage probability)
+
+- What we observe: 13 of 18 blue lines overlap the model, or 72.2%
+
+  + given the small sample size, this is completely consistent with an expected 68% overlap rate
+  
+<br><br><br><br><br>
+
+\* *A practical note*: given a new plot that someone else generated, or a new dataset with some relatively vague information/documentation (say, a column called "precision"), especially one not coming from a statistician, you should always **verify** that this is what's being plotted/conveyed - it very well might not be
+
+

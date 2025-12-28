@@ -1,0 +1,407 @@
+---
+title: "Linear Regression"
+author: "36-600"
+date: '9/25/2025'
+output:
+  xaringan::moon_reader:
+    nature:
+      ratio: '16:9'
+      beforeInit: "macros.js"
+---
+layout: true
+background-image: url(background.png)
+background-size: cover
+---
+
+<style type="text/css">
+.remark-slide-content {
+    font-size: 16px;
+    padding: 1em 4em 1em 4em;
+}
+a { 
+    color: blue; 
+}
+.remark-slide-content h1 {
+    font-family: cabin;
+}
+.remark-slide-content h2 {
+    font-family: cabin;
+}
+.remark-slide-content h3 {
+    font-family: cabin;
+}
+.remark-slide-number {
+    font-size: 8pt;
+    margin-bottom: -5.6px;
+    margin-right: 1145px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+.remark-code {
+    font-size: 16px;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 65% !important;
+}
+</style>
+
+```{css,echo=FALSE}
+table {
+  font-size: 12px;
+}
+```
+
+
+## The Setting
+
+- Linear regression is an inferential (and therefore, relatively inflexible) model in which we assume that $Y$ is related to the predictor variables $\mathbf{x}$ via the model 
+$$Y \mid \mathbf{x} = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p + \epsilon$$
+  
+  + $\epsilon$ is a random variable that is assumed (1) to have mean zero, (2) to have variance $\sigma^2$ that is constant as a function of $x$, and (3) (optionally $-$ we will return to this point) to be normally distributed
+
+- Why would we use linear regression?
+
+  + while it is inflexible, it is also readily interpretable
+
+  + it is a fast model to learn: the $\beta$'s can be computed via a simple closed-form formula
+  
+  + to be clear: it is **not** necessarily the case that there is an *a priori* belief that $\mathbf{x}$ and $Y$ are exactly linearly related
+
+
+---
+
+## Linear Regression: Example
+
+.pull-left[
+
+<br><br>
+
+- Here are some observed (simulated) data:
+
+<br>
+
+```{r}
+set.seed(303)
+x        <- seq(0, 10, by = 0.1)
+y        <- x + rnorm(length(x), sd = 1)
+df       <- data.frame(x, y)
+s        <- sample(length(x), round(0.7*length(x)))
+df.train <- df[s, ]  # training set
+df.test  <- df[-s, ] # test set
+```
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align='center',fig.width=5,fig.height=5}
+suppressMessages(library(tidyverse))
+ggplot(data = df, mapping = aes(x = x, y = y)) +
+  geom_point(col = "seagreen")
+```
+]
+
+
+---
+
+## Linear Regression: Example
+
+.pull-left[
+```{r}
+lm.out <- lm(y ~ x, data = df.train) 
+# that's a tilde between y and x
+summary(lm.out)
+```
+]
+
+.pull-right[
+- Here, we're regressing the response variable $Y$ on $x$
+
+- The estimated coefficients are
+
+  + $\widehat{\beta}_0 = -0.040$
+  
+  + $\widehat{\beta}_1 = 1.006$
+  
+- The estimated probability that one would observe a value of 1.006 or larger (or $-1.006$ or smaller) is $\leq 2.2\times 10^{-16}$
+
+  + this is (much) less than 0.05, so we conclude that the true value of $\beta_1$ is not zero
+  
+  + and therefore, we have evidence of a significant association between $x$ and $y$!
+]
+
+
+---
+
+## Linear Regression: Example
+
+- Caveats to keep in mind regarding $p$-values:
+
+  + if the true value of a coefficient, say, $\beta_i$ is equal to zero, then the $p$-value will be sampled from a ${\rm Uniform}(0,\,1)$ distribution (meaning that there is then a 5% chance that you'll conclude a significant association between a predictor variable and the response, **even when there is none**)
+
+  + as the sample size $n$ gets large, the estimated coefficient uncertainty goes to zero, and so **all** associations are eventually deemed statistically significant, even if they have **no** practical significance
+
+This all is meant to imply that: rather than using $p$-values, use variable selection methods (covered soon) to determine which subset of the predictor variables you should include in your final model
+
+
+---
+
+## Linear Regression: Example
+
+- To compare the linear regression model against other models, we compute the *mean-squared error* for the data in the *testing set*
+
+```{r}
+y.hat <- predict(lm.out, newdata = df.test)
+mean((df.test$y - y.hat)^2)
+```
+
+- To determine the quality of the linear regression model as a representation of the data-generating process, in absolute terms, we use "Adjusted R-squared" (which has value 0.8957; see two slides prior)
+  
+  + it is an estimate of **the proportion of the variance of the data along the $y$-axis that is explained by the model**
+  
+  + values near zero indicate that there is no apparent association between the predictor variables and the response variable
+  
+  + values near one indicate a strong linear association between the predictors and the response
+  
+  + values in between?  Well, the model has value, perhaps, but can't necessarily tell the whole story about the data-generating process
+
+
+---
+
+## Linear Regression: Example
+
+<br>
+
+.pull-left[
+
+- A useful *diagnostic* (for *any* regression model, not just a linear regression model!) is to plot predicted responses (for the test-set data only) versus the observed responses
+
+  + if there is no association between the predictor variable and the response variable, the points will be scattered mostly horizontally across the plot
+  
+  + if there is an association between the predictor variable and the response variable predominantly of the form the model is meant to capture (say, linear), the points will generally follow the red identity line
+  
+  + if there is some nature of relationship between the predictor variable and the response variable, beyond that which is captured by the model, it will be apparent as structure which deviates away from the red line
+  
+  + a "good" model follows the red line, but with random scatter!
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align='center',fig.width=5,fig.height=5}
+ggplot(data = data.frame("y" = df.test$y, y.hat), 
+       mapping = aes(x = y, y = y.hat)) +
+  geom_point(col = "seagreen") +
+  geom_abline(slope = 1, intercept = 0, col = "firebrick") +
+  xlim(-1, 11) + ylim(-1, 11) +
+  xlab("Observed Test-Set Response") +
+  ylab("Predicted Test-Set Response")
+```
+]
+
+
+---
+
+## Linear Regression: Example
+
+- Here are the data with the best-fit linear model overlaid:
+
+<br>
+
+```{r echo=FALSE,fig.align='center',fig.width=5,fig.height=5}
+ggplot(data = df, mapping = aes(x = x, y = y)) +
+  geom_point(col = "seagreen") +
+  geom_abline(slope = lm.out$coefficients[2], intercept = lm.out$coefficients[1], 
+              col = "firebrick")
+```
+
+
+---
+
+## Linear Regression: Assumptions
+
+.pull-left[
+- Let's go back to the "optional" assumption (3): $\epsilon$ is assumed to be normally distributed
+
+  + to check this, plot a histogram of the fitted model *residuals*, denoted $e$ or $\widehat{\epsilon\,}$, defined as $\widehat{\epsilon\,} = Y - \widehat{Y}$
+  
+- To test for normality, you might pass the values of the residuals into the Shapiro-Wilk test
+
+  + in our data (right), the $p$-value is 0.983 $>$ 0.05
+  
+  + we fail to reject the null hypothesis that the data are normally distributed
+  
+- If we *reject* normality, it means that we "cannot take the numbers output by `R` at face value"
+
+  + *however*, if assumptions (1) and (2) still hold, then coefficients estimated, and predictions made, by the model are still perfectly valid, we just can't "trust" the estimated uncertainties of the coefficients or their $p$-values (i.e., inference is affected, but not prediction)
+  
+  + to address this, it *may* make sense to attempt a transformation of the response values, e.g., $Y \rightarrow \log(Y)$
+]
+
+.pull-right[
+
+<br>
+
+```{r}
+y.hat <- predict(lm.out, newdata = df.test)
+e     <- df.test$y - y.hat
+shapiro.test(e)$p.value
+```
+
+```{r echo=FALSE,fig.align='center',fig.width=4,fig.height=4}
+ggplot(data = data.frame(e), mapping = aes(x = e)) +
+  geom_histogram(bins = 10, fill = "seagreen") +
+  xlab("Model Residuals")
+```
+]
+
+
+---
+
+## Linear Regression: Assumptions
+
+<br>
+
+.pull-left[
+- Now let's go back to assumption (2): $\epsilon$ has a constant variance, denoted $\sigma^2$
+
+- To check this, plot the residuals $e$ versus predictions $\widehat{Y}$
+
+  + If the scatter around $e = 0$ appears constant as a function of $\widehat{Y}$ (along the x-axis), then assumption (2) holds
+
+- If assumption (2) does not hold (but assumption (1) does), then the linear model is not the "best linear unbiased estimator" or *BLUE* model
+
+  + it may make sense to attempt *weighted* linear regression, if we can estimate $\sigma_i^2$ for each datum (this is beyond the scope of this class)
+  
+- Note again that if your goal is prediction, whether assumption (2) holds or not really doesn't matter $-$ the model either makes competitive predictions, or it doesn't!
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align='center',fig.width=5,fig.height=5}
+ggplot(data = data.frame(y.hat,e), mapping = aes(x = y.hat, y = e)) +
+  geom_point(col = "seagreen") +
+  geom_hline(yintercept = 0, col = "firebrick") +
+  xlab("Model Fitted Values") +
+  ylab("Model Residuals")
+```
+]
+
+
+---
+
+## Linear Regression: Assumptions
+
+.pull-left[
+
+- Finally assumption (1): the mean of $\epsilon$ is zero
+
+- In a way, the linear model, and many others, enforce that a specific diagnostic of this is always satisfied, i.e., the histogram of residuals will always appear to be centered at zero
+
+- However, the assumption actually requires the mean to be zero *everywhere* in the predictor space
+
+- We can assess how reasonable this assumption is from plots of $Y$ versus each and every predictor, with the model fit overlaid (or, equivalently by plots of the residuals versus each predictor $X_p$)
+
+  + If there is a pattern of deviation from the fitted model (or in the case of residuals versus predictor, patterns of deviation from the horizontal axis), assumption (1) does not hold.  In this case, your model (like linear regression) is simply not a good representation of the data-generating process.  Full stop.
+]
+
+.pull-right[
+```{r echo=FALSE,fig.width=6,fig.height=3}
+y.quad <- x^2 + rnorm(length(x), sd = 1)
+lm.out <- lm(y.quad ~ x)
+ggplot(data = data.frame(x, y.quad), mapping = aes(x = x, y = y.quad)) +
+  geom_point(col = "seagreen") +
+  geom_abline(slope = lm.out$coefficients[2], intercept = lm.out$coefficients[1], 
+              col = "firebrick") +
+  ylab("y")
+```
+
+```{r echo=FALSE,fig.width=6,fig.height=3}
+ggplot(data = data.frame(x, y.quad.res = lm.out$resid), mapping = aes(x = x, y = y.quad.res)) +
+  geom_point(col = "seagreen") +
+  geom_abline(slope = 0, intercept = 0, col = "firebrick") +
+  ylab("Model Residuals")
+```
+]
+
+
+---
+
+### Linear Regression: What if I Have Categorical Predictors?
+
+.pull-left[
+```{r echo=FALSE}
+n <- length(x)
+v <- c(rep("Chocolate", floor(n/2)), rep("Vanilla", n - floor(n/2)))
+df.ic <- data.frame(x, y, "ic" = factor(v))
+```
+
+```{r}
+summary(lm(y ~ ., data = df.ic))
+```
+]
+
+.pull-right[
+- Now I've added a factor variable measuring favorite ice-cream flavor
+
+- When a predictor variable is a factor variable with $k$ levels, then $k-1$ so-called *dummy variables* (Boolean variables) are included in the model, and shown in the output
+
+  + `ic` has levels `Chocolate` and `Vanilla`, and so `Chocolate` (the first level) becomes the "reference level" and `icVanilla` is what gets output
+
+- Mathematically, the model is: 
+$$\widehat{Y} \mid \mathbf{x} = \beta_0 + \beta_1 x + \beta_2 \mathbb{I}_{vanilla}({\rm ic})$$
+
+  + $\mathbb{I}$ is an *indicator variable*: it takes on value 1 if its argument takes on the level in its subscript (here, if the value of `ic` is `Vanilla`) and 0 otherwise
+  
+  + for chocolate ice-cream preferers, the model is then: 
+  $$\widehat{Y} \mid \mathbf{x} = \beta_0 + \beta_1 x$$
+
+  + for vanilla ice-cream enjoyers, the model is:
+  $$\widehat{Y} \mid \mathbf{x} = \beta_0 + \beta_1 x + \beta_2$$
+]
+
+
+---
+
+## Linear Regression: Multicollinearity
+
+- Let's now remove the factor variable and add a second predictor variable that is linearly related to the first one
+
+```{r echo=FALSE}
+x2 <- 5 - 2*x + rnorm(length(x), sd = 1)
+df <- data.frame(x, x2, y)
+df.train <- df[s, ]
+df.test  <- df[-s, ]
+```
+
+```{r warning=FALSE,fig.width=4,fig.height=4,fig.align="center"}
+suppressMessages(library(corrplot))
+corrplot(cor(df.train[, 1:2]), method = "ellipse")   # apparent correlation between columns 1 and 2
+```
+
+- Visual inspection of this plot indicates clearly that multicollinearity is present
+
+  + keep in mind that multicollinearity affects inference, but not prediction!
+
+
+---
+
+## Linear Regression: Variance Inflation Factor
+
+- The variance inflation factor, or VIF, is the amount by which the estimated variance for a coefficient is inflated because of multicollinearity
+
+- For instance, assume we have the estimated regression line: 
+$$\widehat{Y} = 5 + 4 x_1 - 2 x_2$$
+
+  + let the estimated standard errors for $\widehat{\beta}_1$ and $\widehat{\beta}_2$ be 2, and let the VIFs be 4 and 9, respectively
+  
+  + the actual estimate of the standard error for $\widehat{\beta}_1$ should be $2 \times \sqrt{4} = 4$, and for $\widehat{\beta}_2$, it should be $2 \times \sqrt{9} = 6$
+
+- If a VIF value is high, then the coefficient estimate calculated by `lm()` for that variable can be much more uncertain than `R` indicates
+
+  + rules of thumb: start to worry if VIF values are above 5 (more conservative) or above 10 (less conservative)
+
+```{r warning=FALSE}
+suppressMessages(library(car))
+lm.out <- lm(y ~ ., data = df.train)
+vif(lm.out)
+```
+
+- A mitigation here would be to remove one variable at a time until the VIF values for all those that remain fall below 5 (or 10), **but this can adversely affect the model's predictive abilities** $-$ a better (albeit still imperfect) strategy would be to use *principal components regression*
+
+

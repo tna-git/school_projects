@@ -1,0 +1,465 @@
+---
+title: "Exploratory Data Analysis"
+author: "36-600"
+date: '9/11/2025'
+output:
+  xaringan::moon_reader:
+    nature:
+      ratio: '16:9'
+      beforeInit: "macros.js"
+---
+layout: true
+background-image: url(background.png)
+background-size: cover
+---
+
+<style type="text/css">
+.remark-slide-content {
+    font-size: 16px;
+    padding: 1em 4em 1em 4em;
+}
+a { 
+    color: blue; 
+}
+.remark-slide-content h1 {
+    font-family: cabin;
+}
+.remark-slide-content h2 {
+    font-family: cabin;
+}
+.remark-slide-content h3 {
+    font-family: cabin;
+}
+.remark-slide-number {
+    font-size: 8pt;
+    margin-bottom: -5.6px;
+    margin-right: 1145px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+.remark-code {
+    font-size: 16px;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 65% !important;
+}
+</style>
+
+```{css,echo=FALSE}
+table {
+  font-size: 12px;
+}
+```
+
+
+## The Canonical Data Analysis Workflow
+
+.center[
+
+![:scale 80%](./workflow.png)
+
+]
+
+- *Data Pre-Processing*: the act of extracting analyzable data (e.g., a structured data table) from unstructured sources (e.g., images, audio files, text, etc.), as well as the act of editing the data table to mitigate missing data
+
+- *Exploratory Data Analysis*: the act of describing and visualizing the observed data $-$ via, e.g., simple summary statistics, histograms, scatterplots, box plots, etc. $-$ so as to build intuition about them
+
+- *Statistical Learning*: the attempt to find meaningful structures in the data or to uncover relationships between *elements* of the dataset
+
+- *Interpretation*: what did you discover through your analysis?
+
+
+---
+
+## What is Exploratory Data Analysis?
+
+- As stated above: the act of describing and visualizing the observed data $-$ via, e.g., simple summary statistics, histograms, scatterplots, box plots, etc. $-$ so as to build intuition about them.  Some questions under the purview of EDA:
+
+  + what is the sample size and what is the number of variables?
+  
+  + are there uninformative variables (e.g., a column of row numbers)?
+  
+  + are the informative variables quantitative or categorical?
+  
+  + how are the variable values empirically distributed (e.g., unimodally or bimodally?  symmetric or skewed?)
+  
+  + are there missing data?
+  
+  + are there anomalous data?
+  
+  + are there apparent linear relationships between predictor variables?
+  
+  + are there visually apparent associations between the predictor variables and the response variable?
+  
+  + etc.
+
+
+---
+
+### Exploratory Data Analysis is Not a Replacement for Statistical Learning!
+
+- If the number of predictor variables is larger than three, one cannot directly visualize the native space of the data; one can only visualize *projections* of that space
+
+  + if those projections yield useful information, great!
+  
+  + if they do not: one should not give up, *because interesting/important information may have been lost in projection*
+
+
+---
+
+### Exploratory Data Analysis is Not a Replacement for Statistical Learning!
+
+<center>
+
+<div class="row">
+  <img src="./Fig_EDA_TwoVars_I.png" style="width:30%">
+  <img src="./Fig_EDA_TwoVars_II.png" style="width:30%">
+  <img src="./Fig_EDA_TwoVars_III.png" style="width:30%">
+</div>
+
+</center>
+
+- If we can only "see" in one dimension, then we might conclude after some initial EDA (middle and right) that there is no association between the $(x,\,y)$ coordinates and the object class (color).  However, if we could visualize the native space, we'd conclude there is **definitely** an association between coordinates and class
+
+  + EDA: visualization of *projected* data
+
+  + statistical learning: modeling of data in their *native space*, with the goal of being able to *learn* behavior that could be have been missed upon projection
+
+
+---
+
+## The Limits of Exploratory Data Analysis
+
+<center>
+
+<div class="row">
+  <img src="./Fig_EDA_TwoVars_IV.png" style="width:30%">
+  <img src="./Fig_EDA_TwoVars_V.png" style="width:30%">
+  <img src="./Fig_EDA_TwoVars_VI.png" style="width:30%">
+</div>
+
+</center>
+
+- Here, upon use of EDA tools, we might conclude that there is an association between the $(x,\,y)$ coordinates and the object class
+
+- If by eye we see clear associations between, e.g., at least some predictor variables and the response variable, then we know that we when apply statistical learning techniques we **should** be able uncover meaningful information about associations between variables
+
+
+---
+
+## EDA: A Starting Point
+
+```{r echo=FALSE}
+df <- read.csv("https://raw.githubusercontent.com/FSKoerner/F25-36600-data/refs/heads/main/GalaxyMass.csv", 
+               stringsAsFactors = TRUE)
+```
+
+- We start by calling `summary()`, as it will identify the amount of missing data (assuming they have been identified and marked as `NA`) in each variable and give a sense of how the data are distributed
+
+```{r}
+dim(df)              # 10 measurements for each of 3,456 galaxies
+summary(df[, 1:4])   # showing a subset only, so as to fit on the slide
+```
+
+- `field` is a categorical variable and all the others are quantitative
+
+- There are no missing data
+
+
+---
+
+## EDA: But What Happens if Data Are Missing?
+
+.center[
+
+![:scale 60%](./missing_data.png)
+
+]
+
+- If data are missing, you'll have to:
+
+  + remove data from your sample, or
+  
+  + perform data imputation (which is beyond the scope of this class)
+  
+
+---
+
+## EDA: But What Happens if Data Are Missing?
+
+.center[
+
+![:scale 60%](./missing_data.png)
+
+]
+
+- There are no simple heuristics in how to go about removing data
+
+- For instance, if you have six columns of data and a sample size of 100, and 30 of the data in column 6 are missing, do you: 
+
+  + remove the 30 rows with missing data, or 
+  
+  + remove the sixth column?
+
+
+---
+
+## EDA with `ggplot2`
+
+- `ggplot2` is a package for creating graphics, using principles discussed in the book *The Grammar of Graphics* by Leland Wilkinson
+
+  + `ggplot2` is part of the `tidyverse`
+  
+```{r}
+suppressMessages(library(tidyverse))
+```
+  
+- A *very* basic call to `ggplot()` has the following structure:
+
+```
+ggplot(data = <data frame>, mapping = aes(x = <x axis variable>, ...)) + 
+  geom_<plot type>(<arguments>) + ...
+```
+
+
+---
+
+## EDA: Single Categorical Variable
+
+- To visualize a single categorical variable, we could use a `table()`:
+
+.pull-left[
+
+```{r}
+df %>% select(., field) %>% table(.)
+```
+
+]
+
+.pull-right[
+
+```{r echo=FALSE}
+df %>% select(., field) %>% table(.)
+```
+
+]
+
+- Or we could use a bar chart:
+
+.pull-left[
+
+<br><br><br><br>
+
+```{r eval=FALSE,fig.align='center',fig.height=4,fig.width=4}
+ggplot(data = df, mapping = aes(x = field)) +
+  geom_bar(fill = "seagreen")
+```
+
+]
+
+.pull-right[
+
+```{r echo=FALSE,fig.align='center',fig.height=4,fig.width=4}
+ggplot(data = df, mapping = aes(x = field)) +
+  geom_bar(fill = "seagreen")
+```
+
+]
+
+
+---
+
+## EDA: Single Quantitative Variable
+
+- To visualize a single quantitative variable, we would most often use a histogram: 
+<br><br>
+
+```{r C-hist,fig.show='hide'}
+ggplot(data = df, mapping = aes(x = C, y = after_stat(density))) +
+  geom_histogram(bins = 40, fill = "seagreen") +
+  xlab("Concentration")
+```
+
+<br>
+
+```{r ref.label='C-hist',echo=FALSE,fig.align='center',fig.height=4,fig.width=4}
+```
+
+
+---
+
+## EDA: Single Quantitative Variable
+
+<br><br><br>
+
+.pull-left[
+
+<br><br>
+
+- Features of histograms to keep in mind:
+
+  + they exhibit a *nonparametric* estimate of the shape of the underlying data distribution
+
+  + they are sensitive to choice of *bin width*: too few bins, and noise and localized features are smoothed out; too many bins, and noise obscures the underlying distribution
+
+]
+
+.pull-right[
+
+```{r ref.label='C-hist',echo=FALSE,fig.align='center',fig.height=4,fig.width=4}
+```
+
+]
+
+
+---
+
+## EDA: Single Quantitative Variable
+
+<br>
+
+.pull-left[
+
+```{r pairs,fig.show='hide'}
+df.new <- df %>% select(., -field) %>% gather(.)
+ggplot(data = df.new, mapping = aes(x = value)) +
+  geom_histogram(fill = "blue", bins = 30) +
+  facet_wrap(~key, scales = 'free')
+```
+
+<br>
+
+- What do we observe here?
+
+  + `C` and `q` have unimodal and symmetric distributions
+  
+  + `M20`, `n`, `mass`, and `size` are somewhat positively skewed
+  
+  + `Gini` is somewhat negatively skewed
+  
+  + we cannot make firm conclusions about `A` and `z.mode` other than there are apparent outlier values for these variables (based on the automated choice of axis limits)
+
+]
+
+.pull-right[
+
+```{r ref.label='pairs',echo=FALSE,fig.align='center',fig.width=4.8,fig.height=4.8}
+```
+
+]
+
+
+---
+
+## EDA: Anomaly Detection
+
+```{r echo=FALSE,fig.align='center',fig.width=6,fig.height=3}
+df.new <- df %>% dplyr::select(., A, z.mode) %>% gather(.)
+ggplot(data = df.new, mapping = aes(x = value)) +
+  geom_histogram(fill = "blue", bins = 30) +
+  facet_wrap(~key, scales = 'free')
+```
+
+- One goal of EDA is to perform *anomaly detection*, i.e., to find possible outlying values in the data
+
+  + we will assume that we will detect anomalous values "by eye," using the qualitative criterion that data that lie "far from the *core*" of any histogram cannot be plausibly generated by the same mechanisms that generated the rest of the data
+
+  + **be sure to record any removal of apparent anomalous values so that others can reproduce your analyses later!**
+
+- Here, I'll remove rows of data with values of `A` less than $-0.5$ and values of `z.mode` greater than 3.5.  I can do that using the `dplyr` function `filter()`:
+
+```
+df.filtered <- df %>% filter(., A > -0.5, z.mode < 3.5)
+```
+
+
+---
+
+## EDA: Anomaly Removal
+
+```{r echo=FALSE,fig.align='center',fig.width=6,fig.height=3}
+df.filtered <- df %>% filter(., A > -0.5, z.mode < 3.5)
+df.new <- df.filtered %>% dplyr::select(., A, z.mode) %>% gather(.)
+ggplot(data = df.new, mapping = aes(x = value)) +
+  geom_histogram(fill = "blue", bins = 30) +
+  facet_wrap(~key, scales = 'free')
+```
+
+- There exists a "1.5 IQR rule" for determining whether a datum is anomalously valued, **however**, this rule is *far* too conservative when the sample size is (moderately) large
+  
+  + if we have $n = 100$ normally distributed data, the rule will on average identify 0.7 *valid* data as being anomalous
+  
+  + if we have $n = 10000$ data, 70 *valid* data, on average, will be flagged as anomalous
+  
+  + etc.
+
+
+---
+
+## EDA: A Categorical Response vs. a Categorical Predictor
+
+- To visually ascertain whether there might be an association between a categorical response variable and a categorical predictor variable, the simplest approach is to use a table:
+
+```{r fig.align='center',fig.height=4,fig.width=4}
+fake.var <- factor(sample(2, nrow(df), replace = TRUE))
+table(fake.var, df$field)
+```
+
+
+---
+
+## EDA: A Quantitative Response vs. a Categorical Predictor
+
+- To visually ascertain whether there might be an association between a quantitative response variable and a categorical predictor variable, we commonly use side-by-side boxplots:
+
+```{r fig.align='center',fig.height=3.5,fig.width=3.5}
+ggplot(data = df, mapping = aes(x = field, y = z.mode)) +
+  geom_boxplot(fill = "seagreen") +
+  xlab("Galaxy Field") + ylab("Redshift")
+```
+
+- If we draw a line through the boxes, it is flat: there is no apparent  association between galaxy distance and sky location
+
+- If we want to visualize a categorical response variable versus a quantitative predictor, we could simply "turn the plot 90 degrees" (swap which variables are mapped to `x` and `y` in the `ggplot()` function call)
+
+
+---
+
+## EDA: A Quantitative Response vs. a Quantitative Predictor
+
+- To visually ascertain whether there might be an association between a quantitative response variable and a quantitative predictor variable, we most often use a scatterplot:
+
+```{r fig.align='center',fig.height=4,fig.width=4}
+ggplot(data = df, mapping = aes(x = mass, y = z.mode)) +
+  geom_point(col = "seagreen", cex = 0.5) +
+  xlab("Galaxy Mass") + ylab("Redshift")
+```
+
+
+---
+
+## EDA: Scatterplots
+
+- **IMPORTANT!** Here are some tips to keep in mind when constructing scatterplots:
+
+  + if your sample size is $\gtrsim 10^4$, randomly sample $\sim$ 1000 points for plotting
+
+  + to improve interpretability, mitigate the effect of point overlap by both reducing the size of points and increasing point transparency (by descreasing the `alpha` parameter, which is `1`, by default, corresponing to *no* transparency)
+
+  + change the plot limits manually, when necessary, to zoom in on the bulk of the points
+  
+
+---
+
+## EDA: Scatterplots (with Improvements)
+
+```{r fig.align='center',fig.width=4,fig.height=4,fig.retina=1}
+set.seed(101)
+s <- sample(nrow(df), 1000)
+ggplot(data = df[s, ], mapping = aes(x = mass, y = z.mode)) +
+  geom_point(col = "seagreen", cex = 0.5, alpha = 0.5) +
+  xlab("Galaxy Mass") + ylab("Redshift") +
+  xlim(9, 11.5) + ylim(1, 2.5)
+```
+
+

@@ -1,0 +1,381 @@
+---
+title: "Probability Distributions and Confidence Intervals"
+author: "36-600"
+date: '9/2/2025'
+output:
+  xaringan::moon_reader:
+    nature:
+      ratio: '16:9'
+      beforeInit: "macros.js"
+---
+layout: true
+background-image: url(background.png)
+background-size: cover
+---
+
+<style type="text/css">
+.remark-slide-content {
+    font-size: 16px;
+    padding: 1em 4em 1em 4em;
+}
+a { 
+    color: blue; 
+}
+.remark-slide-content h1 {
+    font-family: cabin;
+}
+.remark-slide-content h2 {
+    font-family: cabin;
+}
+.remark-slide-content h3 {
+    font-family: cabin;
+}
+.remark-slide-number {
+    font-size: 8pt;
+    margin-bottom: -5.6px;
+    margin-right: 1145px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+.remark-code {
+    font-size: 16px;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 65% !important;
+}
+</style>
+
+```{css,echo=FALSE}
+table {
+  font-size: 12px;
+}
+```
+
+
+## Probability
+
+- What is probability?
+
+  + for our purposes, it is the long-term frequency of the occurrence of an event
+
+- So, what's an event?
+
+  + an experimental outcome, or a set of experimental outcomes
+
+  + examples: observing heads, then tails, when flipping a coin twice, or observing at least one head when flipping a coin twice, etc.
+
+- How do we organize the information about experimental outcomes?
+
+  + for a given experiment, all possible outcomes (or *simple events*) comprise a *sample space*, conventionally denoted $\Omega$
+
+.center[
+![:scale 35%](./samplespace.png)
+]
+
+
+---
+
+## Random Variables
+
+- Working directly with sample spaces is tedious: instead, we work with *random variables*
+
+- A random variable is a function $X: \Omega \rightarrow S$ mapping the sample space $\Omega$ to some other space that we know how to *measure*
+
+  + intuition: there is no "distance" between `HH` and `TT` in $\Omega$, but the distance is 2 along the real-number line, for a certain mapping
+
+.center[
+![:scale 45%](./measurablespace.png)
+]
+
+- Note that we generally view random variables not as functions, but as function outputs (i.e., data samples), which could be:
+
+  + continuously valued (perhaps representing time, or distance, etc.); or
+
+  + discretely valued (perhaps representing counts, or choices from a finite menu, etc.)
+
+
+---
+
+## Probability Distributions
+
+- Neither a sample space, nor a random variable defined on that sample space, have any implicit notion of *probability*
+
+- A *probability distribution* $P: \Omega \rightarrow \mathbb{R}$ is what describes how probabilities are distributed across the output values of a random variable
+
+.pull-left[
+- For instance, we can specify that the probability of seeing $x$ heads in $n$ coin flips is given by the *binomial distribution* (or specifically its *probability mass function*):
+
+$$
+p_X(x) = {n \choose x} p^x (1-p)^{n-x} = \frac{n!}{x!(n-x)!} p^x (1-p)^{n-x} \,,
+$$
+
+where $x \in \{0,\,1,\,...,\,n\}$, $n$ is the number of *binomial trials*, and $x! = x \cdot (x-1) \cdot (x-2) \cdots 2 \cdot 1$ is the factorial function
+
+- There are many commonly used continuous and discrete distributions, including the normal (or Gaussian), gamma (and exponential), beta, uniform, and Poisson distributions
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align='center',fig.width=4.5,fig.height=4.5}
+x <- 0:10
+y <- dbinom(x, size = 10, prob = 0.6)
+library(ggplot2)
+ggplot(data = data.frame(x, y), mapping = aes(x = x, y = y)) +
+  geom_point(col = "dodgerblue", cex = 3) +
+  ylab(expression(p[X]*"(x)"))
+```
+]
+
+
+---
+
+## Probability Distributions: Motivation
+
+- You may be asking right now: "why exactly are we learning about probability distributions?"
+
+- Because they underlie
+
+  + the sampling of random variables, i.e., the data you wish to analyze;
+
+  + the generation of confidence intervals and performance of hypothesis tests; and
+
+  + the details of statistical learning models, particularly ones like linear regression and Naive Bayes
+
+- The following picture illustrates the statistical inference "cycle," which relies on the sampling of random variables (i.e., data) from distributions (i.e., populations):
+
+<br>
+
+.center[
+  ![:scale 70%](./inference_cycle.png)
+]
+
+
+---
+
+## So What Is a Statistic?
+
+- A *statistic* is simply a function of observed data
+
+  + it "summarizes" an array of numbers into a single number
+  
+  + because it is a function of random variables, a statistic is itself a random variable sampled from some distribution, dubbed a *sampling distribution*
+  
+- If we assume that the data we collect are *independent and identically distributed*, or *i.i.d.*, samples from some distribution, we can:
+
+  + try to derive the sampling distribution of our statistic, then
+  
+  + use that sampling distribution and the observed statistic value to construct a 
+  confidence interval for, e.g., the distribution mean, or, alternatively,
+  
+  + use that sampling distribution and the observed statistic value to test a preconceived notion (or *null hypothesis*) about, e.g., the distribution mean
+  
+- What if we cannot assume a distribution for our sampled data?
+
+  + we can fall back on other tools (e.g., *bootstrapping* -- more on that shortly)
+  
+- What if we cannot determine the sampling distribution for our statistic?
+
+  + we can fall back upon simulations (which are beyond the current scope of this course)
+
+
+---
+
+## Example
+
+- Let's assume that we run an experiment and that we observe the values
+
+```{r echo=FALSE}
+set.seed(101)
+(x <- rnorm(20, mean = 5, sd = 1))
+```
+
+.pull-left[
+<br>
+
+- The data are sampled from some distribution with some mean and some width; we'd like to use methods of statistical inference to try to say something about each
+
+- Perhaps, here, we will assume that the data are normally distributed (i.e., like a bell curve) and we want to be able to infer the true (unknown!) mean
+]
+
+.pull-right[  
+```{r echo=FALSE,fig.align='center',fig.width=3,fig.height=3}
+ggplot(data = data.frame(x = x), mapping = aes(x = x, y = after_stat(density))) +
+  geom_histogram(fill = "dodgerblue", bins = 10)
+```
+]
+
+- What statistic might we use to summarize these data and to try to infer the mean?
+
+  + perhaps the *sample mean*: $\overline{X}$, or the *sample median* (the middle sorted value)
+  
+  + in general, the sample mean is easiest for inference (and often does a pretty good job)
+
+
+---
+
+## Confidence Intervals
+
+- A *confidence interval* is a random interval $[\widehat{\theta_L},\,\widehat{\theta_U}]$ that satisfies the condition
+
+\begin{align*}
+\mathbb{P}(\widehat{\theta_L} \leq \theta \leq \widehat{\theta_U}) = 1 - \alpha \,,
+\end{align*}
+
+where $\theta$ is a population parameter of interest (like the mean) and $1 - \alpha$ is the *confidence* coefficient (which, e.g., has value 0.95 when we construct a 95% confidence interval)
+
+.pull-left[
+<br>
+
+- Every time we run an experiment, we generate new data, meaning we generate new statistic values and new intervals.  
+
+- So how do we interpret any one interval?
+  
+  + we say that any one evaluated interval has a $100\times(1-\alpha)$-percent chance of *overlapping the true value* of $\theta$
+  
+  + we do *not* say that the probability that $\theta$ lies within the evaluated 
+  interval is $1-\alpha$
+]
+  
+.pull-right[
+  ![:scale 62.5%](./ci_schematic.png)
+]
+
+
+---
+
+## Confidence Intervals
+
+- There is much math that goes into the construction of confidence intervals and many formulas for computing them that one would see in, e.g., introductory statistics classes
+
+  + for instance, if we sample $n$ data from a normal distribution with an unknown mean $\mu$ and a *known* standard deviation $\sigma$, and our sample mean is $\overline{X}$, then a symmetric, two-sided 95% confidence interval is:
+
+\begin{align*}
+\overline{X} \pm 1.96 \frac{\sigma}{\sqrt{n}}
+\end{align*}
+
+- However, a more straightforward, more general, and more math-free approach is to numerically construct two-sided confidence intervals for a population parameter $\theta$ using code like this:
+
+```
+f <- function(theta, [arguments]) {
+  [cumulative distribution function]([arguments]) - q
+}
+uniroot(f, interval = [interval], [arguments], q = 1-alpha/2)$root
+uniroot(f, interval = [interval], [arguments], q = alpha/2)$root
+```
+
+- Note that a *cumulative distribution function* takes a coordinate $x$ as input,
+and outputs the probability that we would observe a data sample with value $\leq x$
+
+
+---
+
+## Example
+
+- Let's assume that we ran an experiment and that we observed the values
+
+```{r echo=FALSE}
+set.seed(101)
+(x <- rnorm(20, mean = 5, sd = 1))
+```
+
+- What is a two-sided 95% confidence interval for the population mean?
+
+<hr>
+  
+<br>
+
+- Setting up the solution requires knowing some details about distributions: in this course, we will provide those details
+
+- If we assume that each of the $n = 20$ data are sampled from a normal distribution with some mean and some standard deviation (i.e., some "width"), then
+
+\begin{align*}
+T = \frac{\overline{X}-\mu}{S/\sqrt{n}} \sim t_{n-1} \,,
+\end{align*}
+
+i.e., the stated combination of the sample mean $\overline{X}$ and sample standard 
+deviation $S$ "*is distributed as*" (is sampled from) a $t$-distribution with $n-1$ *degrees of freedom*
+
+---
+
+## Example
+
+- Given this information, here's the `R` code:
+
+```{r}
+alpha <- 0.05
+f <- function(mu, x.bar, s, n, q) {
+  pt((x.bar - mu) / (s / sqrt(n)), n - 1) - q  # "p" in "pt" means cumulative distribution function
+                                               # "t" in "pt" means t-distribution
+}
+uniroot(f, interval = c(-100, 100), x.bar = mean(x), s = sd(x), n = length(x), q = 1-alpha/2)$root
+uniroot(f, interval = c(-100, 100), x.bar = mean(x), s = sd(x), n = length(x), q = alpha/2)$root
+```
+
+- There is a 95% chance that the random interval $[4.497, 5.308]$ overlaps the true distribution mean
+
+  + note: this is **not** the same as saying that the probability that the mean lies in the stated interval is 0.95!
+  
+- We would derive the same interval if we were to use the `R` function `t.test()`
+
+- For more details about confidence intervals, see, e.g., Chapter 1 of [this book](https://mpsibook.github.io)
+
+
+---
+
+## Bootstrap Confidence Intervals
+
+- Let's assume we have the same data as in the example, but that we will not (or cannot) make the assumption that the data are normally distributed; in fact, let's say we cannot assume that the data follow *any* known distribution
+
+$~~~~~~~\Rightarrow$ to construct a confidence interval for the mean, we can use *bootstrapping*
+
+- The bootstrapping algorithm is simple!
+
+  + generate $k$ new datasets of size $n$ from the observed data by sampling *with replacement*
+  
+  + for each of the $k$ datasets, generate the sample mean
+  
+  + determine, e.g., the $2.5^{\rm th}$ and $97.5^{\rm th}$ percentiles of the empirical sample mean distribution: that's the bootstrap confidence interval
+
+- What is sampling "with replacement"?  It means that our new dataset will be comprised of observations from our original dataset, but some will have been repeated, while other rows might be left out
+
+```{r}
+set.seed(101)
+rows <- 1:8  # we have an original dataset with 8 rows
+sort(sample(rows, length(rows), replace = TRUE)) # rows 1 and 7 appear three times, etc.
+```
+
+- Why do we not always compute bootstrap confidence intervals?
+
+  + because, in general, the computed intervals are too short
+
+
+---
+
+## Example
+
+- Let's assume that we ran an experiment and that we observed the values
+
+```{r echo=FALSE}
+set.seed(101)
+(x = rnorm(20, mean = 5, sd = 1))
+```
+
+- What is a two-sided 95% bootstrap confidence interval for the population mean?
+
+<hr>
+
+<br>
+
+```{r}
+set.seed(101)
+k     <- 10000
+x.bar <- rep(NA, k)
+for (ii in 1:k) {
+  s         <- sample(length(x), length(x), replace = TRUE)
+  x.bar[ii] <- mean(x[s])
+}
+quantile(x.bar, probs = c(0.025, 0.975))
+```
+
+- Compare this result to $[4.497,\,5.308]$ -- the interval derived assuming normality
+
+

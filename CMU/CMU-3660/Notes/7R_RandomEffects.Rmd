@@ -1,0 +1,373 @@
+---
+title: "Random and Mixed Effects Models"
+author: "36-600"
+date: '10/9/2025'
+output:
+  xaringan::moon_reader:
+    nature:
+      ratio: '16:9'
+      beforeInit: "macros.js"
+---
+layout: true
+background-image: url(background.png)
+background-size: cover
+---
+
+<style type="text/css">
+.remark-slide-content {
+    font-size: 16px;
+    padding: 1em 4em 1em 4em;
+}
+a { 
+    color: blue; 
+}
+.remark-slide-content h1 {
+    font-family: cabin;
+}
+.remark-slide-content h2 {
+    font-family: cabin;
+}
+.remark-slide-content h3 {
+    font-family: cabin;
+}
+.remark-slide-number {
+    font-size: 8pt;
+    margin-bottom: -5.6px;
+    margin-right: 1145px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+.remark-code {
+    font-size: 16px;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 65% !important;
+}
+</style>
+
+```{css,echo=FALSE}
+table {
+  font-size: 12px;
+}
+```
+
+
+## The Setting (At Least, Initially)
+
+- The one-way analysis of variance (ANOVA) model is
+\begin{eqnarray*}
+Y_{ij} = \mu + \tau_i + \epsilon_{ij}
+\end{eqnarray*}
+
+  + $\mu$: an overall mean response value (a constant)
+
+  + $\tau_i$: a deterministic shift in the mean for group $i$ (also constant)
+
+  + $\epsilon_{ij}$: the random variation for datum $j$ of group $i$
+
+  + $Y_{ij}$: the observed value for datum $j$ of group $i$
+
+- Within this model, there is an implicit assumption that every possible group has been identified and is represented in the dataset
+
+  + for instance, in a particular study, we might have vaccine-taking, placebo-taking, and no treatment groups, and these would be the only three possible groups
+
+- What if, for instance, we only have data for some subset of all possible groups?
+
+  + for instance, in a particular study, we might examine data for all the players on $m$ teams in a league, where the overall number of teams is $n > m$
+
+  + the answer: we should move to the setting of *random effects modeling*
+
+
+---
+
+## The Setting (At Least, Initially)
+
+- For the setting in which we are analyzing groups of data (first, without regard to any possible predictor variables), the corresponding random effects model will be
+\begin{eqnarray*}
+Y_{ij} = \mu + \tau_i + \epsilon_{ij}
+\end{eqnarray*}
+
+  + "uh...this is the same model as on the last slide"
+  
+  + well, yes, but actually no: the ANOVA model assumes the $\tau_i$'s are constants, whereas here we're assuming that $\tau_i \sim {\rm N}(0,\,\sigma_\tau^2)$
+  
+  + *note*: in both models, we have the same assumption on $\epsilon_{ij} \sim {\rm N}(0,\,\sigma^2)$
+  
+- "But how does this change the model, really?"
+
+- Well, one-way ANOVA modeling and random effects modeling have different goals:
+
+  + one-way ANOVA: perform the hypothesis test $\mathcal{H}_0: \tau_1 = \cdots = \tau_k$ versus $\mathcal{H}_A:$ "at least one of the $\tau_i$'s differs from the others"
+  
+  + random effects modelling: quantify how large $\sigma_\tau^2$ (the variance of the means across groups) is compared to $\sigma^2$ (the variance of the data within each group)
+  
+- For a still somewhat high-level, but slightly deeper introduction, you might take a look at [this presentation](https://stat.ethz.ch/education/semesters/as2015/anova/06_Random_Effects.pdf)
+
+
+---
+
+## Example: Calf Birth Weight
+
+.pull-left[
+
+<br><br><br><br><br>
+
+- The data shown at right come from [this book](https://people.math.ethz.ch/~meier/teaching/anova/random-and-mixed-effects-models.html)
+
+  + they show the birth weight of calves born to five different fathers ("sires")
+  
+  + since the number of possible sires is $\gg 5$, a random effects model is appropriate here
+
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align="center",fig.width=6,fig.height=6}
+# https://people.math.ethz.ch/~meier/teaching/anova/random-and-mixed-effects-models.html
+#  First let's create data set
+weight <- c(61, 100,  56, 113,  99, 103,  75,  62,   ## sire 1
+            75, 102,  95, 103,  98, 115,  98,  94,   ## sire 2
+            58,  60,  60,  57,  57,  59,  54, 100,   ## sire 3
+            57,  56,  67,  59,  58, 121, 101, 101,   ## sire 4
+            59,  46, 120, 115, 115,  93, 105,  75)   ## sire 5
+sire    <- factor(rep(1:5, each = 8))
+animals <- data.frame(weight, sire)
+suppressMessages(library(tidyverse))
+ggplot(data = animals, mapping = aes(x = sire, y = weight)) +
+  geom_point(col = "seagreen") + xlab("Sire") + ylab("Weight")
+```
+]
+
+
+---
+
+## Example: Calf Birth Weight
+
+.pull-left[
+
+```{r eval=FALSE}
+# this package needs to be installed!
+suppressMessages(library(lme4))
+
+# 1 | sire <-> "a random intercept for each sire"
+#  (more on this notation later)
+re.out <- lmer(weight ~ 1 | sire, data = animals)
+summary(re.out)
+```
+
+- REML = "restricted maximum likelihood"
+
+  + a maximum likelihood estimator that aims to counteract biases in the estimation of variances
+  
+- Fixed effect: the mean birth weight is 82.55
+
+- Random effects: 
+
+  + the sire-to-sire variance in birth weight is estimated to be $\sigma_\tau^2 = 116.7$ (so that the standard deviation is $\sqrt{116.7} = 10.81$)
+
+  + the within-sire variance in birth weight is $\sigma^2 = 463.8$ (standard deviation $\sqrt{463.8} = 21.54$)
+]
+
+.pull-right[
+```{r echo=FALSE,warning=FALSE}
+# this package needs to be installed!
+suppressMessages(library(lme4))
+
+# a random intercept for each sire
+#  (more on this notation later)
+re.out <- lmer(weight ~ 1 | sire, data = animals)   
+summary(re.out)
+```
+]
+
+
+---
+
+## Example: Calf Birth Weight
+
+.pull-left[
+
+```{r eval=FALSE}
+# this package needs to be installed!
+suppressMessages(library(lme4))
+
+# 1 | sire <-> "a random intercept for each sire"
+#  (more on this notation later)
+re.out <- lmer(weight ~ 1 | sire, data = animals)
+summary(re.out)
+```
+
+- The overall variance in birth weights is $\sigma^2 + \sigma_\tau^2 = 580.5$
+
+- The correlation (a quantification of the magnitude of linear dependence) between two calves of:
+
+  + different sires: 0 (no correlation; by assumption)
+  
+  + the same sire: $\sigma_\tau^2/(\sigma_\tau^2+\sigma^2) = 0.20$ (this would generally be considered a "weak" correlation)
+
+]
+
+.pull-right[
+```{r echo=FALSE,warning=FALSE}
+# this package needs to be installed!
+suppressMessages(library(lme4))
+
+# a random intercept for each sire
+#  (more on this notation later)
+re.out <- lmer(weight ~ 1 | sire, data = animals)   
+summary(re.out)
+```
+]
+
+
+---
+
+## Example: Palmer Penguins
+
+.pull-left[
+```{r eval=FALSE,fig.align="center",fig.width=6,fig.height=6}
+# this package needs to be installed
+library(palmerpenguins)
+
+w  <- complete.cases(penguins)
+df <- data.frame(penguins[w, c(1, 4, 3)])
+
+ggplot(data = df,
+       mapping = aes(x = bill_depth_mm, 
+                     y = bill_length_mm)) +
+  geom_point(col = as.numeric(df$species)) +
+  xlab("Bill Depth (mm)") + ylab("Bill Length (mm)")
+```
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align="center",fig.width=6,fig.height=6}
+# this package needs to be installed
+library(palmerpenguins)
+
+w  <- complete.cases(penguins)
+df <- data.frame(penguins[w, c(1, 4, 3)])
+
+ggplot(data = df, 
+       mapping = aes(x = bill_depth_mm, 
+                     y = bill_length_mm)) +
+  geom_point(col = as.numeric(df$species)) +
+  xlab("Bill Depth (mm)") + ylab("Bill Length (mm)")
+```
+]
+
+
+---
+
+## Example: Palmer Penguins
+
+.pull-left[
+```{r}
+# regress bill length upon bill depth
+lm.out <- lm(bill_length_mm ~ bill_depth_mm, 
+             data = df)
+AIC(lm.out)
+```
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align="center",fig.width=6,fig.height=6}
+ggplot(data = df, mapping = aes(x = bill_depth_mm, y = bill_length_mm)) +
+  geom_point(col = as.numeric(df$species)) +
+  geom_abline(slope = lm.out$coefficients[2], 
+              intercept = lm.out$coefficients[1], col = "blue") +
+  xlab("Bill Depth (mm)") + ylab("Bill Length (mm)")
+```
+]
+
+
+---
+
+## Example: Palmer Penguins - Random Intercepts
+
+.pull-left[
+```{r}
+# regress bill length upon bill depth
+#  with a random species effect (random intercepts)
+lm.out <- lmer(bill_length_mm ~ bill_depth_mm + 
+                 (1 | species), 
+               data = df)
+coef(lm.out)$species
+AIC(lm.out)   
+# much lower - a better model
+```
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align="center",fig.width=6,fig.height=6}
+cf <- coef(lm.out)$species
+ggplot(data = df, mapping = aes(x = bill_depth_mm, y = bill_length_mm)) +
+  geom_point(col = as.numeric(df$species)) +
+  geom_abline(slope = cf[1, 2], intercept = cf[1, 1], col = "black") +
+  geom_abline(slope = cf[2, 2], intercept = cf[2, 1], col = "red") +
+  geom_abline(slope = cf[3, 2], intercept = cf[3, 1], col = "green") +
+  xlab("Bill Depth (mm)") + ylab("Bill Length (mm)")
+```
+]
+
+
+---
+
+## Example: Palmer Penguins - Random Slopes
+
+.pull-left[
+```{r}
+# regress bill length upon bill depth
+#  with a random species effect (random slopes)
+lm.out <- lmer(bill_length_mm ~ bill_depth_mm + 
+              (0 + bill_depth_mm | species), 
+              data = df)
+coef(lm.out)$species
+AIC(lm.out) 
+# still substantially lower - a better model still
+```
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align="center",fig.width=6,fig.height=6}
+cf <- coef(lm.out)$species
+ggplot(data = df, mapping = aes(x = bill_depth_mm, y = bill_length_mm)) +
+  geom_point(col = as.numeric(df$species)) +
+  geom_abline(slope = cf[1, 2], intercept = cf[1, 1], col = "black") +
+  geom_abline(slope = cf[2, 2], intercept = cf[2, 1], col = "red") +
+  geom_abline(slope = cf[3, 2], intercept = cf[3, 1], col = "green") +
+  xlab("Bill Depth (mm)") + ylab("Bill Length (mm)")
+```
+]
+
+
+---
+
+## Example: Palmer Penguins - Random Intercepts and Slopes
+
+.pull-left[
+```{r message=FALSE}
+# regress bill length upon bill depth
+#  with a random species effect 
+#  (both random intercepts and slopes)
+lm.out <- lmer(bill_length_mm ~ bill_depth_mm + 
+              (bill_depth_mm | species), 
+              data = df)
+coef(lm.out)$species
+AIC(lm.out) 
+# slightly higher than before - not the best model
+```
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align="center",fig.width=6,fig.height=6}
+cf <- coef(lm.out)$species
+ggplot(data = df, mapping = aes(x = bill_depth_mm, y = bill_length_mm)) +
+  geom_point(col = as.numeric(df$species)) +
+  geom_abline(slope = cf[1, 2], intercept = cf[1, 1], col = "black") +
+  geom_abline(slope = cf[2, 2], intercept = cf[2, 1], col = "red") +
+  geom_abline(slope = cf[3, 2], intercept = cf[3, 1], col = "green") +
+  xlab("Bill Depth (mm)") + ylab("Bill Length (mm)")
+```
+]
+
+

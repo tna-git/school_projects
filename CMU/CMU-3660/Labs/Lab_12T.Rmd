@@ -1,0 +1,121 @@
+---
+title: Overview of Statistical Learning and Modeling -- 36-600
+subtitle: |
+  Lab 12T: Basic String Manipulation\
+  Due Wednesday, November 19, 11:59pm
+author: "Trishla Nair"
+output:
+  pdf_document:
+    toc: false
+  html_document:
+    toc: false
+    code-overflow: wrap
+    code-fold: false
+    theme: spacelab
+urlcolor: blue
+---
+
+
+## Data
+
+We need some text data.  Below we'll read in an inauguration speech (Joe Biden's from 2021) as formatted by the White House on its website (with one exception: I concatenated the lines containing a poem together into one line).
+
+```{r}
+lines <- readLines("https://raw.githubusercontent.com/FSKoerner/F25-36600-data/refs/heads/main/inauguration.txt")
+```
+
+
+## Question 1
+
+How many lines are there?  How many characters are there, overall?  (This includes spaces and punctuation, for now.)
+
+```{r}
+print(length(lines))
+print(nchar(lines))
+```
+
+
+## Question 2
+
+How many spaces are there in the speech, as formatted?  (Don't worry about the fact that there would be spaces between the lines if they were all concatenated together.)  One way to answer this question is to use `gregexpr()` to identify every place where there is a space, then use a for-loop to loop over the output from that function, which has elements corresponding to each line (therefore looping over lines) and count the number of spaces.  For instance:
+
+```
+out   <- <the output of some function call>
+total <- 0
+for (ii in 1:length(lines)) {
+  total <- total + length(out[[ii]])
+}
+```
+
+```{r}
+num_spaces <- nchar(gsub("[^ ]", "", lines))
+print(sum(num_spaces))
+```
+
+
+## Question 3
+
+Create a table showing how many words are on each line of the speech using `strsplit()` (for our purposes, words are separated by spaces).  The output will be a list (as that of `gregexpr()`), where each element shows the individual words from a speech line.  Determine the total number of words for each line, put the results in a vector, and run `table()` with that vector as input.  You should find that nine of the lines have one word, four lines have two words, etc.  (Note that you'll again use a for-loop, in a manner similar to the last question.)
+
+```{r}
+split_lines <- strsplit(lines, split = " ")
+word_counts_per_line <- c()
+for (ii in 1:length(lines)) {
+  words <- split_lines[[ii]][split_lines[[ii]] != ""]
+  word_counts_per_line <- c(word_counts_per_line, length(words))
+}
+
+word_count_table <- table(word_counts_per_line)
+word_count_table
+```
+
+
+## Question 4
+
+Define a vector called `america` which has an element for each line that is true if the word "America" is observed in said speech line, and false otherwise.  Run `sum()` on that variable to see how many lines have "America" in it.  Don't overthink this: you can create this variable in one line using `grepl()`.
+
+```{r}
+america <- grepl("America", lines)
+lines_with_america <- sum(america)
+print(paste(lines_with_america))
+```
+
+
+## Question 5
+
+Concatenate the speech into one single line.  Call the output `speech`.  Make sure that you insert a space between the end of each of the old lines and the beginning of the next lines.  (See the usage of the `collapse` argument in `paste()`.)
+
+```{r}
+speech <- paste(lines, collapse = " ")
+substr(speech, 1, 100)
+```
+
+
+## Question 6
+
+Working either with `lines` or with `speech`, use the framework on the last slide of the notes to remove punctuation and stopwords, leaving a single line speech in the end.
+
+```{r}
+library(stopwords)
+
+speech_split <- unlist(strsplit(tolower(speech), split = "[[:space:]]+|[[:punct:]]+"))
+speech_cleaned <- speech_split[speech_split != ""]
+stopword.logical <- speech_cleaned %in% stopwords("en")
+speech_no_stopwords <- speech_cleaned[stopword.logical == FALSE]
+final_speech_line <- paste(speech_no_stopwords, collapse = " ")
+substr(final_speech_line, 1, 100)
+```
+
+
+## Question 7
+
+What are the top 20 words (meaning, non-stopwords) in Biden's speech?  You might think that "America" appears less than you'd expect, given your result from Question 4.  But, when you searched for "America" above, you'll note that "American", "Americans", and variety of other formulations with the same root appeared, and all counted.  (Unless you crafted a really exact regex!)
+
+```{r}
+# Rerunning the code from Question 6 to ensure the dependencies are available
+word_frequencies <- table(speech_no_stopwords)
+sorted_frequencies <- sort(word_frequencies, decreasing = TRUE)
+print(sorted_frequencies[1:20])
+```
+
+
