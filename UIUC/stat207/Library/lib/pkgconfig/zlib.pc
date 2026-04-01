@@ -1,0 +1,13 @@
+prefix=C:/Users/Trish/Documents/stat 207/Library
+exec_prefix=C:/Users/Trish/Documents/stat 207/Library
+libdir=C:/Users/Trish/Documents/stat 207/Library/lib
+sharedlibdir=C:/Users/Trish/Documents/stat 207/Library/lib
+includedir=C:/Users/Trish/Documents/stat 207/Library/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.2.13
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}

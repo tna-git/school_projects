@@ -1,0 +1,60 @@
+{
+  "build": "h8cc25b3_0",
+  "build_number": 0,
+  "channel": "https://repo.anaconda.com/pkgs/main/win-64",
+  "constrains": [],
+  "depends": [
+    "vc >=14.1,<15.0a0",
+    "vs2015_runtime >=14.16.27012,<15.0a0"
+  ],
+  "extracted_package_dir": "C:\\Users\\Trish\\Documents\\stat 207\\pkgs\\xz-5.2.8-h8cc25b3_0",
+  "features": "",
+  "files": [
+    "Library/bin/liblzma.dll",
+    "Library/include/lzma.h",
+    "Library/include/lzma/base.h",
+    "Library/include/lzma/bcj.h",
+    "Library/include/lzma/block.h",
+    "Library/include/lzma/check.h",
+    "Library/include/lzma/container.h",
+    "Library/include/lzma/delta.h",
+    "Library/include/lzma/filter.h",
+    "Library/include/lzma/hardware.h",
+    "Library/include/lzma/index.h",
+    "Library/include/lzma/index_hash.h",
+    "Library/include/lzma/lzma12.h",
+    "Library/include/lzma/stream_flags.h",
+    "Library/include/lzma/version.h",
+    "Library/include/lzma/vli.h",
+    "Library/lib/cmake/liblzma/liblzma-config-version.cmake",
+    "Library/lib/cmake/liblzma/liblzma-config.cmake",
+    "Library/lib/cmake/liblzma/liblzma-targets-release.cmake",
+    "Library/lib/cmake/liblzma/liblzma-targets.cmake",
+    "Library/lib/liblzma.lib",
+    "Library/lib/liblzma_static.lib"
+  ],
+  "fn": "xz-5.2.8-h8cc25b3_0.conda",
+  "legacy_bz2_md5": "35c38c661f09a014d17c017a12e08e34",
+  "legacy_bz2_size": 221001,
+  "license": "LGPL-2.1-or-later and GPL-2.0-or-later",
+  "license_family": "GPL2",
+  "link": {
+    "source": "C:\\Users\\Trish\\Documents\\stat 207\\pkgs\\xz-5.2.8-h8cc25b3_0",
+    "type": 1
+  },
+  "md5": "e4de3e4530c1fac5c767cb5e3f093d8d",
+  "name": "xz",
+  "package_tarball_full_path": "C:\\Users\\Trish\\Documents\\stat 207\\pkgs\\xz-5.2.8-h8cc25b3_0.conda",
+  "paths_data": {
+    "paths": [],
+    "paths_version": 1
+  },
+  "requested_spec": "defaults/win-64::xz==5.2.8=h8cc25b3_0[md5=e4de3e4530c1fac5c767cb5e3f093d8d]",
+  "sha256": "d6f8e111520687792b2002228550c91b488c86dde97e211c1ee4daa4e38e1745",
+  "size": 209801,
+  "subdir": "win-64",
+  "timestamp": 1669941740730,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/win-64/xz-5.2.8-h8cc25b3_0.conda",
+  "version": "5.2.8"
+}
