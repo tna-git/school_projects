@@ -1,11 +1,32 @@
-# archives
+# Ignore coursework folders
+UIUC/
+
+# Archives
 *.zip
 
-# large datasets
+# Large datasets
 *.csv
+*.parquet
+*.h5
 
-# checkpoints
+# Jupyter
 .ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+venv/
+.env/
+
+# ML / training artifacts
+*.pt
+*.pth
+*.ckpt
+*.log
 
 # OS junk
 desktop.ini
+.DS_Store
