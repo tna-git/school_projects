@@ -1,0 +1,26 @@
+{
+  "os":  "Windows-11-10.0.26200-SP0",
+  "python":  "CPython 3.12.7",
+  "startedAt":  "2026-02-21T00:07:54.520498Z",
+  "program":  "<python with no main file>",
+  "git":  {
+    "remote":  "https://github.com/tna-git/school_projects",
+    "commit":  "12b082a9ac9b423fea21507f5836b074f3224910"
+  },
+  "email":  "tnair@andrew.cmu.edu",
+  "root":  "C:\\Users\\Trish\\Documents\\CMU\\Capstone",
+  "host":  "Kuttamboos",
+  "executable":  "C:\\Users\\Trish\\new_ana\\python.exe",
+  "cpu_count":  12,
+  "cpu_count_logical":  16,
+  "disk":  {
+    "/":  {
+      "total":  "1022632464384",
+      "used":  "518764666880"
+    }
+  },
+  "memory":  {
+    "total":  "16780767232"
+  },
+  "writerId":  "w1a2yx0tcqs8d34u3mrglo4tr49m7ll2"
+}

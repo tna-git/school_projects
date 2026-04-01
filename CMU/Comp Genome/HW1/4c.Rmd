@@ -1,0 +1,102 @@
+---
+title: "4C"
+author: "Trishla Nair"
+date: "2026-01-28"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+library(Seurat)
+library(hdf5r)
+library(ggplot2)
+```
+
+##  1 Load in Data
+Conversion of .h5afd file to csv can be found in 3a_3b_4c.py
+```{r}
+counts <- read.csv('C:/Users/Trish/Documents/CMU/Comp Genome/HW1/counts_matrix.csv', row.names = 1, check.names = FALSE)
+counts <- as.matrix(counts)
+
+cat("Loaded:", nrow(counts), "genes x", ncol(counts), "cells\n")
+
+# Create Seurat object
+seurat_obj <- CreateSeuratObject(counts = counts, project = "intestine")
+
+# Compute library sizes
+library_sizes <- colSums(counts)
+seurat_obj@meta.data$library_size <- library_sizes
+seurat_obj@meta.data$log_library_size <- log10(library_sizes)
+
+# Verify it worked
+cat("Library size added:", "library_size" %in% colnames(seurat_obj@meta.data), "\n")
+
+```
+
+## 2 Apply standard log-normalization to the count matrix
+
+```{r}
+seurat_obj <- NormalizeData(seurat_obj, 
+                            normalization.method = "LogNormalize",
+                            scale.factor = 10000)
+log_norm_data <- as.matrix(GetAssayData(seurat_obj, layer = "data"))
+```
+
+## 3 Apply scTransform()
+```{r}
+seurat_obj <- SCTransform(seurat_obj, return.only.var.genes = FALSE)
+
+sct_data <- as.matrix(GetAssayData(seurat_obj, assay = "SCT", layer = "scale.data"))
+```
+
+## 4 Calculate Gene-Wise Correlation
+```{r}
+common_genes <- intersect(rownames(log_norm_data), rownames(sct_data))
+
+log_cors <- sapply(common_genes, function(gene) {
+  cor(log_norm_data[gene, ], library_sizes, use = "complete.obs")
+})
+
+sct_cors <- sapply(common_genes, function(gene) {
+  cor(sct_data[gene, ], library_sizes, use = "complete.obs")
+})
+```
+
+## 5 Generate plots
+
+```{r}
+cor_df <- data.frame(
+  Method = rep(c("Log-Normalization", "SCTransform"), 
+               each = length(log_cors)),
+  Correlation = c(log_cors, sct_cors)
+)
+
+p3 <- ggplot(cor_df, aes(x = Method, y = Correlation, fill = Method)) +
+  geom_violin(trim = FALSE, alpha = 0.7) +
+  geom_boxplot(width = 0.1, fill = "white") +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
+  labs(title = "Gene-wise Correlation with Library Size",
+       y = "Pearson Correlation") +
+  theme_classic() +
+  theme(legend.position = "none") +
+  scale_fill_manual(values = c("#F8766D", "#00BFC4"))
+
+p3
+```
+
+```{r}
+p4 <- ggplot(cor_df, aes(x = Correlation, fill = Method)) +
+  geom_histogram(bins = 50, alpha = 0.8) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "red") +
+  facet_wrap(~Method, ncol = 1) +
+  labs(title = "Distribution of Gene-Library Size Correlations",
+       x = "Correlation") +
+  theme_classic() +
+  theme(legend.position = "none") +
+  scale_fill_manual(values = c("#F8766D", "#00BFC4"))
+
+ggsave("correlation_histogram.png", p4, width = 10, height = 8)
+p4
+```
+

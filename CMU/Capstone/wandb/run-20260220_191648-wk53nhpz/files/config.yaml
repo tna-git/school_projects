@@ -1,0 +1,62 @@
+_wandb:
+    value:
+        cli_version: 0.25.0
+        e:
+            wlmjwii1anonabpk2lrc157syv9yfsgi:
+                cpu_count: 12
+                cpu_count_logical: 16
+                disk:
+                    /:
+                        total: "1022632464384"
+                        used: "518839230464"
+                email: tnair@andrew.cmu.edu
+                executable: C:\Users\Trish\new_ana\python.exe
+                git:
+                    commit: 12b082a9ac9b423fea21507f5836b074f3224910
+                    remote: https://github.com/tna-git/school_projects
+                host: Kuttamboos
+                memory:
+                    total: "16780767232"
+                os: Windows-11-10.0.26200-SP0
+                program: <python with no main file>
+                python: CPython 3.12.7
+                root: C:\Users\Trish\Documents\CMU\Capstone
+                startedAt: "2026-02-21T00:16:48.945300Z"
+                writerId: wlmjwii1anonabpk2lrc157syv9yfsgi
+        m: []
+        python_version: 3.12.7
+        t:
+            "1":
+                - 1
+                - 35
+                - 41
+            "2":
+                - 1
+                - 35
+                - 41
+            "3":
+                - 1
+                - 2
+                - 13
+                - 16
+            "4": 3.12.7
+            "5": 0.25.0
+            "8":
+                - 1
+                - 3
+            "10":
+                - 20
+            "12": 0.25.0
+            "13": windows-amd64
+batch_size:
+    value: 64
+dropout_rate:
+    value: 0.11565747016536224
+epochs:
+    value: 3
+hidden_size:
+    value: 1024
+lr:
+    value: 0.00010788661515919537
+optimizer:
+    value: rmsprop

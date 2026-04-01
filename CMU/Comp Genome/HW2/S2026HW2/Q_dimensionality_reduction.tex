@@ -1,0 +1,228 @@
+{\bf [40 points] Dimensionality Reduction}\\
+
+In this question, we will study and compare two widely used dimensionality reduction methods
+in single-cell RNA-seq analysis: (i) Principal Components Analysis (PCA) and
+(ii) t-distributed Stochastic Neighbor Embedding (t-SNE).
+The goal is to understand how the objective functions of these methods determine whether
+they preserve global or local structure in high-dimensional data.
+
+\vspace{10pt}
+
+Throughout this problem, assume that the data matrix
+$X \in \mathbb{R}^{n \times d}$ has been mean-centered
+(i.e., each feature has zero mean).
+
+
+\vspace{10pt}
+\textbf{Your task}
+\vspace{10pt}
+
+
+
+% {\bf Principal Components Analysis}\\
+
+% In this part, we study Principal Components Analysis (PCA) as a linear dimensionality
+% reduction method. 
+Assume that the data matrix
+$X \in \mathbb{R}^{n \times d}$ is \textbf{mean-centered}.
+
+\begin{enumerate}
+
+% =================================================
+\item (5 points) \textbf{PCA: Variance maximization formulation.}
+
+Consider projecting each data point $x_i \in \mathbb{R}^d$ onto a one-dimensional
+direction $w \in \mathbb{R}^d$ with $\|w\|_2 = 1$, producing
+\[
+z_i = w^\top x_i.
+\]
+
+Show that the variance of the projected data can be written as
+\[
+\mathrm{Var}(z) = w^\top \Sigma w,
+\]
+where $\Sigma = \frac{1}{n} X^\top X$ is the sample covariance matrix.
+
+%%%%%%%%%%%%%%%%%%
+\begin{solution}
+
+\end{solution}
+%%%%%%%%%%%%%%%%%%
+
+% =================================================
+\item (5 points) \textbf{PCA: Eigenvalue problem.}
+
+PCA seeks the direction $w$ that maximizes $w^\top \Sigma w$ subject to $\|w\|_2 = 1$.
+
+\begin{enumerate}
+    \item Using a Lagrange multiplier, show that the optimal solution satisfies
+    \[
+    \Sigma w = \lambda w.
+    \]
+    \item Explain why the eigenvector corresponding to the largest eigenvalue
+    is selected as the first principal component.
+\end{enumerate}
+
+
+%%%%%%%%%%%%%%%%%%
+\begin{solution}
+
+\end{solution}
+%%%%%%%%%%%%%%%%%%
+
+% =================================================
+\item (5 points) \textbf{PCA and global structure.}
+
+PCA can also be viewed as minimizing the total squared reconstruction error
+\[
+\sum_{i=1}^{n} \|x_i - \hat{x}_i\|_2^2,
+\]
+where $\hat{x}_i$ denotes the projection of $x_i$ onto the low-dimensional
+subspace.
+
+Explain why this objective makes PCA particularly sensitive to \emph{global}
+structure in the data. In your answer, discuss how distances between far-apart
+points influence the solution.
+
+%%%%%%%%%%%%%%%%%%
+\begin{solution}
+
+\end{solution}
+%%%%%%%%%%%%%%%%%%
+% {\bf [t-SNE: 20 points] t-distributed Stochastic Neighbor Embedding}\\
+
+% In this part, we study t-distributed Stochastic Neighbor Embedding (t-SNE), a nonlinear
+% dimensionality reduction method designed to preserve local neighborhood structure.
+
+\vspace{15pt}
+
+% \begin{enumerate}
+
+% =================================================
+\item (8 points) \textbf{ t-SNE: High-dimensional similarities}
+
+In t-SNE, similarities between points in the original space are defined as conditional
+probabilities:
+\[
+p_{j|i} =
+\frac{\exp\left(-\|x_i - x_j\|^2 / (2\sigma_i^2)\right)}
+{\sum_{k \neq i} \exp\left(-\|x_i - x_k\|^2 / (2\sigma_i^2)\right)}.
+\]
+
+Explain the intuition behind this definition. What does it mean for $p_{j|i}$ to be
+large or small?
+
+%%%%%%%%%%%%%%%%%%
+\begin{solution}
+
+\end{solution}
+%%%%%%%%%%%%%%%%%%
+
+% =================================================
+% \item (7 points) \textbf{t-SNE: Low-dimensional similarities and heavy-tailed distribution}
+
+% In the low-dimensional embedding $\{y_i\}_{i=1}^n$, t-SNE defines similarities as
+% \[
+% q_{ij} =
+% \frac{(1 + \|y_i - y_j\|^2)^{-1}}
+% {\sum_{k \neq l} (1 + \|y_k - y_l\|^2)^{-1}}.
+% \]
+
+% Explain why a heavy-tailed distribution (such as the Student-$t$ distribution)
+% is used for defining similarities in the low-dimensional space.
+
+% %%%%%%%%%%%%%%%%%%
+% \begin{solution}
+
+% A heavy-tailed distribution assigns non-negligible probability to moderately large
+% distances in low-dimensional space. This helps alleviate the crowding problem,
+% where many points that are moderately far apart in high dimension are forced too
+% close together in two or three dimensions. Using a Student-$t$ distribution allows
+% dissimilar points to be placed farther apart without their similarity values becoming
+% too small, leading to better separation of clusters in the visualization.
+
+% \end{solution}
+% %%%%%%%%%%%%%%%%%%
+
+% % =================================================
+% \item (8 points) \textbf{t-SNE: KL divergence and local structure in}
+
+% t-SNE finds the low-dimensional embedding by minimizing the Kullback--Leibler (KL)
+% divergence between the high-dimensional and low-dimensional similarity distributions:
+% \[
+% \mathcal{L} = \sum_{i,j} p_{ij} \log \frac{p_{ij}}{q_{ij}}.
+% \]
+
+% Explain why this objective emphasizes preserving \emph{local} neighborhood structure.
+% In your explanation, comment on the asymmetry of the KL divergence and the role of
+% pairs with large $p_{ij}$.
+
+% %%%%%%%%%%%%%%%%%%
+% \begin{solution}
+
+% The KL divergence $\mathrm{KL}(P\|Q)$ is asymmetric and weights each term by $p_{ij}$.
+% As a result, pairs of points that are close neighbors in the high-dimensional space
+% have large $p_{ij}$ values and dominate the loss. If such pairs are mapped far apart
+% in the low-dimensional space (so that $q_{ij}$ is small), the penalty becomes large.
+% In contrast, pairs that are far apart in high dimension typically have
+% $p_{ij} \approx 0$ and contribute negligibly to the loss regardless of their
+% low-dimensional distance. Thus, the objective focuses on preserving local
+% neighborhood relationships rather than global geometry.
+
+% \end{solution}
+%%%%%%%%%%%%%%%%%%
+
+% \end{enumerate}
+% =================================================
+\item (12 points) \textbf{t-SNE: KL divergence, asymmetry, and locality}
+
+In t-SNE, similarities in the low-dimensional embedding are defined as
+\[
+q_{ij} =
+\frac{(1 + \|y_i - y_j\|^2)^{-1}}
+{\sum_{k \neq l} (1 + \|y_k - y_l\|^2)^{-1}}.
+\]
+
+The low-dimensional embedding is obtained by minimizing the Kullback--Leibler (KL)
+divergence between the high-dimensional and low-dimensional similarity distributions:
+\[
+\mathcal{L} = \sum_{i,j} p_{ij} \log \frac{p_{ij}}{q_{ij}}.
+\]
+
+\begin{enumerate}
+    \item Explain how the weighting by $p_{ij}$ affects which pairs of points
+    contribute most to the loss.
+    \item  Consider a pair of points that are far apart in the high-dimensional
+    space but close together in the low-dimensional embedding. Explain why this
+    typically does \emph{not} incur a large penalty.
+    \item Qualitatively describe what would change if t-SNE minimized
+    $\mathrm{KL}(Q\|P)$ instead of $\mathrm{KL}(P\|Q)$.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%
+\begin{solution}
+
+
+\end{solution}
+%%%%%%%%%%%%%%%%%%
+
+\vspace{20pt}
+
+% =================================================
+% {\bf (10 points) PCA vs. t-SNE}\\
+\item (5 points) \textbf{Comparison: PCA vs. t-SNE}
+
+\begin{quote}
+Why is PCA generally considered a \emph{global} dimensionality reduction method,
+while t-SNE is considered a \emph{local} dimensionality reduction method?
+\end{quote}
+
+Your answer should explicitly reference the objective functions of both methods.
+
+%%%%%%%%%%%%%%%%%%
+\begin{solution}
+
+\end{solution}
+%%%%%%%%%%%%%%%%%%
+
+\end{enumerate}

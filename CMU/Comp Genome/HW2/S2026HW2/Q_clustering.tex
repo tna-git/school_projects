@@ -1,0 +1,102 @@
+{\bf [40 points] Clustering}\\
+
+In this question, we will perform and compare two clustering algorithms on real single-cell RNA-seq data: (i) K-means clustering and (ii) graph-based Leiden clustering. The goal is to understand how different clustering assumptions affect both quantitative performance and biological interpretability in single-cell analysis.
+
+\textbf{Data Description}
+
+We provide a single-cell RNA-seq dataset in an AnnData object (file: \texttt{sc\_pca.h5ad}). The data are derived from:
+
+\begin{quote}
+Smillie, Christopher S., et al. \emph{``Intra- and inter-cellular rewiring of the human colon during ulcerative colitis.''} Cell 178.3 (2019): 714--730.
+\end{quote}
+
+The AnnData object contains:
+
+\begin{itemize}
+    \item \textbf{Cells:} 34{,}162 cells.
+    \item \texttt{obsm} (embeddings): \texttt{X\_pca}, a 30-dimensional PCA embedding for each cell.
+    \item \texttt{obs} (cell metadata): a column \texttt{merged\_annotation} with 9 cell type labels:
+    Plasma, Follicular, CD4+ Memory, CD8+ LP, Enterocytes, TA, Macrophages, Immature Goblet, Immature Enterocytes 1.
+\end{itemize}
+
+All clustering should be performed using the PCA embeddings (\texttt{X\_pca}) only. The cell type annotations are provided \emph{for evaluation and interpretation purposes only}.
+
+\textbf{Notes:}
+\begin{itemize}
+    \item You may use \emph{any} programming language and packages (e.g., Scanpy, Seurat, scikit-learn) that you find useful.
+    \item No skeleton code is provided. Your code will not be graded by an autograder; instead, you should submit your code together with your written solutions. Partial credit may be awarded for some correct implementations even if final results are incorrect.
+    \item For K-means clustering, you should use K-means++ initialization or multiple random restarts and select the best solution.
+\end{itemize}
+
+\vspace{20pt}
+
+\textbf{Your task}
+
+\begin{enumerate}
+
+\item (15 points) \textbf{K-means clustering.}
+
+K-means clustering partitions the data into $k$ clusters by minimizing the within-cluster sum of squared errors (SSE) in Euclidean space. Given cluster assignments $\{C_1, \dots, C_k\}$ and cluster centroids $\{\mu_1, \dots, \mu_k\}$, the SSE is defined as:
+\[
+\mathrm{SSE} = \sum_{c=1}^{k} \sum_{x_i \in C_c} \lVert x_i - \mu_c \rVert^2 .
+\]
+
+\begin{enumerate}
+    \item (5 points) Run K-means clustering for $k = 1,2,\dots,15$ on \texttt{X\_pca}. Plot SSE versus $k$ and identify the elbow point. Briefly explain what the elbow point represents and why it may be ambiguous for single-cell data.
+    
+    \item (5 points) Run K-means with $k=10$. To ensure stable results, use either K-means++ initialization or run K-means multiple times with different random initializations and select the solution with the lowest SSE. Report the final SSE value.
+    
+    \item (5 points) Compute the Adjusted Rand Index (ARI) between the K-means cluster assignments ($k=10$) and the ground-truth labels \texttt{merged\_annotation}. The ARI between two partitions $U$ and $V$ is defined as:
+    \[
+    \mathrm{ARI} = \frac{\mathrm{RI} - \mathbb{E}[\mathrm{RI}]}{\max(\mathrm{RI}) - \mathbb{E}[\mathrm{RI}]},
+    \]
+    where RI is the Rand Index measuring pairwise agreement between clusterings. Report and interpret the ARI value.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%
+
+\vspace{20pt}
+
+\item (15 points) \textbf{Graph-based Leiden clustering.}
+
+Graph-based clustering methods operate on a neighborhood graph and can capture clusters with arbitrary shapes. In this part, you will apply Leiden clustering.
+
+\begin{enumerate}
+    \item (5 points) Construct a $k$-nearest neighbor (kNN) graph from \texttt{X\_pca} using $k=20$ neighbors per cell. Clearly state the distance metric used.
+    
+    \item (5 points) Run the Leiden algorithm on the kNN graph with resolution parameter \texttt{resolution = 0.1}. Report the number of clusters obtained.
+    
+    \item (5 points) Compute the ARI between the Leiden cluster assignments (resolution $=0.1$) and \texttt{merged\_annotation}. Report and interpret the ARI value.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%
+\begin{solution}
+
+\end{solution}
+%%%%%%%%%%%%%%%%%%
+
+\vspace{20pt}
+
+\item (10 points) \textbf{Visualization and comparison.}
+
+UMAP is commonly used to visualize single-cell data and clustering results.
+
+\begin{enumerate}
+    \item (5 points) Plot a UMAP embedding colored by K-means clusters using $k=4$.
+    \item (5 points) Plot the same UMAP embedding colored by Leiden clusters using \texttt{resolution = 0.01}.
+\end{enumerate}
+
+\textbf{Question:} Based on the UMAP visualizations of K-means ($k=4$) and Leiden (resolution $=0.01$), what is a potential disadvantage of K-means–based clustering methods in single-cell RNA-seq analysis? Briefly explain your reasoning.
+
+%%%%%%%%%%%%%%%%%%
+\begin{solution}
+
+\end{solution}
+%%%%%%%%%%%%%%%%%%
+
+\end{enumerate}
+
+\vspace{10pt}
+
+
